@@ -1601,10 +1601,10 @@ class calendar_event(osv.Model):
                     real_ids = [real_event_id]
                     # if start change, update recurrent_id_date time of detached events
                     if 'start' in values:
-                        _, _, new_time = values['start'].partition(' ')
+                        __, __, new_time = values['start'].partition(' ')
                         detached_ids = self.search(cr, uid, [('recurrent_id', '=', real_event_id)], context=context)
                         for event in self.browse(cr, uid, detached_ids, context=context):
-                            detached_date, _, _ = event.recurrent_id_date.partition(' ')
+                            detached_date, __, __ = event.recurrent_id_date.partition(' ')
                             event.recurrent_id_date = detached_date + ' ' + new_time
                 else:
                     data = self.read(cr, uid, event_id, ['start', 'stop', 'rrule', 'duration'])
