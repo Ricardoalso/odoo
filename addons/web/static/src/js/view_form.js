@@ -6122,7 +6122,11 @@ instance.web.form.FieldStatus = instance.web.form.AbstractField.extend({
     on_click_stage: function (ev) {
         var self = this;
         var $li = $(ev.currentTarget);
+        var ul = $li.parent('ul');
         var val;
+        if (ul.attr('disabled'))
+            return
+        ul.attr('disabled', true);
         if (this.field.type == "many2one") {
             val = parseInt($li.data("id"), 10);
         }
@@ -6134,6 +6138,7 @@ instance.web.form.FieldStatus = instance.web.form.AbstractField.extend({
                 var change = {};
                 change[self.name] = val;
                 self.view.dataset.write(self.view.datarecord.id, change).done(function() {
+                    ul.removeAttr('disabled');
                     self.view.reload();
                 });
             });
