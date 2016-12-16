@@ -69,21 +69,21 @@ class AccountPartialReconcileCashBasis(models.Model):
                             total_by_cash_basis_account[key] += amount
                         else:
                             total_by_cash_basis_account[key] = amount
-                    if any([tax.use_cash_basis for tax in line.tax_ids]):
-                        for tax in line.tax_ids:
-                            line_to_create.append((0, 0, {
-                                'name': '/',
-                                'debit': line.debit_cash_basis - line.debit * matched_percentage,
-                                'credit': line.credit_cash_basis - line.credit * matched_percentage,
-                                'account_id': line.account_id.id,
-                                'tax_ids': [(6, 0, [tax.id])],
-                                }))
-                            line_to_create.append((0, 0, {
-                                'name': '/',
-                                'credit': line.debit_cash_basis - line.debit * matched_percentage,
-                                'debit': line.credit_cash_basis - line.credit * matched_percentage,
-                                'account_id': line.account_id.id,
-                                }))
+                    #if any([tax.use_cash_basis for tax in line.tax_ids]):
+                        #for tax in line.tax_ids:
+                            #line_to_create.append((0, 0, {
+                                #'name': '/',
+                                #'debit': line.debit_cash_basis - line.debit * matched_percentage,
+                                #'credit': line.credit_cash_basis - line.credit * matched_percentage,
+                                #'account_id': line.account_id.id,
+                                #'tax_ids': [(6, 0, [tax.id])],
+                                #}))
+                            #line_to_create.append((0, 0, {
+                                #'name': '/',
+                                #'credit': line.debit_cash_basis - line.debit * matched_percentage,
+                                #'debit': line.credit_cash_basis - line.credit * matched_percentage,
+                                #'account_id': line.account_id.id,
+                                #}))
 
         for k, v in tax_group.items():
             line_to_create.append((0, 0, {
