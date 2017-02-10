@@ -1091,12 +1091,25 @@ class Binary(http.Controller):
                 # create an empty registry
                 registry = odoo.modules.registry.Registry(dbname)
                 with registry.cursor() as cr:
-                    cr.execute("""SELECT c.logo_web, c.write_date
-                                    FROM res_users u
-                               LEFT JOIN res_company c
-                                      ON c.id = u.company_id
-                                   WHERE u.id = %s
-                               """, (uid,))
+                    # This try/except is useful when mail templates are displayed in preview mode,
+                    # since we receive a value not yet evaluated, e.g. company='${company.id}'
+                    try:
+                        company = (kw or {}).get('company')
+                        company = int(company)
+                    except ValueError:
+                        company = False
+                    if company:
+                        cr.execute("""SELECT logo_web, write_date
+                                        FROM res_company
+                                       WHERE id = %s
+                                   """, (company,))
+                    else:
+                        cr.execute("""SELECT c.logo_web, c.write_date
+                                        FROM res_users u
+                                   LEFT JOIN res_company c
+                                          ON c.id = u.company_id
+                                       WHERE u.id = %s
+                                   """, (uid,))
                     row = cr.fetchone()
                     if row and row[0]:
                         image_base64 = str(row[0]).decode('base64')
