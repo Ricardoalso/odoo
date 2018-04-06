@@ -1,7 +1,8 @@
 -
   !python {model: res.partner, id: base.main_partner}: |
     main_warehouse = self.env['stock.warehouse'].browse(ref('warehouse0'))
-    self.write({'property_stock_customer':main_warehouse.lot_stock_id.id})    
+    #commented out because it crashes when upgrading Roctool (multi company issue)
+    #self.write({'property_stock_customer':main_warehouse.lot_stock_id.id})
 
 -
   !python {model: ir.model.data, id: False}: |
@@ -23,11 +24,10 @@
             self.create(xml_record)
         #avoid the xml id and the associated resource being dropped by the orm by manually making a hit on it
         self._update_dummy(xml_record['model'], xml_record['module'], xml_record['name'])
-    
+
 -
   !python {model: res.company, id: False}: |
     #create the transit location for each company existing
     companies = self.search([('internal_transit_location_id', '=', False)])
     for company in companies:
         company.create_transit_location()
-
