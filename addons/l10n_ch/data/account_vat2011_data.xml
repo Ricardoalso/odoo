@@ -349,13 +349,13 @@
         <field name="tag_ids" eval="[(6,0,[ref('vat_tag_302_a'), ref('vat_tag_302_b')])]"/>
     </record>
     <record model="account.tax.template" id="vat_77_purchase">
-        <field name="name">TVA 7.7% sur achat B&amp;S (TN)</field>
+        <field name="name">Impôt Acquisition - Positif</field>
         <field name="description">7.7% achat</field>
         <field name="amount" eval="7.7"/>
         <field name="amount_type">percent</field>
         <field name="sequence" eval="0"/>
         <field name="chart_template_id" ref="l10nch_chart_template"/>
-        <field name="type_tax_use">purchase</field>
+        <field name="type_tax_use">none</field>
         <field name="refund_account_id" ref="ch_coa_1170"/>
         <field name="account_id" ref="ch_coa_1170"/>
         <field name="tag_ids" eval="[(6,0,[ref('vat_tag_400')])]"/>
@@ -397,13 +397,13 @@
         <field name="tag_ids" eval="[(6,0,[ref('vat_tag_405')])]"/>
     </record>
     <record model="account.tax.template" id="vat_77_purchase_return">
-        <field name="name">TVA due a 7.7% (TN) (return)</field>
+        <field name="name">Impôt Acquisition - Negatif</field>
         <field name="description">7.7% achat (return)</field>
         <field name="amount" eval="-7.7"/>
         <field name="amount_type">percent</field>
         <field name="sequence" eval="0"/>
         <field name="chart_template_id" ref="l10nch_chart_template"/>
-        <field name="type_tax_use">purchase</field>
+        <field name="type_tax_use">none</field>
         <field name="refund_account_id" ref="ch_coa_1170"/>
         <field name="account_id" ref="ch_coa_1170"/>
         <field name="tag_ids" eval="[(6,0,[ref('vat_tag_382_a'),ref('vat_tag_382_b')])]"/>
@@ -528,7 +528,7 @@
     <!--# for reverse charge or VAT on Acquisition (group of taxes)-->
     <record model="account.tax.template" id="vat_77_purchase_reverse">
         <field name="description">7.7% achat</field>
-        <field name="name">TVA 7.7% sur achat service a l'etranger (reverse charge)</field>
+        <field name="name">Impôt sur acquisitions 7.7%</field>
         <field name="amount" eval="7.7"/>
         <field name="amount_type">group</field>
         <field name="type_tax_use">purchase</field>
