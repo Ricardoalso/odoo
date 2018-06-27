@@ -12,6 +12,10 @@ import logging
 import odoo.release as release
 import appdirs
 
+from passlib.context import CryptContext
+crypt_context = CryptContext(schemes=['pbkdf2_sha512', 'plaintext'],
+                             deprecated=['plaintext'])
+
 class MyOption (optparse.Option, object):
     """ optparse Option with two additional attributes.
 
@@ -255,7 +259,7 @@ class configmanager(object):
                          type="int")
         group.add_option("--unaccent", dest="unaccent", my_default=False, action="store_true",
                          help="Use the unaccent function provided by the database when available.")
-        group.add_option("--geoip-db", dest="geoip_database", my_default='/usr/share/GeoIP/GeoLiteCity.dat',
+        group.add_option("--geoip-db", dest="geoip_database", my_default='/usr/share/GeoIP/GeoLite2-City.mmdb',
                          help="Absolute path to the GeoIP database file.")
         parser.add_option_group(group)
 
@@ -605,5 +609,20 @@ class configmanager(object):
 
     def filestore(self, dbname):
         return os.path.join(self['data_dir'], 'filestore', dbname)
+
+    def set_admin_password(self, new_password):
+        self.options['admin_passwd'] = crypt_context.encrypt(new_password)
+
+    def verify_admin_password(self, password):
+        """Verifies the super-admin password, possibly updating the stored hash if needed"""
+        stored_hash = self.options['admin_passwd']
+        if not stored_hash:
+            # empty password/hash => authentication forbidden
+            return False
+        result, updated_hash = crypt_context.verify_and_update(password, stored_hash)
+        if result:
+            if updated_hash:
+                self.options['admin_passwd'] = updated_hash
+            return True
 
 config = configmanager()

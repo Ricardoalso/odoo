@@ -240,7 +240,7 @@ class AccountBankStatement(models.Model):
                     raise UserError(_('All the account entries lines must be processed in order to close the statement.'))
                 moves = (moves | st_line.journal_entry_ids)
             if moves:
-                moves.post()
+                moves.filtered(lambda m: m.state != 'posted').post()
             statement.message_post(body=_('Statement %s confirmed, journal items were created.') % (statement.name,))
         statements.link_bank_to_partner()
         statements.write({'state': 'confirm', 'date_done': time.strftime("%Y-%m-%d %H:%M:%S")})
@@ -338,7 +338,7 @@ class AccountBankStatement(models.Model):
     def link_bank_to_partner(self):
         for statement in self:
             for st_line in statement.line_ids:
-                if st_line.bank_account_id and st_line.partner_id and st_line.bank_account_id.partner_id != st_line.partner_id:
+                if st_line.bank_account_id and st_line.partner_id and not st_line.bank_account_id.partner_id:
                     st_line.bank_account_id.partner_id = st_line.partner_id
 
 
@@ -566,7 +566,7 @@ class AccountBankStatementLine(models.Model):
         """
         # Blue lines = payment on bank account not assigned to a statement yet
         reconciliation_aml_accounts = [self.journal_id.default_credit_account_id.id, self.journal_id.default_debit_account_id.id]
-        domain_reconciliation = ['&', '&', ('statement_id', '=', False), ('account_id', 'in', reconciliation_aml_accounts), ('payment_id','<>', False)]
+        domain_reconciliation = ['&', ('statement_id', '=', False), ('account_id', 'in', reconciliation_aml_accounts)]
 
         # Black lines = unreconciled & (not linked to a payment or open balance created by statement
         domain_matching = [('reconciled', '=', False)]
@@ -786,7 +786,7 @@ class AccountBankStatementLine(models.Model):
             # company in currency A, statement in currency B and transaction in currency A
             # counterpart line must have currency B and amount is computed using the rate between A and B
             amount_currency = amount/st_line_currency_rate
-        
+
         # last case is company in currency A, statement in currency A and transaction in currency A
         # and in this case counterpart line does not need any second currency nor amount_currency
 
@@ -892,7 +892,7 @@ class AccountBankStatementLine(models.Model):
         total = self.amount
         for aml_rec in payment_aml_rec:
             total -= aml_rec.debit-aml_rec.credit
-            aml_rec.write({'statement_id': self.statement_id.id})
+            aml_rec.with_context(check_move_validity=False).write({'statement_id': self.statement_id.id})
             aml_rec.move_id.write({'statement_line_id': self.id})
             counterpart_moves = (counterpart_moves | aml_rec.move_id)
 
@@ -932,7 +932,7 @@ class AccountBankStatementLine(models.Model):
                     'currency_id': currency.id,
                     'amount': abs(total),
                     'communication': self._get_communication(payment_methods[0] if payment_methods else False),
-                    'name': self.statement_id.name,
+                    'name': self.statement_id.name or _("Bank Statement %s") %  self.date,
                 })
 
             # Complete dicts to create both counterpart move lines and write-offs

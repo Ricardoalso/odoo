@@ -32,7 +32,7 @@ class DatabaseExists(Warning):
 #----------------------------------------------------------
 
 def check_super(passwd):
-    if passwd and passwd == odoo.tools.config['admin_passwd']:
+    if passwd and odoo.tools.config.verify_admin_password(passwd):
         return True
     raise odoo.exceptions.AccessDenied()
 
@@ -211,9 +211,13 @@ def dump_db(db_name, stream, backup_format='zip'):
             return stdout
 
 def exp_restore(db_name, data, copy=False):
+    def chunks(d, n=8192):
+        for i in range(0, len(d), n):
+            yield d[i:i+n]
     data_file = tempfile.NamedTemporaryFile(delete=False)
     try:
-        data_file.write(data.decode('base64'))
+        for chunk in chunks(data):
+            data_file.write(chunk.decode('base64'))
         data_file.close()
         restore_db(db_name, data_file.name, copy=copy)
     finally:
@@ -296,7 +300,7 @@ def exp_rename(old_name, new_name):
     return True
 
 def exp_change_admin_password(new_password):
-    odoo.tools.config['admin_passwd'] = new_password
+    odoo.tools.config.set_admin_password(new_password)
     odoo.tools.config.save()
     return True
 
