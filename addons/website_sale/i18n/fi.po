@@ -3,10 +3,10 @@
 # * website_sale
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Veikko Väätäjä <veikko.vaataja@gmail.com>, 2017
 # Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2017
-# salmemik <salmemik@gmail.com>, 2017
+# Mikko Salmela <salmemik@gmail.com>, 2017
 # Tommi Rintala <tommi.rintala@gmail.com>, 2017
 # Kari Lindgren <kari.lindgren@emsystems.fi>, 2017
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2017
@@ -21,13 +21,14 @@
 # Timo Koukkari <ti.ko@netikka.fi>, 2017
 # Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2017
 # Jukka Paulin <jukka.paulin@gmail.com>, 2017
+# Timo Talvitie <timo.talvitie@vizucom.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 13:11+0000\n"
-"PO-Revision-Date: 2017-11-30 13:11+0000\n"
-"Last-Translator: Jukka Paulin <jukka.paulin@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-02-19 13:43+0000\n"
+"PO-Revision-Date: 2018-02-19 13:43+0000\n"
+"Last-Translator: Timo Talvitie <timo.talvitie@vizucom.com>, 2018\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -752,6 +753,8 @@ msgstr "Tarvikkeet"
 msgid ""
 "Add a step to request some extra customer data (picking preferences, etc.)"
 msgstr ""
+"Lisää tilausprosessiin uusi välivaihe lisätietojen syöttämiseen (asiakkaan "
+"viite, kommentit ym.)"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.product
@@ -1505,12 +1508,12 @@ msgstr "Ulkoinen kiintolevy"
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.extra_info_option
 msgid "Extra Info<span class=\"chevron\"/>"
-msgstr ""
+msgstr "Tilauksen lisätiedot"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.extra_info
 msgid "Extra Step"
-msgstr ""
+msgstr "Lisätietovaihe"
 
 #. module: website_sale
 #: model:sale.order.line,website_description:website_sale.website_sale_order_line_1
@@ -2172,6 +2175,7 @@ msgstr "Ylempi ryhmä"
 
 #. module: website_sale
 #: code:addons/website_sale/controllers/main.py:756
+#: model:ir.ui.view,arch_db:website_sale.payment
 #, python-format
 msgid "Pay Now"
 msgstr "Maksa nyt"
@@ -2196,6 +2200,11 @@ msgstr "Maksun vastaanottajat"
 #: model:ir.ui.view,arch_db:website_sale.report_shop_saleorder_document
 msgid "Payment Information"
 msgstr "Maksun tiedot"
+
+#. module: website_sale
+#: model:ir.model,name:website_sale.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Maksutapahtuma"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -2311,7 +2320,7 @@ msgstr "Hinnoittelu"
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
 msgid "Pricing &amp; Discounts"
-msgstr ""
+msgstr "Hinnoittelu ja alennukset"
 
 #. module: website_sale
 #: model:product.public.category,name:website_sale.printer
@@ -2747,7 +2756,7 @@ msgstr ""
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
-msgid "Send a recovery email to authentified shoppers"
+msgid "Send a recovery email to authenticated shoppers"
 msgstr ""
 
 #. module: website_sale
@@ -3463,6 +3472,11 @@ msgstr "Oma viitteesi"
 #: model:ir.ui.view,arch_db:website_sale.cart_popover
 msgid "Your cart is empty!"
 msgstr "Ostoskorisi on tyhjä!"
+
+#. module: website_sale
+#: model:ir.ui.view,arch_db:website_sale.payment_confirmation_status
+msgid "Your payment has been authorized."
+msgstr "Maksusuorituksesi on hyväksytty."
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.cart

@@ -4,13 +4,18 @@
 # 
 # Translators:
 # Quim - eccit <quim@eccit.com>, 2017
+# Sandra Franch <sandra.franch@upc.edu>, 2018
+# Josep Sànchez <papapep@gmx.com>, 2018
+# Marc Tormo i Bochaca <mtbochaca@gmail.com>, 2018
+# RGB Consulting <odoo@rgbconsulting.com>, 2018
+# Martin Trigaux, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 13:12+0000\n"
-"PO-Revision-Date: 2017-11-30 13:12+0000\n"
-"Last-Translator: Quim - eccit <quim@eccit.com>, 2017\n"
+"POT-Creation-Date: 2018-01-09 10:16+0000\n"
+"PO-Revision-Date: 2018-01-09 10:16+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Catalan (https://www.transifex.com/odoo/teams/41243/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +35,7 @@ msgstr "& Tanca"
 #: code:addons/web/static/src/js/views/calendar/calendar_model.js:502
 #, python-format
 msgid " [Me]"
-msgstr ""
+msgstr " [Jo]"
 
 #. module: web
 #. openerp-web
@@ -147,7 +152,7 @@ msgstr ""
 #. module: web
 #: model:ir.ui.view,arch_db:web.minimal_layout
 msgid "&lt;!DOCTYPE html&gt;"
-msgstr ""
+msgstr "&lt;!DOCTYPE html&gt;"
 
 #. module: web
 #. openerp-web
@@ -410,7 +415,7 @@ msgstr "Alerta"
 #: code:addons/web/static/src/xml/base.xml:622
 #, python-format
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #. module: web
 #. openerp-web
@@ -456,7 +461,7 @@ msgstr "I més"
 #: code:addons/web/static/src/xml/base.xml:623
 #, python-format
 msgid "Any"
-msgstr ""
+msgstr "Alguna"
 
 #. module: web
 #. openerp-web
@@ -508,28 +513,35 @@ msgstr "Està segur que vol eliminar aquest filtre?"
 #: code:addons/web/static/src/js/views/calendar/calendar_controller.js:304
 #, python-format
 msgid "Are you sure you want to delete this record ?"
-msgstr ""
+msgstr "Està segur d'eliminar aquest registre?"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:332
+#: code:addons/web/static/src/xml/base.xml:343
 #, python-format
 msgid "Attachment :"
 msgstr "Adjunts:"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:1181
+#: code:addons/web/static/src/xml/base.xml:1195
 #, python-format
 msgid "Available fields"
 msgstr "Camps disponibles"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:510
+#: code:addons/web/static/src/xml/base.xml:521
 #, python-format
 msgid "Bar Chart"
 msgstr "Gràfic de barres"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/fields/basic_fields.js:1311
+#, python-format
+msgid "Binary File"
+msgstr ""
 
 #. module: web
 #: code:addons/web/controllers/main.py:1474
@@ -572,7 +584,7 @@ msgstr "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
 #: code:addons/web/static/src/js/views/calendar/calendar_view.js:22
 #, python-format
 msgid "Calendar"
-msgstr ""
+msgstr "Calendari"
 
 #. module: web
 #. openerp-web
@@ -654,7 +666,7 @@ msgstr "Tancar"
 #: code:addons/web/static/src/js/fields/basic_fields.js:1635
 #, python-format
 msgid "Closed"
-msgstr ""
+msgstr "Tancat"
 
 #. module: web
 #. openerp-web
@@ -908,7 +920,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/calendar/calendar_renderer.js:132
 #, python-format
 msgid "Do you really want to delete this filter from favorites ?"
-msgstr ""
+msgstr "Esteu segurs d'esborrar aquest filtre dels favorit?"
 
 #. module: web
 #. openerp-web
@@ -922,7 +934,7 @@ msgstr "Documentació "
 #: code:addons/web/static/src/js/widgets/domain_selector_dialog.js:36
 #, python-format
 msgid "Domain"
-msgstr ""
+msgstr "Domini "
 
 #. module: web
 #. openerp-web
@@ -947,14 +959,21 @@ msgstr "No te'n vagis encara,<br />encara està carregant..."
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:539
+#: code:addons/web/static/src/js/fields/basic_fields.js:1316
+#, python-format
+msgid "Download"
+msgstr "Descarregar"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:550
 #, python-format
 msgid "Download xls"
 msgstr "Descarregar xls"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/js/views/form/form_controller.js:161
+#: code:addons/web/static/src/js/views/form/form_controller.js:162
 #, python-format
 msgid "Duplicate"
 msgstr "Duplicar"
@@ -981,6 +1000,13 @@ msgstr "Editar acció"
 
 #. module: web
 #. openerp-web
+#: code:addons/web/static/src/xml/base.xml:275
+#, python-format
+msgid "Edit Calendar view"
+msgstr ""
+
+#. module: web
+#. openerp-web
 #: code:addons/web/static/src/js/views/kanban/kanban_column.js:287
 #, python-format
 msgid "Edit Column"
@@ -988,23 +1014,72 @@ msgstr ""
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:603
+#: code:addons/web/static/src/xml/base.xml:614
 #, python-format
 msgid "Edit Domain"
 msgstr ""
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:268
+#: code:addons/web/static/src/xml/base.xml:269
 #, python-format
-msgid "Edit SearchView"
-msgstr "Editar SearchView"
+msgid "Edit Form view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:273
+#, python-format
+msgid "Edit Gantt view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:272
+#, python-format
+msgid "Edit Graph view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:271
+#, python-format
+msgid "Edit Kanban view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:270
+#, python-format
+msgid "Edit List view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:274
+#, python-format
+msgid "Edit Pivot view"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:279
+#, python-format
+msgid "Edit Search view"
+msgstr ""
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/kanban.xml:22
 #, python-format
 msgid "Edit Stage"
+msgstr ""
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/xml/base.xml:276
+#, python-format
+msgid "Edit view, type:"
 msgstr ""
 
 #. module: web
@@ -1015,7 +1090,7 @@ msgstr "Correu electrònic"
 #. module: web
 #: model:ir.ui.view,arch_db:web.external_layout_standard
 msgid "Email:"
-msgstr ""
+msgstr "Correu electrònic:"
 
 #. module: web
 #. openerp-web
@@ -1038,7 +1113,7 @@ msgstr "Error, contrasenya no modificada!"
 #: code:addons/web/static/src/js/views/calendar/calendar_model.js:511
 #, python-format
 msgid "Everybody's calendars"
-msgstr ""
+msgstr "Calendaris de tothom"
 
 #. module: web
 #. openerp-web
@@ -1108,7 +1183,7 @@ msgstr "Fallat en avaluar els criteris de cerca"
 #: code:addons/web/static/src/js/fields/field_utils.js:45
 #, python-format
 msgid "False"
-msgstr ""
+msgstr "Fals"
 
 #. module: web
 #. openerp-web
@@ -1365,7 +1440,7 @@ msgstr "Testos JS"
 #: code:addons/web/static/src/js/views/kanban/kanban_view.js:16
 #, python-format
 msgid "Kanban"
-msgstr ""
+msgstr "Kanban"
 
 #. module: web
 #: code:addons/web/controllers/main.py:802
@@ -1706,7 +1781,7 @@ msgstr "No hi ha resultats per mostrar..."
 #: code:addons/web/static/src/xml/base.xml:619
 #, python-format
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #. module: web
 #. openerp-web
@@ -1841,7 +1916,7 @@ msgstr "Només tu"
 #: code:addons/web/static/src/js/fields/basic_fields.js:1636
 #, python-format
 msgid "Open"
-msgstr ""
+msgstr "Obert"
 
 #. module: web
 #. openerp-web
@@ -1890,7 +1965,7 @@ msgstr "Contrasenya"
 #. module: web
 #: model:ir.ui.view,arch_db:web.external_layout_standard
 msgid "Phone:"
-msgstr ""
+msgstr "Telèfon:"
 
 #. module: web
 #. openerp-web
@@ -2002,12 +2077,12 @@ msgstr "Preferències"
 #. module: web
 #: model:ir.actions.report,name:web.action_report_externalpreview
 msgid "Preview External Report"
-msgstr ""
+msgstr "Vistar prèvia de l'informe extern"
 
 #. module: web
 #: model:ir.actions.report,name:web.action_report_internalpreview
 msgid "Preview Internal Report"
-msgstr ""
+msgstr "Vista prèvia de l'informe intern "
 
 #. module: web
 #. openerp-web
@@ -2064,14 +2139,14 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:57
 #, python-format
 msgid "Remove this favorite from the list"
-msgstr ""
+msgstr "Esborra aquest favorit de la llista "
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/report/qwebactionmanager.js:94
 #, python-format
 msgid "Report"
-msgstr ""
+msgstr "Informe"
 
 #. module: web
 #. openerp-web
@@ -2371,7 +2446,7 @@ msgstr "Traducció tècnica"
 #: model:ir.ui.view,arch_db:web.external_layout_boxed
 #: model:ir.ui.view,arch_db:web.external_layout_clean
 msgid "Tel:"
-msgstr ""
+msgstr "Telf: "
 
 #. module: web
 #. openerp-web
@@ -2481,12 +2556,12 @@ msgstr ""
 #. module: web
 #: model:ir.ui.view,arch_db:web.preview_externalreport
 msgid "This is a sample of an external report."
-msgstr ""
+msgstr "Això és un exemple d'un informe extern."
 
 #. module: web
 #: model:ir.ui.view,arch_db:web.preview_internalreport
 msgid "This is a sample of an internal report."
-msgstr ""
+msgstr "Això és un exemple d'un informe intern."
 
 #. module: web
 #. openerp-web
@@ -2517,14 +2592,14 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:63
 #, python-format
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/web_calendar.xml:67
 #, python-format
 msgid "Today"
-msgstr ""
+msgstr "Avui"
 
 #. module: web
 #. openerp-web
@@ -2578,6 +2653,9 @@ msgid ""
 "system. The report will be shown in html.<br><br><a href=\"http://wkhtmltopdf.org/\" target=\"_blank\">\n"
 "wkhtmltopdf.org</a>"
 msgstr ""
+"No s'ha pogut trobar Wkhtmltopdf en \n"
+"aquest sistema. Es mostrarà l'informe en html.<br><br><a href=\"http://wkhtmltopdf.org/\" target=\"_blank\">\n"
+"wkhtmltopdf.org</a>"
 
 #. module: web
 #. openerp-web
@@ -2588,11 +2666,12 @@ msgstr "Desarxivar"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/js/views/graph/graph_model.js:179
+#: code:addons/web/static/src/js/views/graph/graph_model.js:178
 #: code:addons/web/static/src/js/views/kanban/kanban_column.js:73
 #: code:addons/web/static/src/js/views/kanban/kanban_column.js:76
-#: code:addons/web/static/src/js/views/list/list_renderer.js:419
+#: code:addons/web/static/src/js/views/kanban/kanban_renderer_mobile.js:145
 #: code:addons/web/static/src/js/views/list/list_renderer.js:422
+#: code:addons/web/static/src/js/views/list/list_renderer.js:425
 #: code:addons/web/static/src/js/views/pivot/pivot_model.js:689
 #, python-format
 msgid "Undefined"
@@ -2693,13 +2772,6 @@ msgstr "Error de validació"
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:267
-#, python-format
-msgid "View"
-msgstr "Vista"
-
-#. module: web
-#. openerp-web
 #: code:addons/web/static/src/xml/base.xml:239
 #, python-format
 msgid "View Fields"
@@ -2757,7 +2829,7 @@ msgstr "Setmana"
 #: code:addons/web/static/src/js/views/calendar/calendar_controller.js:349
 #, python-format
 msgid "Week "
-msgstr ""
+msgstr "Setmana"
 
 #. module: web
 #. openerp-web
@@ -2859,6 +2931,9 @@ msgid ""
 "You need to start OpenERP with at least two \n"
 "workers to print a pdf version of the reports."
 msgstr ""
+"Necessitu iniciar l'OpenErp amb un mínim de \n"
+"dos workers per imprimir la versió PDF dels\n"
+"informes."
 
 #. module: web
 #. openerp-web
@@ -2870,6 +2945,10 @@ msgid ""
 "support for table-breaking between pages.<br><br><a href=\"http://wkhtmltopdf.org/\" \n"
 "target=\"_blank\">wkhtmltopdf.org</a>"
 msgstr ""
+"Heu d'actualitzar la vostra versió de\n"
+"Wkhtmltopdf com a mínim a 0.12.0 amb la finalitat de tenir una correcta visualització de les capçaleres i els peus de pàgina així com\n"
+"suport de ruptura de taules entre pàgines.<br><br><a href=\"http://wkhtmltopdf.org/\"\n"
+"target=\"_blank\">wkhtmltopdf.org</a>"
 
 #. module: web
 #. openerp-web
@@ -2889,6 +2968,9 @@ msgid ""
 "shown in html.<br><br><a href=\"http://wkhtmltopdf.org/\" "
 "target=\"_blank\">wkhtmltopdf.org</a>"
 msgstr ""
+"La seva instal·lació de Wkhtmltopdf sembla estar trencat. L'informe es "
+"mostrarà en html. <br><br><a href=\"http://wkhtmltopdf.org/\" "
+"target=\"_blank\">wkhtmltopdf.org</a>"
 
 #. module: web
 #. openerp-web
@@ -2942,7 +3024,7 @@ msgstr ""
 #. module: web
 #: model:ir.model,name:web.model_base
 msgid "base"
-msgstr ""
+msgstr "base"
 
 #. module: web
 #. openerp-web
@@ -2992,7 +3074,7 @@ msgstr ""
 #. module: web
 #: model:ir.model,name:web.model_ir_qweb_field_image
 msgid "ir.qweb.field.image"
-msgstr ""
+msgstr "ir.qweb.field.image"
 
 #. module: web
 #. openerp-web
@@ -3205,7 +3287,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/kanban.xml:41
 #, python-format
 msgid "remaining)"
-msgstr ""
+msgstr "restant)"
 
 #. module: web
 #. openerp-web

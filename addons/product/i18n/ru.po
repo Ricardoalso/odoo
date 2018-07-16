@@ -3,11 +3,11 @@
 # * product
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Gennady Marchenko <gennadym@gmail.com>, 2017
 # Sergey Vilizhanin <sv@grimmette.ru>, 2017
 # Максим Дронь <dronmax@gmail.com>, 2017
-# Эдуард Манятовский <manyatovskiy@gmail.com>, 2017
+# Collex100, 2017
 # Viktor Pogrebniak <vp@aifil.ru>, 2017
 # Василий Коробатов <boxat@mail.ru>, 2017
 # Артур Чеботарь <artcha.chebotar@gmail.com>, 2017
@@ -19,14 +19,16 @@
 # Masha Koc <mariya.kos.ua@gmail.com>, 2017
 # Max Belyanin <maxbelyanin@gmail.com>, 2017
 # Andrey Samorukov <andrey.samorukov@me.com>, 2017
+# Sergei Ruzki <sergei.ruzki@icode.by>, 2017
 # Yuriy Ney <k_wizard@mail.ru>, 2017
+# Yuriy Ney <kwizardn@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:26+0000\n"
-"PO-Revision-Date: 2017-10-02 11:26+0000\n"
-"Last-Translator: Yuriy Ney <k_wizard@mail.ru>, 2017\n"
+"POT-Creation-Date: 2018-02-19 13:43+0000\n"
+"PO-Revision-Date: 2018-02-19 13:43+0000\n"
+"Last-Translator: Yuriy Ney <kwizardn@gmail.com>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,6 +82,8 @@ msgid ""
 "17\" LCD Monitor\n"
 "Processor AMD 8-Core"
 msgstr ""
+"17\" ЖК мониор\n"
+"Процессор AMD 8-Core"
 
 #. module: product
 #: model:product.product,description:product.product_product_25
@@ -416,7 +420,7 @@ msgstr "Атрибуты"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_product_variant
 msgid "Attributes and Variants"
-msgstr ""
+msgstr "Атрибуты и Варианты"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -827,7 +831,7 @@ msgstr "Группы стран"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_create_variant
 msgid "Create Variant"
-msgstr ""
+msgstr "Создать Вариант"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_create_uid
@@ -1241,6 +1245,11 @@ msgid "Friendly to the environment."
 msgstr "Дружественный к окружающей среде."
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Future Activities"
+msgstr "Будущие действия"
+
+#. module: product
 #: model:product.product,name:product.product_product_1
 #: model:product.template,name:product.product_product_1_product_template
 msgid "GAP Analysis Service"
@@ -1601,6 +1610,11 @@ msgstr "Последний раз обновил"
 #: model:ir.model.fields,field_description:product.field_product_uom_write_date
 msgid "Last Updated on"
 msgstr "Последнее обновление"
+
+#. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Late Activities"
+msgstr "Действия с опозданием"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_delay
@@ -2066,12 +2080,12 @@ msgstr "Название продукта"
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_stock_packaging
 #: model:ir.ui.view,arch_db:product.product_packaging_tree_view
 msgid "Product Packages"
-msgstr ""
+msgstr "Варианты упаковки продукта"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_packaging_form_view
 msgid "Product Packaging"
-msgstr ""
+msgstr "Тара"
 
 #. module: product
 #: model:ir.model,name:product.model_product_template
@@ -2157,6 +2171,11 @@ msgstr "Продукты "
 #: model:ir.model.fields,field_description:product.field_product_template_lst_price
 #: selection:product.pricelist.item,base:0
 msgid "Public Price"
+msgstr "Открытый каталог"
+
+#. module: product
+#: model:product.pricelist,name:product.list0
+msgid "Public Pricelist"
 msgstr "Открытый каталог"
 
 #. module: product
@@ -2419,6 +2438,11 @@ msgstr ""
 "Предоставьте свой продукт всем компаниям, определенным в вашем экземпляре.\n"
 "  * Проверено: Продукт виден для каждой компании, даже если компания определена для партнера.\n"
 "  * Не проверено: Каждая компания может видеть только свой продукт (продукт, в котором определена компания). Продукт, не связанный с компанией, видимый для всех компаний."
+
+#. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Show all records which has next action date is before today"
+msgstr "Показать все записи с просроченой датой следующего действия"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_product_pricelist
@@ -2930,6 +2954,11 @@ msgstr ""
 "Оставьте пустым чтобы использовать обычное."
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Today Activities"
+msgstr "Сегодняшние мероприятия"
+
+#. module: product
 #: model:product.product,website_description:product.product_product_7
 #: model:product.template,website_description:product.product_product_7_product_template
 msgid "Two is better than one."
@@ -2949,11 +2978,6 @@ msgid ""
 msgstr ""
 "USB-порт позволяет обновлять программное обеспечение для обеспечения "
 "совместимости совместимых устройств Bluetooth"
-
-#. module: product
-#: model:product.pricelist,name:product.list0
-msgid "USD"
-msgstr "USD"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_6
@@ -3062,7 +3086,7 @@ msgstr "Период действия"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_name
 msgid "Value"
-msgstr "Объём"
+msgstr "Значение"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_ids

@@ -91,7 +91,7 @@ class AccountInvoice(models.Model):
         self.purchase_id = False
         return {}
 
-    @api.onchange('currency_id', 'date_invoice')
+    @api.onchange('currency_id')
     def _onchange_currency_id(self):
         if self.currency_id:
             for line in self.invoice_line_ids.filtered(lambda r: r.purchase_line_id):
@@ -161,7 +161,15 @@ class AccountInvoice(models.Model):
                         #for average/fifo/lifo costing method, fetch real cost price from incomming moves
                         valuation_price_unit = i_line.purchase_line_id.product_uom._compute_price(i_line.purchase_line_id.price_unit, i_line.uom_id)
                         stock_move_obj = self.env['stock.move']
-                        valuation_stock_move = stock_move_obj.search([('purchase_line_id', '=', i_line.purchase_line_id.id), ('state', '=', 'done')])
+                        valuation_stock_move = stock_move_obj.search([
+                            ('purchase_line_id', '=', i_line.purchase_line_id.id),
+                            ('state', '=', 'done'), ('product_qty', '!=', 0.0)
+                        ])
+                        if self.type == 'in_refund':
+                            valuation_stock_move = valuation_stock_move.filtered(lambda m: m._is_out())
+                        elif self.type == 'in_invoice':
+                            valuation_stock_move = valuation_stock_move.filtered(lambda m: m._is_in())
+
                         if valuation_stock_move:
                             valuation_price_unit_total = 0
                             valuation_total_qty = 0
@@ -186,13 +194,13 @@ class AccountInvoice(models.Model):
                                     if child.type_tax_use != 'none':
                                         tax_ids.append((4, child.id, None))
                         price_before = line.get('price', 0.0)
-                        line.update({'price': company_currency.round(valuation_price_unit * line['quantity'])})
+                        line.update({'price': inv.currency_id.round(valuation_price_unit * line['quantity'])})
                         diff_res.append({
                             'type': 'src',
                             'name': i_line.name[:64],
-                            'price_unit': company_currency.round(price_unit - valuation_price_unit),
+                            'price_unit': inv.currency_id.round(price_unit - valuation_price_unit),
                             'quantity': line['quantity'],
-                            'price': company_currency.round(price_before - line.get('price', 0.0)),
+                            'price': inv.currency_id.round(price_before - line.get('price', 0.0)),
                             'account_id': acc,
                             'product_id': line['product_id'],
                             'uom_id': line['uom_id'],

@@ -8,6 +8,7 @@ from odoo.tools.safe_eval import safe_eval, test_python_expr
 from odoo.tools import pycompat
 from odoo.http import request
 
+import base64
 from collections import defaultdict
 import datetime
 import dateutil
@@ -33,6 +34,7 @@ class IrActions(models.Model):
     binding_model_id = fields.Many2one('ir.model', ondelete='cascade',
                                        help="Setting a value makes this action available in the sidebar for the given model.")
     binding_type = fields.Selection([('action', 'Action'),
+                                     ('action_form_only', "Form-only"),
                                      ('report', 'Report')],
                                     required=True, default='action')
 
@@ -76,6 +78,8 @@ class IrActions(models.Model):
             'datetime': datetime,
             'dateutil': dateutil,
             'timezone': timezone,
+            'b64encode': base64.b64encode,
+            'b64decode': base64.b64decode,
         }
 
     @api.model
@@ -253,7 +257,7 @@ class IrActionsActWindowView(models.Model):
     _name = 'ir.actions.act_window.view'
     _table = 'ir_act_window_view'
     _rec_name = 'view_id'
-    _order = 'sequence'
+    _order = 'sequence,id'
 
     sequence = fields.Integer()
     view_id = fields.Many2one('ir.ui.view', string='View')
@@ -442,7 +446,12 @@ class IrActionsServer(models.Model):
         for exp in action.fields_lines:
             res[exp.col1.name] = exp.eval_value(eval_context=eval_context)[exp.id]
 
-        self.env[action.model_id.model].browse(self._context.get('active_id')).write(res)
+        if self._context.get('onchange_self'):
+            record_cached = self._context['onchange_self']
+            for field, new_value in res.items():
+                record_cached[field] = new_value
+        else:
+            self.env[action.model_id.model].browse(self._context.get('active_id')).write(res)
 
     @api.model
     def run_action_object_create(self, action, eval_context=None):
@@ -537,6 +546,8 @@ class IrActionsServer(models.Model):
 
             elif hasattr(self, 'run_action_%s' % action.state):
                 active_id = self._context.get('active_id')
+                if not active_id and self._context.get('onchange_self'):
+                    active_id = self._context['onchange_self']._origin.id
                 active_ids = self._context.get('active_ids', [active_id] if active_id else [])
                 for active_id in active_ids:
                     # run context dedicated to a particular active_id
