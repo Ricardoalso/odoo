@@ -72,6 +72,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/papillon_orange-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="citron" model="product.product">
@@ -84,6 +85,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/citron-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="limon" model="product.product">
             <field name="available_in_pos">True</field>
@@ -94,6 +96,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/limon-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="pamplemousse_rouge_pamplemousse" model="product.product">
             <field name="available_in_pos">True</field>
@@ -104,6 +107,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/pamplemousse_rouge_pamplemousse-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="pomme_granny_smith" model="product.product">
@@ -115,6 +119,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/pomme_granny_smith-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="pomme_jonagold" model="product.product">
             <field name="available_in_pos">True</field>
@@ -125,6 +130,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/pomme_jonagold-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="pomme_golden_perlim" model="product.product">
             <field name="available_in_pos">True</field>
@@ -135,6 +141,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/pomme_golden_perlim-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="poire_conference" model="product.product">
@@ -146,6 +153,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/poire_conference-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="peche" model="product.product">
@@ -158,6 +166,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/peche-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="raisins_noir" model="product.product">
@@ -169,6 +178,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/raisins-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="pomme_de_terre" model="product.product">
@@ -180,6 +190,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/pomme_de_terre-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="chicon_flandria_extra" model="product.product">
@@ -191,6 +202,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/chicon_flandria_extra-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="carotte" model="product.product">
             <field name="available_in_pos">True</field>
@@ -201,6 +213,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/carotte-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="tomate_en_grappe" model="product.product">
@@ -212,6 +225,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/tomate_en_grappe-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="Onions" model="product.product">
@@ -224,6 +238,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/Onions-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="poivron_rouges" model="product.product">
@@ -235,6 +250,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/poivron_rouges-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="poivron_verts" model="product.product">
             <field name="available_in_pos">True</field>
@@ -245,6 +261,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/poivron_verts-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="poivron_jaunes" model="product.product">
             <field name="available_in_pos">True</field>
@@ -255,6 +272,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/poivron_jaunes-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="poireaux_poireaux" model="product.product">
             <field name="available_in_pos">True</field>
@@ -265,6 +283,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/poireaux_poireaux-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="courgette" model="product.product">
             <field name="available_in_pos">True</field>
@@ -275,6 +294,7 @@
             <field name="uom_id" ref="product.product_uom_kgm" />
             <field name="uom_po_id" ref="product.product_uom_kgm" />
             <field name="image" type="base64" file="point_of_sale/static/img/courgette-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="coca_regular_50cl" model="product.product">
@@ -283,6 +303,7 @@
             <field name="name">Coca-Cola Regular 50cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/coca_regular_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="coca_regular_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -291,6 +312,7 @@
             <field name="barcode">5449000000996</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/coca_regular_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="coca_light_50cl" model="product.product">
@@ -299,6 +321,7 @@
             <field name="name">Coca-Cola Light 50cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/coca_light_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="coca_light_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -306,6 +329,7 @@
             <field name="name">Coca-Cola Light 33cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/coca_light_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="coca_light_lemon_2l" model="product.product">
@@ -314,6 +338,7 @@
             <field name="name">Coca-Cola Light Lemon 2L</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/coca_light_lemon_2l-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="fanta_orange_50cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -321,6 +346,7 @@
             <field name="name">Fanta Orange 50cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/fanta_orange_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="fanta_orange_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -328,6 +354,7 @@
             <field name="name">Fanta Orange 33cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/fanta_orange_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="fanta_orange_25cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -335,6 +362,7 @@
             <field name="name">Fanta Orange 25cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/fanta_orange_25cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="fanta_zero_orange_1,5l" model="product.product">
             <field name="available_in_pos">True</field>
@@ -342,6 +370,7 @@
             <field name="name">Fanta Orange Zero 1.5L</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/fanta_zero_orange_1,5l-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="fanta_zero_orange_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -349,6 +378,7 @@
             <field name="name">Fanta Zero Orange 33cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/fanta_zero_orange_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="evian_50cl" model="product.product">
@@ -357,6 +387,7 @@
             <field name="name">Evian 50cl</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/evian_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="evian_2l" model="product.product">
             <field name="available_in_pos">True</field>
@@ -364,6 +395,7 @@
             <field name="name">2L Evian</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/evian_2l-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="chaudfontaine_petillante_1,5l" model="product.product">
             <field name="available_in_pos">True</field>
@@ -371,6 +403,7 @@
             <field name="name">Chaudfontaine Petillante 1.5l</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/chaudfontaine_petillante_1,5l-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="perrier_50cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -378,6 +411,7 @@
             <field name="name">50cl Perrier</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/perrier_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="san_pellegrino_1l" model="product.product">
             <field name="available_in_pos">True</field>
@@ -385,6 +419,7 @@
             <field name="name">San Pellegrino 1L</field>
             <field name="pos_categ_id" ref="soft"/>
             <field name="image" type="base64" file="point_of_sale/static/img/san_pellegrino_1l-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="stella_50cl" model="product.product">
@@ -393,6 +428,7 @@
             <field name="name">Stella Artois 50cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/stella_50cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="stella_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -400,6 +436,7 @@
             <field name="name">Stella Artois 33cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/stella_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="timmermans_kriek_37,5cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -407,6 +444,7 @@
             <field name="name">Timmermans Kriek 37.5cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/timmermans_kriek_37,5cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="lindemans_kriek_37,5cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -414,6 +452,7 @@
             <field name="name">Lindemans Kriek 37.5cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/lindemans_kriek_37,5cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="grisette_cerise_25cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -421,6 +460,7 @@
             <field name="name">Grisette Cherry 25cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/grisette_cerise_25cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="belle_vue_kriek_25cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -429,6 +469,7 @@
             <field name='barcode'>5410228193449</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/belle_vue_kriek_25cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="leffe_brune_33cl" model="product.product">
@@ -438,6 +479,7 @@
             <field name='barcode'>5410228142164</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/leffe_brune_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="leffe_blonde_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -446,6 +488,7 @@
             <field name='barcode'>5410228142218</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/leffe_blonde_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="orval_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -453,6 +496,7 @@
             <field name="name">Orval 33cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/orval_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="rochefort_8_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -460,6 +504,7 @@
             <field name="name">Rochefort "8" 33cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/rochefort_8_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
         <record id="chimay_rouge_33cl" model="product.product">
             <field name="available_in_pos">True</field>
@@ -467,13 +512,14 @@
             <field name="name">Chimay Red 33cl</field>
             <field name="pos_categ_id" ref="alcohol"/>
             <field name="image" type="base64" file="point_of_sale/static/img/chimay_rouge_33cl-image.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <!-- The electronic products shouldn't be present in the point of sale for the demo -->
 
-        <record id="stock.product_icecream"  model="product.product"> 
+        <record id="stock.product_icecream"  model="product.product">
             <field name="name">Ice Cream</field>
-            <field name="available_in_pos" eval="False"/> 
+            <field name="available_in_pos" eval="False"/>
         </record>
 
         <record id="partner_product_3" model="product.product">
@@ -483,6 +529,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/eezee-it.png"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_4" model="product.product">
@@ -492,6 +539,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/ekomurz.gif"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_5" model="product.product">
@@ -500,6 +548,7 @@
             <field name="name">Acsone.eu</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/acsone.png"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_6" model="product.product">
@@ -509,6 +558,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/vauxoo.png"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_7" model="product.product">
@@ -518,6 +568,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/datalp.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_8" model="product.product">
@@ -527,6 +578,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/camptocamp.png"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <record id="partner_product_9" model="product.product">
@@ -536,6 +588,7 @@
             <field name="type">service</field>
             <field name="pos_categ_id" ref="partner_services"/>
             <field name="image" type="base64" file="point_of_sale/static/img/partners/eggs-solutions.jpg"/>
+            <field name="categ_id" ref="product.product_category_3"/>
         </record>
 
         <!-- The electronic products shouldn't be present in the point of sale for the demo -->
