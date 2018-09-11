@@ -2980,6 +2980,7 @@ QUnit.module('Views', {
         list.destroy();
     });
 
+
     QUnit.test('editable list with handle widget', function (assert) {
         assert.expect(12);
 
@@ -2999,7 +3000,6 @@ QUnit.module('Views', {
                         "should write the right field as sequence");
                     assert.deepEqual(args.ids, [4, 2, 3],
                         "should write the sequence in correct order");
-                    return $.when();
                 }
                 return this._super.apply(this, arguments);
             },
@@ -3053,13 +3053,16 @@ QUnit.module('Views', {
                   '</tree>',
             mockRPC: function (route, args) {
                 if (route === '/web/dataset/resequence') {
-                    assert.strictEqual(args.offset, -4,
+                    var _super = this._super.bind(this);
+                    assert.strictEqual(args.offset, 1,
                         "should write the sequence starting from the lowest current one");
                     assert.strictEqual(args.field, 'int_field',
                         "should write the right field as sequence");
                     assert.deepEqual(args.ids, [4, 2, 3],
                         "should write the sequence in correct order");
-                    return $.when(def);
+                    return $.when(def).then(function () {
+                        return _super(route, args);
+                    });
                 }
                 return this._super.apply(this, arguments);
             },
