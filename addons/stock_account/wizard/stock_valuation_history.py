@@ -114,9 +114,9 @@ class stock_history(osv.osv):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, 'stock_history')
         cr.execute("""
-            CREATE OR REPLACE VIEW stock_history AS (
+            DROP MATERIALIZED VIEW IF EXISTS stock_history;
+            CREATE MATERIALIZED VIEW stock_history AS (
               SELECT MIN(id) as id,
                 move_id,
                 location_id,
@@ -153,12 +153,7 @@ class stock_history(osv.osv):
                     product_product ON product_product.id = stock_move.product_id
                 JOIN
                     product_template ON product_template.id = product_product.product_tmpl_id
-                WHERE quant.qty>0 AND stock_move.state = 'done' AND dest_location.usage in ('internal', 'transit')
-                  AND (
-                    (source_location.company_id is null and dest_location.company_id is not null) or
-                    (source_location.company_id is not null and dest_location.company_id is null) or
-                    source_location.company_id != dest_location.company_id or
-                    source_location.usage not in ('internal', 'transit'))
+                WHERE quant.qty>0 AND stock_move.state = 'done' AND dest_location.usage in ('internal')
                 ) UNION ALL
                 (SELECT
                     (-1) * stock_move.id AS id,
@@ -185,14 +180,12 @@ class stock_history(osv.osv):
                     product_product ON product_product.id = stock_move.product_id
                 JOIN
                     product_template ON product_template.id = product_product.product_tmpl_id
-                WHERE quant.qty>0 AND stock_move.state = 'done' AND source_location.usage in ('internal', 'transit')
-                 AND (
-                    (dest_location.company_id is null and source_location.company_id is not null) or
-                    (dest_location.company_id is not null and source_location.company_id is null) or
-                    dest_location.company_id != source_location.company_id or
-                    dest_location.usage not in ('internal', 'transit'))
+                WHERE quant.qty>0 AND stock_move.state = 'done' AND source_location.usage in ('internal')
                 ))
                 AS foo
                 GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, source
             );
+            create index stock_history_date on stock_history (date);
+            create index stock_history_product on stock_history (product_id);
+            create index stock_history_id on stock_history (id);
             """)
