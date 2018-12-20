@@ -50,7 +50,7 @@ class stock_history(osv.osv):
         if 'inventory_value' in fields:
             group_lines = {}
             for line in res:
-                domain = line.get('__domain', [])
+                domain = line.get('__domain', domain)
                 group_lines.setdefault(str(domain), self.search(cr, uid, domain, context=context))
             line_ids = set()
             for ids in group_lines.values():
@@ -75,7 +75,7 @@ class stock_history(osv.osv):
                 histories_dict[(history['product_template_id'], history['company_id'])] = history['cost']
             for line in res:
                 inv_value = 0.0
-                lines = group_lines.get(str(line.get('__domain', [])))
+                lines = group_lines.get(str(line.get('__domain', domain)))
                 for line_id in lines:
                     line_rec = lines_dict[line_id]
                     product = products_dict[line_rec['product_id']]
@@ -108,7 +108,7 @@ class stock_history(osv.osv):
         'product_categ_id': fields.many2one('product.category', 'Product Category', required=True),
         'quantity': fields.float('Product Quantity'),
         'date': fields.datetime('Operation Date'),
-        'price_unit_on_quant': fields.float('Value'),
+        'price_unit_on_quant': fields.float('Value', group_operator='avg'),
         'inventory_value': fields.function(_get_inventory_value, string="Inventory Value", type='float', readonly=True),
         'source': fields.char('Source')
     }
@@ -125,7 +125,7 @@ class stock_history(osv.osv):
                 product_categ_id,
                 SUM(quantity) as quantity,
                 date,
-                price_unit_on_quant,
+                COALESCE(SUM(price_unit_on_quant * quantity) / NULLIF(SUM(quantity), 0), 0) as price_unit_on_quant,
                 source
                 FROM
                 ((SELECT
@@ -193,5 +193,6 @@ class stock_history(osv.osv):
                     dest_location.usage not in ('internal', 'transit'))
                 ))
                 AS foo
-                GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, price_unit_on_quant, source
-            )""")
+                GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, source
+            );
+            """)
