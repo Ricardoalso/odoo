@@ -155,24 +155,50 @@ class StockMove(models.Model):
 
     @api.model
     def _get_in_base_domain(self, company_id=False):
+        # Domain:
+        # - state is done
+        # - coming from a location without company, or an inventory location within the same company
+        # - going to a location within the same company
         domain = [
             ('state', '=', 'done'),
-            ('location_id.company_id', '=', False),
-            ('location_dest_id.company_id', '=', company_id or self.env.user.company_id.id)
+            '&',
+                '|',
+                    ('location_id.company_id', '=', False),
+                    '&',
+                        ('location_id.usage', 'in', ['inventory', 'production']),
+                        ('location_id.company_id', '=', company_id or self.env.user.company_id.id),
+                ('location_dest_id.company_id', '=', company_id or self.env.user.company_id.id),
         ]
         return domain
 
     @api.model
     def _get_all_base_domain(self, company_id=False):
+        # Domain:
+        # - state is done
+        # Then, either 'in' or 'out' moves.
+        # 'in' moves:
+        # - coming from a location without company, or an inventory location within the same company
+        # - going to a location within the same company
+        # 'out' moves:
+        # - coming from to a location within the same company
+        # - going to a location without company, or an inventory location within the same company
         domain = [
             ('state', '=', 'done'),
             '|',
                 '&',
-                    ('location_id.company_id', '=', False),
+                    '|',
+                        ('location_id.company_id', '=', False),
+                        '&',
+                            ('location_id.usage', 'in', ['inventory', 'production']),
+                            ('location_id.company_id', '=', company_id or self.env.user.company_id.id),
                     ('location_dest_id.company_id', '=', company_id or self.env.user.company_id.id),
                 '&',
                     ('location_id.company_id', '=', company_id or self.env.user.company_id.id),
-                    ('location_dest_id.company_id', '=', False)
+                    '|',
+                        ('location_dest_id.company_id', '=', False),
+                        '&',
+                            ('location_dest_id.usage', '=', 'inventory'),
+                            ('location_dest_id.company_id', '=', company_id or self.env.user.company_id.id),
         ]
         return domain
 
@@ -377,7 +403,7 @@ class StockMove(models.Model):
         tmpl_dict = defaultdict(lambda: 0.0)
         # adapt standard price on incomming moves if the product cost_method is 'average'
         std_price_update = {}
-        for move in self.filtered(lambda move: move.location_id.usage in ('supplier', 'production') and move.product_id.cost_method == 'average'):
+        for move in self.filtered(lambda move: move._is_in() and move.product_id.cost_method == 'average'):
             product_tot_qty_available = move.product_id.qty_available + tmpl_dict[move.product_id.id]
             rounding = move.product_id.uom_id.rounding
 

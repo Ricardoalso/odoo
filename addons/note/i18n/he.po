@@ -138,7 +138,7 @@ msgstr "תאריך עדכון אחרון"
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Late Activities"
-msgstr ""
+msgstr "פעילויות מאוחרות"
 
 #. module: note
 #: model:note.stage,name:note.demo_note_stage_03
@@ -211,7 +211,7 @@ msgstr "רצף"
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Show all records which has next action date is before today"
-msgstr ""
+msgstr "הצג את כל הרשומות שתאריך הפעולה הבא שלהם הוא לפני היום"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_stage_id
