@@ -913,8 +913,12 @@ def convert_csv_import(cr, module, fname, csvcontent, idref=None, mode='init',
 
 def convert_xml_import(cr, module, xmlfile, idref=None, mode='init', noupdate=False, report=None):
     doc = etree.parse(xmlfile)
-    relaxng = etree.RelaxNG(
-        etree.parse(os.path.join(config['root_path'],'import_xml.rng' )))
+    grammar_file = open(os.path.join(config['root_path'],'import_xml.rng' ), 'r')
+    try:
+        relaxng = etree.RelaxNG(
+            etree.fromstring(grammar_file.read()))
+    finally:
+        grammar_file.close()
     try:
         relaxng.assert_(doc)
     except Exception:
