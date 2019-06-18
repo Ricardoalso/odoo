@@ -3,6 +3,7 @@
 
 from odoo import api, fields, models, _
 from odoo.tools.float_utils import float_round, float_is_zero
+from odoo.osv import expression
 
 
 class AccountInvoice(models.Model):
@@ -51,18 +52,16 @@ class AccountInvoice(models.Model):
         self._compute_timesheet_revenue()
         return result
 
+    @api.multi
     def _get_compute_timesheet_revenue_domain(self, so_line_ids):
-        return [
-            ('so_line', 'in', so_line_ids),
-            ('project_id', '!=', False),
-            ('timesheet_invoice_id', '=', False),
-            ('timesheet_invoice_type', 'in', ['billable_time', 'billable_fixed'])
-        ]
+        domain = so_line_ids._analytic_compute_delivered_quantity_domain()
+        not_invoiced_domain = ['&', ('timesheet_invoice_id', '=', False), ('timesheet_invoice_type', 'in', ['billable_time', 'billable_fixed'])]
+        return expression.AND([domain, not_invoiced_domain])
 
     def _compute_timesheet_revenue(self):
         for invoice in self:
             for invoice_line in invoice.invoice_line_ids.filtered(lambda line: line.product_id.type == 'service').sorted(key=lambda inv_line: (inv_line.invoice_id, inv_line.id)):
-                domain = self._get_compute_timesheet_revenue_domain(invoice_line.sale_line_ids.ids)
+                domain = self._get_compute_timesheet_revenue_domain(invoice_line.sale_line_ids)
                 uninvoiced_timesheet_lines = self.env['account.analytic.line'].sudo().search(domain)
 
                 # NOTE JEM : changing quantity (or unit price) of invoice line does not impact the revenue calculation. (FP specs)
