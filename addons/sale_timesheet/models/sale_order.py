@@ -170,7 +170,7 @@ class SaleOrderLine(models.Model):
         # TODO JEM: avoid increment delivered for all AAL or just timesheet ?
         # see nim commit https://github.com/odoo/odoo/commit/21fbb9776a5fbd1838b189f1f7cf8c5d40663e14
         so_line_ids = self.filtered(lambda sol: sol.product_id.service_type != 'manual').ids
-        return ['&', ('so_line', 'in', so_line_ids), ('project_id', '!=', False)]
+        return ['&', '&', ('so_line', 'in', so_line_ids), ('project_id', '!=', False), ('timesheet_invoice_id', '=', False)]
 
     @api.multi
     def _analytic_compute_delivered_quantity_domain(self):
