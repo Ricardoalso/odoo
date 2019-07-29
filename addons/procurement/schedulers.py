@@ -30,7 +30,6 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 from openerp import tools
 from psycopg2 import OperationalError
 import logging
-
 logger = logging.getLogger(__name__)
 
 
@@ -41,6 +40,7 @@ class procurement_order(osv.osv):
         ''' Runs through scheduler.
         @param use_new_cursor: False or the dbname
         '''
+        logger.debug('Start Scheduler')
         if use_new_cursor:
             use_new_cursor = cr.dbname
         self._procure_confirm(cr, uid, use_new_cursor=use_new_cursor, context=context)
@@ -70,6 +70,7 @@ class procurement_order(osv.osv):
             if not ids:
                 ids = procurement_obj.search(cr, uid, [('state', '=', 'exception')], order="date_planned")
             for id in ids:
+                logger.debug('Try to validate procurement %s' % id)
                 wf_service.trg_validate(uid, 'procurement.order', id, 'button_restart', cr)
             if use_new_cursor:
                 cr.commit()
@@ -166,10 +167,15 @@ class procurement_order(osv.osv):
             context['warehouse'] = warehouse
             # Here we check products availability.
             # We use the method 'read' for performance reasons, because using the method 'browse' may crash the server.
+
+            logger.debug('Start to read all stock information for %s products'
+                % len(products_ids))
             for product_read in product_obj.read(cr, uid, products_ids, ['virtual_available'], context=context):
                 if product_read['virtual_available'] >= 0.0:
                     continue
 
+                logger.debug('Create procurement for product id: %s'
+                    % product_read['id'])
                 product = product_obj.browse(cr, uid, [product_read['id']], context=context)[0]
                 if product.supply_method == 'buy':
                     location_id = warehouse.lot_input_id.id
@@ -182,6 +188,7 @@ class procurement_order(osv.osv):
                             context=context)
                 wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
                 wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr)
+        logger.debug('Auto OP done')
         return True
 
     def _get_orderpoint_date_planned(self, cr, uid, orderpoint, start_date, context=None):
