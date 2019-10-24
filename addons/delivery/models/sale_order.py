@@ -23,7 +23,8 @@ class SaleOrder(models.Model):
                 # Prevent SOAP call to external shipping provider when SO has no lines yet
                 continue
             else:
-                order.delivery_price = order.carrier_id.with_context(order_id=order.id).price
+                order.delivery_price = order.company_id.currency_id.with_context(date=order.date_order).compute(
+                    order.carrier_id.with_context(order_id=order.id).price, order.pricelist_id.currency_id)
 
     @api.onchange('partner_id')
     def onchange_partner_id_dtype(self):
@@ -86,9 +87,15 @@ class SaleOrder(models.Model):
             taxes_ids = self.fiscal_position_id.map_tax(taxes, carrier.product_id, self.partner_id).ids
 
         # Create the sale order line
+        carrier_with_partner_lang = carrier.with_context(lang=self.partner_id.lang)
+        if carrier_with_partner_lang.product_id.description_sale:
+            so_description = '%s: %s' % (carrier_with_partner_lang.name,
+                                        carrier_with_partner_lang.product_id.description_sale)
+        else:
+            so_description = carrier_with_partner_lang.name
         values = {
             'order_id': self.id,
-            'name': carrier.name,
+            'name': so_description,
             'product_uom_qty': 1,
             'product_uom': carrier.product_id.uom_id.id,
             'product_id': carrier.product_id.id,

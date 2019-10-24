@@ -3,20 +3,24 @@
 # * point_of_sale
 # 
 # Translators:
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
-# 珠海-杜哥 <liangjia@qq.com>, 2016
 # Martin Trigaux, 2017
+# Jeffery CHEN <jeffery9@gmail.com>, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 # e2f <projects@e2f.com>, 2018
 # ChinaMaker <liuct@chinamaker.net>, 2018
 # xu xiaohu <xu.xiaohu@gmail.com>, 2018
+# liAnGjiA <liangjia@qq.com>, 2018
+# John An <johnxan@163.com>, 2019
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2019
+# Manga Tsang <mts@odoo.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
-"PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: xu xiaohu <xu.xiaohu@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:25+0000\n"
+"Last-Translator: Manga Tsang <mts@odoo.com>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -861,7 +865,7 @@ msgstr "当前会话"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_current_session_state
 msgid "Current session state"
-msgstr ""
+msgstr "当前会话状态"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1314,6 +1318,13 @@ msgstr "分组日记账项目"
 
 #. module: point_of_sale
 #. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:135
+#, python-format
+msgid "HTTPS connection to IoT Box failed"
+msgstr "与IoT Box的HTTPS连接失败"
+
+#. module: point_of_sale
+#. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1322
 #, python-format
 msgid "Hardware Events"
@@ -1396,7 +1407,7 @@ msgstr "导入订单"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_settings_module_pos_data_drinks
 msgid "Import common drinks data"
-msgstr ""
+msgstr "导入普通饮料数据"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_sale_config_settings_form_pos
@@ -1553,7 +1564,7 @@ msgstr "最后更新时间"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_last_session_closing_cash
 msgid "Last session closing cash"
-msgstr ""
+msgstr "上次会话关闭钱箱现金"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_last_session_closing_date
@@ -1640,6 +1651,15 @@ msgstr "忠诚计划"
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_payment
 msgid "Make Payment"
 msgstr "付款"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:137
+#, python-format
+msgid ""
+"Make sure you are using IoT Box v18.12 or higher. Navigate to %s to accept "
+"the certificate of your IoT Box."
+msgstr "确保您使用的是IoT Box v18.12或更高版本。导航到 %s接受IoT Box的证书。"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_sale_config_settings_form_pos
@@ -1919,7 +1939,7 @@ msgstr "开张日期"
 #: model:product.product,name:point_of_sale.papillon_orange
 #: model:product.template,name:point_of_sale.papillon_orange_product_template
 msgid "Orange Butterfly"
-msgstr ""
+msgstr "蝴蝶橙"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2215,6 +2235,13 @@ msgid "Please define income account for this product: \"%s\" (id:%d)."
 msgstr "请为这个产品定义收益科目: \"%s\" (id:%d)."
 
 #. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2017
+#, python-format
+msgid "Please print the invoice from the backend"
+msgstr "请从后台打印发票"
+
+#. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:446
 #, python-format
 msgid "Please provide a partner for the sale."
@@ -2338,23 +2365,23 @@ msgstr "POS产品类别"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_details_wizard_pos_config_ids
 msgid "Pos config ids"
-msgstr ""
+msgstr "Pos 配置 ids"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_res_partner_pos_order_count
 #: model:ir.model.fields,field_description:point_of_sale.field_res_users_pos_order_count
 msgid "Pos order count"
-msgstr ""
+msgstr "POS订单数"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_pack_operation_lot_pos_order_line_id
 msgid "Pos order line id"
-msgstr ""
+msgstr "POS订单明细ID"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_pos_session_username
 msgid "Pos session username"
-msgstr ""
+msgstr "POS会话用户名"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2915,7 +2942,7 @@ msgstr "街道"
 #: model:product.product,name:point_of_sale.limon
 #: model:product.template,name:point_of_sale.limon_product_template
 msgid "Stringers"
-msgstr ""
+msgstr "Stringers"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3105,7 +3132,7 @@ msgstr "销售会话名称必须唯一"
 #: model:ir.model.fields,help:point_of_sale.field_res_partner_pos_order_count
 #: model:ir.model.fields,help:point_of_sale.field_res_users_pos_order_count
 msgid "The number of point of sale orders related to this customer"
-msgstr ""
+msgstr "与此客户相关的销售点订单的数量"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3120,6 +3147,15 @@ msgstr "订单不能被发送"
 #, python-format
 msgid "The order could not be sent to the server due to an unknown error"
 msgstr "因为未知错误，订单不能发送到服务器"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2018
+#, python-format
+msgid ""
+"The order has been synchronized earlier. Please make the invoice from the "
+"backend for the order: "
+msgstr ""
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_precompute_cash
@@ -3597,6 +3633,8 @@ msgid ""
 "You can define another list of available currencies on the\n"
 "                                <i>Cash Registers</i> tab of the"
 msgstr ""
+"您可以在 <name> 付款方式的\n"
+"                                <i>收银机</i>选项卡上定义其他可用货币列表 "
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:390

@@ -3,23 +3,25 @@
 # * website_quote
 # 
 # Translators:
-# Martin Trigaux, 2016
-# Hoang Loc Le Huu <loclhh@gmail.com>, 2016
 # Minh Nguyen <minh@kiuasia.com>, 2016
-# fanha99 <fanha99@hotmail.com>, 2016
 # Phạm Lân <phamquanglan@gmail.com>, 2016
 # son dang <son.dang@doda100.com>, 2016
 # PHAM QUOC MY <mypham2802@gmail.com>, 2016
+# Hoang Loc Le Huu <loclhh@gmail.com>, 2016
 # Jean-Charles Drubay <jcdrubay@gmail.com>, 2017
-# thanh nguyen <thanhnguyen.icsc@gmail.com>, 2018
+# fanha99 <fanha99@hotmail.com>, 2017
 # Duy BQ <duybq86@gmail.com>, 2018
+# Martin Trigaux, 2019
+# Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2019
+# Chinh Chinh <trinhttp@trobz.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:28+0000\n"
-"PO-Revision-Date: 2017-06-23 13:28+0000\n"
-"Last-Translator: Duy BQ <duybq86@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:33+0000\n"
+"Last-Translator: Chinh Chinh <trinhttp@trobz.com>, 2019\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -121,7 +123,7 @@ msgstr ""
 "                <p style=\"font-size: 11px;\"><strong>Sent by\n"
 "                <a href=\"${user.company_id.website}\" style=\"text-decoration:none; color: #875A7B;\">\n"
 "                    <strong>${user.company_id.name}</strong>\n"
-"                </a> sử dụng <a href=\"https://www.erponline.vn\" style=\"text-decoration:none; color: #875A7B;\"><strong>Hệ thống</strong></a>\n"
+"                </a> sử dụng <a href=\"www.odoo.com\" style=\"text-decoration:none; color: #875A7B;\"><strong>Odoo</strong></a>\n"
 "                </strong></p>\n"
 "            </td>\n"
 "        </tr></tbody>\n"
@@ -781,7 +783,7 @@ msgstr "Tên hiển thị"
 #: model:product.template,quote_description:website_quote.product_template_quote_2
 #: model:sale.quote.line,website_description:website_quote.website_sale_order_line_2
 msgid "Dive into Strings"
-msgstr ""
+msgstr "Đi sâu vào Chuỗi"
 
 #. module: website_quote
 #: model:sale.quote.option,website_description:website_quote.website_sale_option_line_1
@@ -937,7 +939,7 @@ msgstr "Lịch sử"
 #: model:product.template,quote_description:website_quote.product_template_quote_2
 #: model:sale.quote.line,website_description:website_quote.website_sale_order_line_2
 msgid "How to Debug"
-msgstr ""
+msgstr "Cách gỡ lỗi"
 
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_sale_order_option_id
@@ -1133,7 +1135,7 @@ msgstr ""
 #: model:product.template,quote_description:website_quote.product_template_quote_2
 #: model:sale.quote.line,website_description:website_quote.website_sale_order_line_2
 msgid "Loops"
-msgstr ""
+msgstr "Vòng lặp"
 
 #. module: website_quote
 #: model:product.product,quote_description:website_quote.product_product_quote_1
@@ -1172,7 +1174,7 @@ msgstr ""
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.so_quotation
 msgid "My Quotations"
-msgstr ""
+msgstr "Báo giá của tôi"
 
 #. module: website_quote
 #: model:sale.quote.option,website_description:website_quote.website_sale_option_line_1
@@ -1218,7 +1220,7 @@ msgstr "Website Chính thức của Hệ thống"
 #: model:product.template,quote_description:website_quote.product_template_quote_2
 #: model:sale.quote.line,website_description:website_quote.website_sale_order_line_2
 msgid "Odoo Web Client"
-msgstr ""
+msgstr "Odoo Web Client"
 
 #. module: website_quote
 #: model:sale.quote.template,website_description:website_quote.website_quote_template_1
@@ -1780,7 +1782,7 @@ msgstr "Giá tổng"
 #: model:product.template,quote_description:website_quote.product_template_quote_2
 #: model:sale.quote.line,website_description:website_quote.website_sale_order_line_2
 msgid "Training Center Module"
-msgstr ""
+msgstr "Module trung tâm đào tạo"
 
 #. module: website_quote
 #: model:product.product,quote_description:website_quote.product_product_quote_2

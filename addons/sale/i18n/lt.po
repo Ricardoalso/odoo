@@ -3,26 +3,27 @@
 # * sale
 # 
 # Translators:
-# Martin Trigaux, 2016
-# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
-# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
-# Rolandas <info@paninfo.lt>, 2016
-# Monika Raciunaite <monika.raciunaite@gmail.com>, 2016
 # Anatolij, 2016
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
+# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
+# Rolandas <info@paninfo.lt>, 2016
 # Arminas Grigonis <arminas@versada.lt>, 2016
+# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
+# Monika Raciunaite <monika.raciunaite@gmail.com>, 2016
 # Antanas Muliuolis <an.muliuolis@gmail.com>, 2017
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# Silvija Butko <silvija.butko@gmail.com>, 2018
 # Paulius Sladkevičius <paulius@versada.eu>, 2018
-# Linas Versada <paulius.sladkevicius@gmail.com>, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
+# Martin Trigaux, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-08 13:18+0000\n"
-"PO-Revision-Date: 2018-03-08 13:18+0000\n"
-"Last-Translator: Linas Versada <paulius.sladkevicius@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:28+0000\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2019\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -726,7 +727,7 @@ msgstr "Aprašymas"
 #. module: sale
 #: model:ir.ui.view,arch_db:sale.view_sales_config
 msgid "Digital Products"
-msgstr ""
+msgstr "Skaitmeniniai produktai"
 
 #. module: sale
 #: model:ir.ui.view,arch_db:sale.report_invoice_layouted
@@ -1337,6 +1338,8 @@ msgstr ""
 #, python-format
 msgid "Once your quotation is ready, you can save, print or send it by email."
 msgstr ""
+"Kai tik jūsų komercinis pasiūlymas bus paruoštas, galėsite jį išsaugoti, "
+"atsispausdinti ir siųsti el. paštu."
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_config_settings_module_website_quote
@@ -2146,6 +2149,8 @@ msgid ""
 "The Sales Order %s linked to the Analytic Account %s is cancelled. You "
 "cannot register an expense on a cancelled Sales Order."
 msgstr ""
+"Pardavimų užsakymas %s, susietas su analitine sąskaita %s, yra atšauktas. "
+"Negalite registruoti išlaidų atšauktam pardavimų užsakymui."
 
 #. module: sale
 #: code:addons/sale/models/sale_analytic.py:112
@@ -2154,6 +2159,8 @@ msgid ""
 "The Sales Order %s linked to the Analytic Account %s must be validated "
 "before registering expenses."
 msgstr ""
+"Pardavimų užsakymas %s, susietas su analitine sąskaita %s, turi būti "
+"patvirtintas prieš registruojant išlaidas."
 
 #. module: sale
 #: code:addons/sale/models/sale_analytic.py:115
@@ -2163,6 +2170,9 @@ msgid ""
 "You cannot register an expense on a locked Sales Order. Please create a new "
 "SO linked to this Analytic Account."
 msgstr ""
+"Pardavimų užsakymas %s, susietas su analitine sąskaita %s, šiuo metu yra "
+"užrakintas. Negalite registruoti išlaidų užrakintam pardavimų užsakymui. "
+"Sukurkite naują pardavimų užsakymą, susietą su šia analitine sąskaita."
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_sale_advance_payment_inv_amount
@@ -2398,6 +2408,7 @@ msgstr "Naudokite kainoraščius kainos pritaikymui prie klientų"
 #, python-format
 msgid "Use the breadcrumbs to <b>go back to preceeding screens</b>."
 msgstr ""
+"Norėdami <b>grįžti į ankstesnius langus</b>, naudokite nuorodos kelią."
 
 #. module: sale
 #. openerp-web
@@ -2405,6 +2416,8 @@ msgstr ""
 #, python-format
 msgid "Use this menu to access quotations, sales orders and customers."
 msgstr ""
+"Naudokite šį meniu norėdami pasiekti komercinius pasiūlymus, pardavimo "
+"užsakymus ir klientus."
 
 #. module: sale
 #: model:ir.ui.view,arch_db:sale.report_saleorder_document
@@ -2459,6 +2472,8 @@ msgid ""
 "Write the name of your customer to create one on the fly, or select an "
 "existing one."
 msgstr ""
+"Norėdami iškart sukurti klientą, įrašykite jo vardą, arba pasirinkite jau "
+"egzistuojantį."
 
 #. module: sale
 #. openerp-web

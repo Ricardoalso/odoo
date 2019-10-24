@@ -305,6 +305,8 @@ class AccountJournal(models.Model):
     @api.constrains('currency_id', 'default_credit_account_id', 'default_debit_account_id')
     def _check_currency(self):
         if self.currency_id:
+            if self.currency_id == self.company_id.currency_id:
+                raise ValidationError(_("Currency field should only be set if the journal's currency is different from the company's. Leave the field blank to use company currency."))
             if self.default_credit_account_id and not self.default_credit_account_id.currency_id.id == self.currency_id.id:
                 raise ValidationError(_('Configuration error!\nThe currency of the journal should be the same than the default credit account.'))
             if self.default_debit_account_id and not self.default_debit_account_id.currency_id.id == self.currency_id.id:
@@ -532,7 +534,7 @@ class AccountJournal(models.Model):
     @api.depends('company_id')
     def _belong_to_company(self):
         for journal in self:
-            journal.belong_to_company = (journal.company_id.id == self.env.user.company_id.id)
+            journal.belongs_to_company = (journal.company_id.id == self.env.user.company_id.id)
 
     @api.multi
     def _search_company_journals(self, operator, value):
@@ -773,14 +775,17 @@ class AccountTax(models.Model):
             round_tax = bool(self.env.context['round'])
             round_total = bool(self.env.context['round'])
 
-        if not round_tax:
-            prec += 5
-
         base_values = self.env.context.get('base_values')
         if not base_values:
             total_excluded = total_included = base = round(price_unit * quantity, prec)
         else:
             total_excluded, total_included, base = base_values
+
+        # Additional precision must be done only on tax computation
+        # Base amount must be set to currency precision in order to have
+        # a sum of tax lines base amount equals to invoice untaxed_amount.
+        if not round_tax:
+            prec += 5
 
         # Sorting key is mandatory in this case. When no key is provided, sorted() will perform a
         # search. However, the search method is overridden in account.tax in order to add a domain

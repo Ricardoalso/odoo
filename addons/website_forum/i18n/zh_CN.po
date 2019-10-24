@@ -3,18 +3,20 @@
 # * website_forum
 # 
 # Translators:
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
-# 珠海-杜哥 <liangjia@qq.com>, 2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2017
 # Lijie Ma <tony@malijie.cc>, 2017
 # e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 # keecome <7017511@qq.com>, 2018
+# liAnGjiA <liangjia@qq.com>, 2019
+# e2f <projects@e2f.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-10 08:44+0000\n"
-"PO-Revision-Date: 2016-10-10 08:44+0000\n"
-"Last-Translator: keecome <7017511@qq.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:32+0000\n"
+"Last-Translator: e2f <projects@e2f.com>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -428,6 +430,9 @@ msgid ""
 "            similar questions. Using the right tags makes it easier for\n"
 "            others to find and answer your question. (Hover the mouse to follow/unfollow tag(s))"
 msgstr ""
+"标签是将您的问题与其他\n"
+" 类似问题进行分类的标签。通过使用正确的标签，其他人\n"
+" 能够轻松找到并回答您的问题。（将鼠标悬停以选中/取消选中标签）"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.header
@@ -895,7 +900,7 @@ msgstr "关闭"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.close_post
 msgid "Close Post"
-msgstr ""
+msgstr "关闭帖子"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_close_all
@@ -910,7 +915,7 @@ msgstr "关闭自己的帖子"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.close_post
 msgid "Close post"
-msgstr ""
+msgstr "关闭帖子"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_closed_uid
@@ -1004,12 +1009,12 @@ msgstr "转换所有回复去评论，反之亦然"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_answers
 msgid "Convert as a comment"
-msgstr ""
+msgstr "转换为备注"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_comment
 msgid "Convert as an answer"
-msgstr ""
+msgstr "转换为答案"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_karma_accept
@@ -1534,7 +1539,7 @@ msgid ""
 "How to create a physical inventory at an anterior date?, How is the "
 "'remaining hours' field computed on tasks?, How to configure TPS and TVQ's "
 "canadian taxes?"
-msgstr ""
+msgstr "如何在早期创建实际库存？如何计算任务的“剩余小时数”字段？如何配置 TPS 和 TVQ 的加拿大税务？"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_id
@@ -1597,7 +1602,7 @@ msgstr "插入标签到和你有关的问题"
 msgid ""
 "Inventory Date Problem, Task remaining hours, Can you help solve solve my "
 "tax computation problem in Canada?"
-msgstr ""
+msgstr "库存日期问题、任务剩余小时数。您能帮我解决加拿大的税务计算问题吗？"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_user_favourite
@@ -1724,7 +1729,7 @@ msgstr "链接"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.close_post
 msgid "Mark as offensive"
-msgstr ""
+msgstr "标记为具有攻击性"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_moderate
@@ -1848,13 +1853,13 @@ msgstr "不能给自己的贴子投票"
 #: code:addons/website_forum/models/forum.py:935
 #, python-format
 msgid "Not enough karma to create a new Tag"
-msgstr ""
+msgstr "贡献值不足，无法创建新标签"
 
 #. module: website_forum
 #: code:addons/website_forum/models/forum.py:494
 #, python-format
 msgid "Not enough karma to retag."
-msgstr ""
+msgstr "贡献值不足，无法更换标签。"
 
 #. module: website_forum
 #: model:gamification.badge,name:website_forum.badge_q_2
@@ -1896,7 +1901,7 @@ msgstr "无礼"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.close_post
 msgid "Offensive Post"
-msgstr ""
+msgstr "具有攻击性的帖子"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_answers
@@ -2184,7 +2189,7 @@ msgstr "回复: %s"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_description_full
 msgid "Reactivate"
-msgstr ""
+msgstr "重新激活"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.header
@@ -2241,7 +2246,7 @@ msgstr "相关计算"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_description_full
 msgid "Reopen"
-msgstr ""
+msgstr "重开"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_answers
@@ -2362,7 +2367,7 @@ msgstr "银质徽章个数"
 #: code:addons/website_forum/static/src/js/website_forum.js:23
 #, python-format
 msgid "Sorry you must be logged in to perform this action"
-msgstr ""
+msgstr "抱歉，您必须登录才能执行此操作"
 
 #. module: website_forum
 #. openerp-web
@@ -2586,7 +2591,7 @@ msgstr "这个帖子已经被结束了"
 msgid ""
 "This post is currently awaiting moderation and not yet published... Do you "
 "want <i>Accept</i> or <i>Reject</i> this post ?"
-msgstr ""
+msgstr "此帖当前正等待审核，尚未发布...<i>是否要接受</i>或<i>拒绝此帖</i>？"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.private_profile
@@ -2834,6 +2839,8 @@ msgid ""
 "You already have one pending post.<br/>\n"
 "            Please wait for a moderator to validate your previous post before continuing."
 msgstr ""
+"您已有一个待处理的帖子。<br/>\n"
+" 继续之前，请等待核对人验证您之前的帖子。"
 
 #. module: website_forum
 #: code:addons/website_forum/models/forum.py:139

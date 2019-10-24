@@ -3,27 +3,28 @@
 # * mail
 # 
 # Translators:
-# Martin Trigaux, 2016
 # Arminas Grigonis <arminas@versada.lt>, 2016
-# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
-# Anatolij, 2016
-# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
-# Rolandas <info@paninfo.lt>, 2016
 # Andrius Preimantas <andrius@versada.lt>, 2016
-# Naglis Jonaitis, 2016
+# Rolandas <info@paninfo.lt>, 2016
+# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
+# Anatolij, 2016
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
+# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
+# Martin Trigaux, 2016
 # Monika Raciunaite <monika.raciunaite@gmail.com>, 2016
+# Naglis Jonaitis, 2016
 # Antanas Muliuolis <an.muliuolis@gmail.com>, 2017
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# Silvija Butko <silvija.butko@gmail.com>, 2018
-# Linas Versada <paulius.sladkevicius@gmail.com>, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2019
+# Silvija Butko <silvija.butko@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-14 15:53+0000\n"
-"PO-Revision-Date: 2016-11-14 15:53+0000\n"
-"Last-Translator: Linas Versada <paulius.sladkevicius@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:22+0000\n"
+"Last-Translator: Silvija Butko <silvija.butko@gmail.com>, 2019\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -206,6 +207,9 @@ msgid ""
 "href=\"#\" class=\"o_channel_redirect\" data-oe-"
 "id=\"%(channel_id)s\">#%(channel_name)s</a></div>"
 msgstr ""
+"<div class=\"o_mail_notification\">%(author)s pakvietė %(new_partner)s į <a "
+"href=\"#\" class=\"o_channel_redirect\" data-oe-"
+"id=\"%(channel_id)s\">#%(channel_name)s</a></div>"
 
 #. module: mail
 #: code:addons/mail/models/mail_channel.py:550
@@ -2852,7 +2856,7 @@ msgstr "Nauja datos reikšmė"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_tracking_value_new_value_float
 msgid "New Value Float"
-msgstr ""
+msgstr "Nauja skaičiaus su kableliu reikšmė"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_tracking_value_new_value_integer
@@ -3216,7 +3220,7 @@ msgstr "Sena datos lauko reikšmė"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_tracking_value_old_value_float
 msgid "Old Value Float"
-msgstr ""
+msgstr "Sena skaičiaus su kableliu reikšmė"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_tracking_value_old_value_integer
@@ -4656,6 +4660,8 @@ msgid ""
 "You could also add a new %(document)s by sending an email to: "
 "%(email_link)s."
 msgstr ""
+"Jūs taip pat galėtumėte pridėti naują %(document)s siunčiant laišką į: "
+"%(email_link)s."
 
 #. module: mail
 #: model:ir.ui.view,arch_db:mail.message_user_assigned
@@ -4704,7 +4710,7 @@ msgstr ""
 #: code:addons/mail/models/ir_actions.py:33
 #, python-format
 msgid "Your template should define email_from"
-msgstr ""
+msgstr "Jūsų šablone turėtų būti email_from"
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:968

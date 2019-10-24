@@ -3,27 +3,28 @@
 # * delivery
 # 
 # Translators:
-# Martin Trigaux, 2016
-# Arminas Grigonis <arminas@versada.lt>, 2016
-# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
-# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
-# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
-# Rolandas <info@paninfo.lt>, 2016
-# Silvija Butko <silvija.butko@gmail.com>, 2016
 # Mindaugas Palubinskas <kindiss@gmail.com>, 2016
 # Naglis Jonaitis, 2016
+# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
+# Arminas Grigonis <arminas@versada.lt>, 2016
 # Anatolij, 2016
+# Rolandas <info@paninfo.lt>, 2016
+# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2016
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2016
+# Martin Trigaux, 2016
 # Monika Raciunaite <monika.raciunaite@gmail.com>, 2016
 # Antanas Muliuolis <an.muliuolis@gmail.com>, 2017
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
-# Linas Versada <paulius.sladkevicius@gmail.com>, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:56+0000\n"
-"PO-Revision-Date: 2016-09-07 08:56+0000\n"
-"Last-Translator: Linas Versada <paulius.sladkevicius@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:18+0000\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2018\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -308,7 +309,7 @@ msgstr "Kategorijos maršrutai"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_membership
 msgid "Check if the product is eligible for membership."
-msgstr ""
+msgstr "Tikrinti, ar produktui galima narystė."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_to_weight
@@ -513,6 +514,8 @@ msgid ""
 "Depending on the modules installed, this will allow you to define the route "
 "of the product: whether it will be bought, manufactured, MTO/MTS,..."
 msgstr ""
+"Priklausomai nuo įdiegtų modulių, tai jums leis nustatyti produkto maršrutą:"
+" ar jis bus perkamas, gaminamas, MTO/MTS, ..."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_description
@@ -522,7 +525,7 @@ msgstr "Aprašymas"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_description_picking
 msgid "Description on Picking"
-msgstr ""
+msgstr "Paėmimo aprašas"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
@@ -1227,7 +1230,7 @@ msgstr "Produkto laiško šablonas"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_life_time
 msgid "Product Life Time"
-msgstr ""
+msgstr "Produkto gyvavimo trukmė"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_removal_time
@@ -1249,7 +1252,7 @@ msgstr "Produkto tipas"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_use_time
 msgid "Product Use Time"
-msgstr ""
+msgstr "Produkto vartojimo laikas"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_property_stock_production
@@ -1281,7 +1284,7 @@ msgstr "Pirkimo aprašymas"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_gap
 msgid "Purchase Gap"
-msgstr ""
+msgstr "Pirkimo spraga"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_line_warn
@@ -1380,7 +1383,7 @@ msgstr "Pardavimo kaina"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_sales_gap
 msgid "Sales Gap"
-msgstr ""
+msgstr "Pardavimo spraga"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_sale_order
@@ -1529,35 +1532,35 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_normal_cost
 msgid "Sum of Multiplication of Cost price and quantity of Vendor Bills"
-msgstr ""
+msgstr "Kaštų kainos ir tiekėjų sąskaitų kiekių sandauga"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_turnover
 msgid ""
 "Sum of Multiplication of Invoice price and quantity of Customer Invoices"
-msgstr ""
+msgstr "Sąskaitos kainos ir kliento sąskaitų kiekio sandauga"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_total_cost
 msgid "Sum of Multiplication of Invoice price and quantity of Vendor Bills "
-msgstr ""
+msgstr "Sąskaitos kainos ir tiekėjo sąskaitų kiekio sandauga"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sale_expected
 msgid ""
 "Sum of Multiplication of Sale Catalog price and quantity of Customer "
 "Invoices"
-msgstr ""
+msgstr "Pardavimo katalogo kainos ir klientų sąskaitų kiekio sandauga"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sale_num_invoiced
 msgid "Sum of Quantity in Customer Invoices"
-msgstr ""
+msgstr "Kiekių suma klientų sąskaitose"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_purchase_num_invoiced
 msgid "Sum of Quantity in Vendor Bills"
-msgstr ""
+msgstr "Kiekių suma tiekėjų sąskaitose"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_pricelist_id
@@ -1931,6 +1934,9 @@ msgid ""
 "this template. The customer will receive an email for each product linked to"
 " an email template."
 msgstr ""
+"Kai sąskaita patvirtinama, vartotojui pagal šį šabloną bus nusiunčiamas el. "
+"laiškas. Klientas gaus laišką kiekvienam produktui, susietam su laiško "
+"šablonu."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_product_packaging_width

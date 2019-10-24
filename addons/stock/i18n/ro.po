@@ -3,17 +3,18 @@
 # * stock
 # 
 # Translators:
-# Dorin Hongu <dhongu@gmail.com>, 2016
 # Cozmin Candea <office@terrabit.ro>, 2016
 # Martin Trigaux, 2016
 # Laurentiu Archip, 2016
+# Dorin Hongu <dhongu@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:26+0000\n"
-"PO-Revision-Date: 2017-06-23 13:26+0000\n"
-"Last-Translator: Laurentiu Archip, 2016\n"
+"PO-Revision-Date: 2016-09-07 09:29+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2019\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -407,6 +408,10 @@ msgid ""
 "quantity does not include items already allocated to other orders or items "
 "that are in transit from a supplier"
 msgstr ""
+"<strong>Produsele disponibile</strong> sunt disponibile în prezent pentru a "
+"fi utilizate în completarea unei comenzi noi de producția sau livrare. "
+"Această cantitate nu include elementele deja alocate altor comenzi sau "
+"articole care sunt în tranzit de la un furnizor"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_picking
@@ -657,7 +662,7 @@ msgstr ""
 #. module: stock
 #: model:res.groups,name:stock.group_warning_stock
 msgid "A warning can be set on a partner (Stock)"
-msgstr ""
+msgstr "O avertizare poate fi setată pe un partener (Stoc)"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
@@ -2981,7 +2986,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_inventory_category_id
 msgid "Inventoried Category"
-msgstr ""
+msgstr "Categorie inventariată"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_inventory_location_id

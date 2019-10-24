@@ -3,18 +3,22 @@
 # * point_of_sale
 # 
 # Translators:
-# Martin Trigaux, 2017
 # Aivenho <nauris.sedlers@gmail.com>, 2017
+# Martin Trigaux, 2017
 # JanisJanis <jbojars@gmail.com>, 2017
-# Arnis Putniņš <arnis.putnins@its1.lv>, 2017
+# Arnis Putniņš <arnis@allegro.lv>, 2017
 # InfernalLV <karlisdreizis@gmail.com>, 2018
+# Konstantins Zabogonskis <inculin4ik@gmail.com>, 2019
+# ievaputnina <ievai.putninai@gmail.com>, 2019
+# Artjoms Ustinovs <artyom.ustinov2010@yandex.ru>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
-"PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: InfernalLV <karlisdreizis@gmail.com>, 2018\n"
+"PO-Revision-Date: 2016-09-07 09:25+0000\n"
+"Last-Translator: Artjoms Ustinovs <artyom.ustinov2010@yandex.ru>, 2019\n"
 "Language-Team: Latvian (https://www.transifex.com/odoo/teams/41243/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -561,7 +565,7 @@ msgstr "Kases Rinda"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_form
 msgid "Cashbox"
-msgstr ""
+msgstr "Seifs"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_cashdrawer
@@ -1307,6 +1311,13 @@ msgstr ""
 
 #. module: point_of_sale
 #. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:135
+#, python-format
+msgid "HTTPS connection to IoT Box failed"
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1322
 #, python-format
 msgid "Hardware Events"
@@ -1585,7 +1596,7 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/xml/pos.xml:38
 #, python-format
 msgid "Loading"
-msgstr ""
+msgstr "Notiek ielāde"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_location_id
@@ -1631,6 +1642,15 @@ msgstr ""
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_payment
 msgid "Make Payment"
 msgstr "Veikt Maksājumu"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:137
+#, python-format
+msgid ""
+"Make sure you are using IoT Box v18.12 or higher. Navigate to %s to accept "
+"the certificate of your IoT Box."
+msgstr ""
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_sale_config_settings_form_pos
@@ -2093,7 +2113,7 @@ msgstr "Apmaksas Datums"
 #: model:ir.actions.act_window,name:point_of_sale.action_account_journal_form
 #: model:ir.ui.menu,name:point_of_sale.menu_action_account_journal_form_open
 msgid "Payment Methods"
-msgstr ""
+msgstr "Maksājumu Metodes"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_make_payment_journal_id
@@ -2200,6 +2220,13 @@ msgstr ""
 #, python-format
 msgid "Please define income account for this product: \"%s\" (id:%d)."
 msgstr "Lūdzu norādiet ieņēmumu kontu šim produktam: \"%s\" (id:%d)."
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2017
+#, python-format
+msgid "Please print the invoice from the backend"
+msgstr ""
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:446
@@ -3106,6 +3133,15 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/js/screens.js:1951
 #, python-format
 msgid "The order could not be sent to the server due to an unknown error"
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2018
+#, python-format
+msgid ""
+"The order has been synchronized earlier. Please make the invoice from the "
+"backend for the order: "
 msgstr ""
 
 #. module: point_of_sale

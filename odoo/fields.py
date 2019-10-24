@@ -658,13 +658,25 @@ class Field(object):
         return model.env['ir.property'].get(self.name, self.model_name)
 
     def _compute_company_dependent(self, records):
-        Property = records.env['ir.property']
+        # read property as superuser, as the current user may not have access
+        context = records.env.context
+        if 'force_company' not in context:
+            field_id = records.env['ir.model.fields']._get_id(self.model_name, self.name)
+            company = records.env['res.company']._company_default_get(self.model_name, field_id)
+            context = dict(context, force_company=company.id)
+        Property = records.env(user=SUPERUSER_ID, context=context)['ir.property']
         values = Property.get_multi(self.name, self.model_name, records.ids)
         for record in records:
             record[self.name] = values.get(record.id)
 
     def _inverse_company_dependent(self, records):
-        Property = records.env['ir.property']
+        # update property as superuser, as the current user may not have access
+        context = records.env.context
+        if 'force_company' not in context:
+            field_id = records.env['ir.model.fields']._get_id(self.model_name, self.name)
+            company = records.env['res.company']._company_default_get(self.model_name, field_id)
+            context = dict(context, force_company=company.id)
+        Property = records.env(user=SUPERUSER_ID, context=context)['ir.property']
         values = {
             record.id: self.convert_to_write(record[self.name], record)
             for record in records
@@ -709,7 +721,7 @@ class Field(object):
     # on ``path``. See method ``modified`` below for details.
     #
 
-    def resolve_deps(self, model):
+    def resolve_deps(self, model, path0=[], seen=frozenset()):
         """ Return the dependencies of ``self`` as tuples ``(model, field, path)``,
             where ``path`` is an optional list of field names.
         """
@@ -720,11 +732,12 @@ class Field(object):
         for dotnames in self.depends:
             if dotnames == self.name:
                 _logger.warning("Field %s depends on itself; please fix its decorator @api.depends().", self)
-            model, path = model0, dotnames.split('.')
-            for i, fname in enumerate(path):
+            model, path = model0, path0
+            for fname in dotnames.split('.'):
                 field = model._fields[fname]
-                result.append((model, field, path[:i]))
+                result.append((model, field, path))
                 model = model0.env.get(field.comodel_name)
+                path = None if path is None else path + [fname]
 
         # add self's model dependencies
         for mname, fnames in model0._depends.iteritems():
@@ -734,11 +747,14 @@ class Field(object):
                 result.append((model, field, None))
 
         # add indirect dependencies from the dependencies found above
+        seen = seen.union([self])
         for model, field, path in list(result):
             for inv_field in model._field_inverses[field]:
                 inv_model = model0.env[inv_field.model_name]
                 inv_path = None if path is None else path + [field.name]
                 result.append((inv_model, inv_field, inv_path))
+            if not field.store and field not in seen:
+                result += field.resolve_deps(model, path, seen)
 
         return result
 
@@ -998,6 +1014,8 @@ class Field(object):
                 recs = record._recompute_check(self)
                 if recs:
                     # recompute the value (only in cache)
+                    if self.recursive:
+                        recs = record
                     self.compute_value(recs)
                     # HACK: if result is in the wrong cache, copy values
                     if recs.env != env:
@@ -2329,6 +2347,8 @@ class Many2many(_RelationalMulti):
                     self.column2 = '%s_id' % comodel._table
             # check validity of table name
             check_pg_name(self.relation)
+        else:
+            self.relation = self.column1 = self.column2 = None
 
     def _setup_regular_full(self, model):
         super(Many2many, self)._setup_regular_full(model)
