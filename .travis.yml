@@ -25,3 +25,7 @@ script:
 
 after_success:
   coveralls
+
+branches:
+  except:
+    - /^merge-branch-.*$/
