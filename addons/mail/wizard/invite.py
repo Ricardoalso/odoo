@@ -67,15 +67,16 @@ class invite_wizard(osv.osv_memory):
                 if signature:
                     wizard.message = tools.append_content_to_html(wizard.message, signature, plaintext=True, container_tag='div')
                 # FIXME 8.0: use notification_email_send, send a wall message and let mail handle email notification + message box
-                for follower_id in new_follower_ids:
-                    mail_mail = self.pool.get('mail.mail')
-                    # the invite wizard should create a private message not related to any object -> no model, no res_id
-                    mail_id = mail_mail.create(cr, uid, {
-                        'model': wizard.res_model,
-                        'res_id': wizard.res_id,
-                        'subject': _('Invitation to follow %s') % document.name_get()[0][1],
-                        'body_html': '%s' % wizard.message,
-                        'auto_delete': True,
-                        }, context=context)
-                    mail_mail.send(cr, uid, [mail_id], recipient_ids=[follower_id], context=context)
+                #TODO NEXT VERSION remove for now this bugged code
+#                for follower_id in new_follower_ids:
+#                    mail_mail = self.pool.get('mail.mail')
+#                    # the invite wizard should create a private message not related to any object -> no model, no res_id
+#                    mail_id = mail_mail.create(cr, uid, {
+#                        'model': wizard.res_model,
+#                        'res_id': wizard.res_id,
+#                        'subject': _('Invitation to follow %s') % document.name_get()[0][1],
+#                        'body_html': '%s' % wizard.message,
+#                        'auto_delete': True,
+#                        }, context=context)
+#                    mail_mail.send(cr, uid, [mail_id], recipient_ids=[follower_id], context=context)
         return {'type': 'ir.actions.act_window_close'}
