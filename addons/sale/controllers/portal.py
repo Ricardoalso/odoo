@@ -155,7 +155,7 @@ class CustomerPortal(CustomerPortal):
 
         # Log only once a day
         if order_sudo and request.session.get('view_quote_%s' % order_sudo.id) != now and request.env.user.share and access_token:
-            request.session['view_quote_%s' % order_sudo.id] = now
+            request.session['view_quote_%s' % order_sudo.id] = now.isoformat()
             body = _('Quotation viewed by customer')
             _message_post_helper(res_model='sale.order', res_id=order_sudo.id, message=body, token=order_sudo.access_token, message_type='notification', subtype="mail.mt_note", partner_ids=order_sudo.user_id.sudo().partner_id.ids)
 
