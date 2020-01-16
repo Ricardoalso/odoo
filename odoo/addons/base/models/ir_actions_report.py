@@ -179,7 +179,7 @@ class IrActionsReport(models.Model):
         :param attachment_name: The optional name of the attachment.
         :return: A recordset of length <=1 or None
         '''
-        attachment_name = safe_eval(self.attachment, {'object': record, 'time': time})
+        attachment_name = safe_eval(self.attachment, {'object': record, 'time': time}) if self.attachment else ''
         if not attachment_name:
             return None
         return self.env['ir.attachment'].search([
@@ -589,7 +589,8 @@ class IrActionsReport(models.Model):
                     reader = PdfFileReader(pdf_content_stream)
                     if reader.trailer['/Root'].get('/Dests'):
                         outlines_pages = sorted(
-                            [outline.getObject()[0] for outline in reader.trailer['/Root']['/Dests'].values()])
+                            set(outline.getObject()[0] for outline in reader.trailer['/Root']['/Dests'].values())
+                        )
                         assert len(outlines_pages) == len(res_ids)
                         for i, num in enumerate(outlines_pages):
                             to = outlines_pages[i + 1] if i + 1 < len(outlines_pages) else reader.numPages

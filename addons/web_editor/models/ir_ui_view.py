@@ -70,6 +70,7 @@ class IrUiView(models.Model):
         xpath = etree.Element('xpath', expr="//*[hasclass('oe_structure')][@id='{}']".format(el.get('id')), position="replace")
         arch.append(xpath)
         structure = etree.Element(el.tag, attrib=el.attrib)
+        structure.text = el.text
         xpath.append(structure)
         for child in el.iterchildren(tag=etree.Element):
             structure.append(copy.deepcopy(child))
@@ -252,10 +253,10 @@ class IrUiView(models.Model):
             if called_view and called_view not in views_to_return:
                 views_to_return += self._views_get(called_view, options=options, bundles=bundles)
 
-        extensions = self._view_get_inherited_children(view, options)
         if not options:
-            # only active children
-            extensions = extensions.filtered(lambda view: view.active)
+            return views_to_return
+
+        extensions = self._view_get_inherited_children(view, options)
 
         # Keep options in a deterministic order regardless of their applicability
         for extension in extensions.sorted(key=lambda v: v.id):

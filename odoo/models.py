@@ -870,6 +870,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             batch.clear()
             batch_xml_ids.clear()
 
+            unknown_msg = _(u"Unknown database error: '%s'")
             try:
                 cr.execute('SAVEPOINT model_load_save')
             except psycopg2.InternalError as e:
@@ -877,7 +878,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 # already logged
                 if not any(message['type'] == 'error' for message in messages):
                     info = data_list[0]['info']
-                    messages.append(dict(info, type='error', message=u"Unknown database error: '%s'" % e))
+                    messages.append(dict(info, type='error', message=unknown_msg % e))
                 return
 
             # try to create in batch
@@ -897,24 +898,24 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     ids.append(rec.id)
                     cr.execute('RELEASE SAVEPOINT model_load_save')
                 except psycopg2.Warning as e:
+                    cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
                     info = rec_data['info']
                     messages.append(dict(info, type='warning', message=str(e)))
-                    cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
                 except psycopg2.Error as e:
-                    info = rec_data['info']
-                    messages.append(dict(info, type='error', **PGERROR_TO_OE[e.pgcode](self, fg, info, e)))
                     # Failed to write, log to messages, rollback savepoint (to
                     # avoid broken transaction) and keep going
                     cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
+                    info = rec_data['info']
+                    messages.append(dict(info, type='error', **PGERROR_TO_OE[e.pgcode](self, fg, info, e)))
                 except Exception as e:
                     _logger.exception("Error while loading record")
+                    # Failed for some reason, perhaps due to invalid data supplied,
+                    # rollback savepoint and keep going
+                    cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
                     info = rec_data['info']
                     message = (_(u'Unknown error during import:') + u' %s: %s' % (type(e), e))
                     moreinfo = _('Resolve other errors first')
                     messages.append(dict(info, type='error', message=message, moreinfo=moreinfo))
-                    # Failed for some reason, perhaps due to invalid data supplied,
-                    # rollback savepoint and keep going
-                    cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
 
         # make 'flush' available to the methods below, in the case where XMLID
         # resolution fails, for instance
@@ -2597,6 +2598,15 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         cls._setup_done = True
 
+        # 5. determine and validate rec_name
+        if cls._rec_name:
+            assert cls._rec_name in cls._fields, \
+                "Invalid rec_name %s for model %s" % (cls._rec_name, cls._name)
+        elif 'name' in cls._fields:
+            cls._rec_name = 'name'
+        elif 'x_name' in cls._fields:
+            cls._rec_name = 'x_name'
+
     @api.model
     def _setup_fields(self):
         """ Setup the fields, except for recomputation triggers. """
@@ -2608,7 +2618,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             try:
                 field.setup_full(self)
             except Exception:
-                if not self.pool.loaded and field.base_field.manual:
+                if field.base_field.manual:
                     # Something goes wrong when setup a manual field.
                     # This can happen with related fields using another manual many2one field
                     # that hasn't been loaded because the comodel does not exist yet.
@@ -2620,6 +2630,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         for name in bad_fields:
             del cls._fields[name]
             delattr(cls, name)
+
+        # fix up _rec_name
+        if 'x_name' in bad_fields and cls._rec_name == 'x_name':
+            cls._rec_name = None
+            field = cls._fields['display_name']
+            field.depends = tuple(name for name in field.depends if name != 'x_name')
 
         # map each field to the fields computed with the same method
         groups = defaultdict(list)
@@ -2648,15 +2664,6 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         # register constraints and onchange methods
         cls._init_constraints_onchanges()
-
-        # validate rec_name
-        if cls._rec_name:
-            assert cls._rec_name in cls._fields, \
-                "Invalid rec_name %s for model %s" % (cls._rec_name, cls._name)
-        elif 'name' in cls._fields:
-            cls._rec_name = 'name'
-        elif 'x_name' in cls._fields:
-            cls._rec_name = 'x_name'
 
     @api.model
     def fields_get(self, allfields=None, attributes=None):
@@ -3119,22 +3126,24 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         self.check_access_rights('unlink')
 
-        # Check if the records are used as default properties.
-        refs = ['%s,%s' % (self._name, i) for i in self.ids]
-        if self.env['ir.property'].search([('res_id', '=', False), ('value_reference', 'in', refs)]):
-            raise UserError(_('Unable to delete this document because it is used as a default property'))
-
-        # Delete the records' properties.
         with self.env.norecompute():
             self.check_access_rule('unlink')
-            self.env['ir.property'].search([('res_id', 'in', refs)]).sudo().unlink()
 
             cr = self._cr
             Data = self.env['ir.model.data'].sudo().with_context({})
             Defaults = self.env['ir.default'].sudo()
+            Property = self.env['ir.property'].sudo()
             Attachment = self.env['ir.attachment']
 
             for sub_ids in cr.split_for_in_conditions(self.ids):
+                # Check if the records are used as default properties.
+                refs = ['%s,%s' % (self._name, i) for i in sub_ids]
+                if Property.search([('res_id', '=', False), ('value_reference', 'in', refs)], limit=1):
+                    raise UserError(_('Unable to delete this document because it is used as a default property'))
+
+                # Delete the records' properties.
+                Property.search([('res_id', 'in', refs)]).unlink()
+
                 query = "DELETE FROM %s WHERE id IN %%s" % self._table
                 cr.execute(query, (sub_ids,))
 
@@ -3236,16 +3245,13 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
               (from the database). Can not be used in :meth:`~.create`.
           ``(3, id, _)``
               removes the record of id ``id`` from the set, but does not
-              delete it. Can not be used on
-              :class:`~odoo.fields.One2many`. Can not be used in
+              delete it. Can not be used in
               :meth:`~.create`.
           ``(4, id, _)``
-              adds an existing record of id ``id`` to the set. Can not be
-              used on :class:`~odoo.fields.One2many`.
+              adds an existing record of id ``id`` to the set.
           ``(5, _, _)``
               removes all records from the set, equivalent to using the
-              command ``3`` on every record explicitly. Can not be used on
-              :class:`~odoo.fields.One2many`. Can not be used in
+              command ``3`` on every record explicitly. Can not be used in
               :meth:`~.create`.
           ``(6, _, ids)``
               replaces all existing records in the set by the ``ids`` list,
@@ -5220,7 +5226,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                         target0 = Model.browse(i for [i] in self.env.cr.fetchall())
                     else:
                         env = self.env(user=SUPERUSER_ID, context={'active_test': False})
-                        target0 = env[model_name].search([(path, 'in', self.ids)])
+                        target0 = env[model_name].search([(path, 'in', self.ids)], order='id')
                         target0 = target0.with_env(self.env)
                 # prepare recomputation for each field on linked records
                 for field in stored:
@@ -5640,8 +5646,8 @@ def convert_pgerror_not_null(model, fields, info, e):
         return {'message': tools.ustr(e)}
 
     field_name = e.diag.column_name
-    field = fields[field_name]
-    message = _(u"Missing required value for the field '%s' (%s)") % (field['string'], field_name)
+    field_description = _get_translated_field_name(model, field_name)
+    message = _(u"Missing required value for the field '%s' (%s)") % (field_description, field_name)
     return {
         'message': message,
         'field': field_name,
@@ -5650,8 +5656,8 @@ def convert_pgerror_not_null(model, fields, info, e):
 def convert_pgerror_unique(model, fields, info, e):
     # new cursor since we're probably in an error handler in a blown
     # transaction which may not have been rollbacked/cleaned yet
-    with closing(model.env.registry.cursor()) as cr:
-        cr.execute("""
+    with closing(model.env.registry.cursor()) as cr_tmp:
+        cr_tmp.execute("""
             SELECT
                 conname AS "constraint name",
                 t.relname AS "table name",
@@ -5664,7 +5670,7 @@ def convert_pgerror_unique(model, fields, info, e):
             JOIN pg_class t ON t.oid = conrelid
             WHERE conname = %s
         """, [e.diag.constraint_name])
-        constraint, table, ufields = cr.fetchone() or (None, None, None)
+        constraint, table, ufields = cr_tmp.fetchone() or (None, None, None)
     # if the unique constraint is on an expression or on an other table
     if not ufields or model._table != table:
         return {'message': tools.ustr(e)}
@@ -5672,18 +5678,29 @@ def convert_pgerror_unique(model, fields, info, e):
     # TODO: add stuff from e.diag.message_hint? provides details about the constraint & duplication values but may be localized...
     if len(ufields) == 1:
         field_name = ufields[0]
-        field = fields[field_name]
-        message = _(u"The value for the field '%s' already exists (this is probably '%s' in the current model).") % (field_name, field['string'])
+        field_description = _get_translated_field_name(model, field_name)
+        message = _(u"The value for the field '%s' already exists (this is probably '%s' in the current model).") % (field_name, field_description)
         return {
             'message': message,
             'field': field_name,
         }
-    field_strings = [fields[fname]['string'] for fname in ufields]
+    field_strings = [_get_translated_field_name(model, fname) for fname in ufields]
     message = _(u"The values for the fields '%s' already exist (they are probably '%s' in the current model).") % (', '.join(ufields), ', '.join(field_strings))
     return {
         'message': message,
         # no field, unclear which one we should pick and they could be in any order
     }
+
+def _get_translated_field_name(model, field_name):
+    """From a lang-free environment, build a new one with the information from
+       the current user, to get the field(_name)'s description in its language.
+    """
+    field = model._fields[field_name]
+    ctx = model.env.user.context_get()  # get the lang
+    ctx.update(model.env.context)  # only overwrite it if not already there
+    env = model.with_context(ctx).env
+    return field._description_string(env)
+
 
 PGERROR_TO_OE = defaultdict(
     # shape of mapped converters

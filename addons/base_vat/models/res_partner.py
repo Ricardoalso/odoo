@@ -14,6 +14,13 @@ except ImportError:
                     "Install it to support more countries, for example with `easy_install vatnumber`.")
     vatnumber = None
 
+# Although stdnum is a dependency of vatnumber, the import of the latter is surrounded by a try/except
+# if it is not installed. Therefore, we cannot be sure stdnum is installed in all cases.
+try:
+    import stdnum
+except ImportError:
+    stdnum = None
+
 from odoo import api, models, _
 from odoo.tools.misc import ustr
 from odoo.exceptions import ValidationError
@@ -29,6 +36,8 @@ _ref_vat = {
     'be': 'BE0477472701',
     'bg': 'BG1234567892',
     'ch': 'CHE-123.456.788 TVA or CH TVA 123456',  # Swiss by Yannick Vaucher @ Camptocamp
+    'cl': 'CL76086428-5',
+    'co': 'CO213123432-1 or CO213.123.432-1',
     'cy': 'CY12345678F',
     'cz': 'CZ12345679',
     'de': 'DE123456788',
@@ -116,7 +125,7 @@ class ResPartner(models.Model):
                 vat = country_code + vat
         return vat
 
-    @api.constrains('vat')
+    @api.constrains('vat', 'country_id')
     def check_vat(self):
         if self.env.context.get('company_id'):
             company = self.env['res.company'].browse(self.env.context['company_id'])
@@ -225,6 +234,9 @@ class ResPartner(models.Model):
                                    br"(?P<ano>[0-9]{2})(?P<mes>[01][0-9])(?P<dia>[0-3][0-9])" \
                                    br"[ \-_]?" \
                                    br"(?P<code>[A-Za-z0-9&\xd1\xf1]{3})$")
+
+    # Netherlands VAT verification
+    __check_vat_nl_re = re.compile("(?:NL)?[0-9A-Z+*]{10}[0-9]{2}")
 
     def check_vat_mx(self, vat):
         ''' Mexican VAT verification
@@ -363,3 +375,61 @@ class ResPartner(models.Model):
             return stdnum.al.vat.is_valid(vat)
         except ImportError:
             return True
+
+    def check_vat_cl(self, vat):
+        return stdnum.util.get_cc_module('cl', 'vat').is_valid(vat) if stdnum else True
+
+    def check_vat_co(self, vat):
+        return stdnum.util.get_cc_module('co', 'vat').is_valid(vat) if stdnum else True
+
+    def check_vat_nl(self, vat):
+        """
+        Temporary Netherlands VAT validation to support the new format introduced in January 2020,
+        until upstream is fixed.
+
+        Algorithm detail: http://kleineondernemer.nl/index.php/nieuw-btw-identificatienummer-vanaf-1-januari-2020-voor-eenmanszaken
+
+        TODO: remove when fixed upstream
+        """
+
+        try:
+            from stdnum.util import clean
+            from stdnum.nl.bsn import checksum
+        except ImportError:
+            return True
+
+        vat = clean(vat, ' -.').upper().strip()
+
+        if not (len(vat) == 14):
+            return False
+
+        # Check the format
+        match = self.__check_vat_nl_re.match(vat)
+        if not match:
+            return False
+
+        # Match letters to integers
+        char_to_int = {k: str(ord(k) - 55) for k in string.ascii_uppercase}
+        char_to_int['+'] = '36'
+        char_to_int['*'] = '37'
+
+        # Remove the prefix
+        vat = vat[2:]
+
+        # 2 possible checks:
+        # - For natural persons
+        # - For non-natural persons and combinations of natural persons (company)
+
+        # Natural person => mod97 full checksum
+        check_val_natural = '2321'
+        for x in vat:
+            check_val_natural += x if x.isdigit() else char_to_int[x]
+        if int(check_val_natural) % 97 == 1:
+            return True
+
+        # Company => weighted(9->2) mod11 on bsn
+        vat = vat[:-3]
+        if vat.isdigit() and checksum(vat) == 0:
+            return True
+
+        return False

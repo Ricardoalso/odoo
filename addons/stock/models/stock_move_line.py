@@ -70,7 +70,7 @@ class StockMoveLine(models.Model):
     @api.constrains('lot_id', 'product_id')
     def _check_lot_product(self):
         for line in self:
-            if line.lot_id and line.product_id != line.lot_id.product_id:
+            if line.lot_id and line.product_id != line.lot_id.sudo().product_id:
                 raise ValidationError(_('This lot %s is incompatible with this product %s' % (line.lot_id.name, line.product_id.display_name)))
 
     @api.one
@@ -210,6 +210,9 @@ class StockMoveLine(models.Model):
         """
         if self.env.context.get('bypass_reservation_update'):
             return super(StockMoveLine, self).write(vals)
+
+        if 'product_id' in vals and any(vals.get('state', ml.state) != 'draft' and vals['product_id'] != ml.product_id.id for ml in self):
+            raise UserError(_("Changing the product is only allowed in 'Draft' state."))
 
         Quant = self.env['stock.quant']
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
@@ -487,8 +490,8 @@ class StockMoveLine(models.Model):
         if quantity > available_quantity:
             # We now have to find the move lines that reserved our now unavailable quantity. We
             # take care to exclude ourselves and the move lines were work had already been done.
-            oudated_move_lines_domain = [
-                ('move_id.state', 'not in', ['done', 'cancel']),
+            outdated_move_lines_domain = [
+                ('state', 'not in', ['done', 'cancel']),
                 ('product_id', '=', product_id.id),
                 ('lot_id', '=', lot_id.id if lot_id else False),
                 ('location_id', '=', location_id.id),
@@ -497,14 +500,15 @@ class StockMoveLine(models.Model):
                 ('product_qty', '>', 0.0),
                 ('id', 'not in', ml_to_ignore.ids),
             ]
-            oudated_candidates = self.env['stock.move.line'].search(oudated_move_lines_domain)
+            current_picking_first = lambda cand: cand.picking_id != self.move_id.picking_id
+            outdated_candidates = self.env['stock.move.line'].search(outdated_move_lines_domain).sorted(current_picking_first)
 
             # As the move's state is not computed over the move lines, we'll have to manually
             # recompute the moves which we adapted their lines.
             move_to_recompute_state = self.env['stock.move']
 
             rounding = self.product_uom_id.rounding
-            for candidate in oudated_candidates:
+            for candidate in outdated_candidates:
                 if float_compare(candidate.product_qty, quantity, precision_rounding=rounding) <= 0:
                     quantity -= candidate.product_qty
                     move_to_recompute_state |= candidate.move_id

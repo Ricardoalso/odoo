@@ -254,8 +254,6 @@ class AccountBankStatement(models.Model):
 
     @api.multi
     def button_journal_entries(self):
-        context = dict(self._context or {})
-        context['journal_id'] = self.journal_id.id
         return {
             'name': _('Journal Entries'),
             'view_type': 'form',
@@ -264,7 +262,9 @@ class AccountBankStatement(models.Model):
             'view_id': False,
             'type': 'ir.actions.act_window',
             'domain': [('id', 'in', self.mapped('move_line_ids').mapped('move_id').ids)],
-            'context': context,
+            'context': {
+                'journal_id': self.journal_id.id,
+            }
         }
 
     @api.multi
@@ -687,7 +687,7 @@ class AccountBankStatementLine(models.Model):
 
             # Create counterpart move lines and reconcile them
             for aml_dict in counterpart_aml_dicts:
-                if aml_dict['move_line'].payment_id:
+                if aml_dict['move_line'].payment_id and not aml_dict['move_line'].statement_line_id:
                     aml_dict['move_line'].write({'statement_line_id': self.id})
                 if aml_dict['move_line'].partner_id.id:
                     aml_dict['partner_id'] = aml_dict['move_line'].partner_id.id
@@ -718,7 +718,7 @@ class AccountBankStatementLine(models.Model):
         if self.account_number and self.partner_id and not self.bank_account_id:
             # Search bank account without partner to handle the case the res.partner.bank already exists but is set
             # on a different partner.
-            bank_account = self.env['res.partner.bank'].search([('acc_number', '=', self.account_number)])
+            bank_account = self.env['res.partner.bank'].search([('company_id', '=', self.company_id.id),('acc_number', '=', self.account_number)])
             if not bank_account:
                 bank_account = self.env['res.partner.bank'].create({
                     'acc_number': self.account_number, 'partner_id': self.partner_id.id

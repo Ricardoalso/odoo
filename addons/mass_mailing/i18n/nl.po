@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-15 10:04+0000\n"
+"POT-Creation-Date: 2019-11-14 07:35+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -1945,6 +1945,16 @@ msgid "Scheduled date"
 msgstr "Geplande datum"
 
 #. module: mass_mailing
+#: code:addons/mass_mailing/models/mass_mailing.py:255
+#, python-format
+msgid ""
+"Search opt out cannot be executed without a unique and valid active mailing "
+"list context."
+msgstr ""
+"Opt-out voor zoeken kan niet worden uitgevoerd zonder een unieke en geldige "
+"actieve mailinglijstcontext."
+
+#. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "Select a template"
 msgstr "Selecteer een sjabloon"
@@ -2500,10 +2510,10 @@ msgstr "U bent niet ingeschreven voor een van onze nieusbrieven."
 
 #. module: mass_mailing
 #. openerp-web
-#: code:addons/mass_mailing/static/src/js/unsubscribe.js:49
+#: code:addons/mass_mailing/static/src/js/unsubscribe.js:50
 #, python-format
-msgid "You have been <strong>successfully unsubscribed from </strong>."
-msgstr "U bent <strong> succesvol uitgeschreven uit</strong>."
+msgid "You have been <strong>successfully unsubscribed from %s</strong>."
+msgstr "U bent <strong>succesvol uitgeschreven van %s</strong>."
 
 #. module: mass_mailing
 #. openerp-web
