@@ -574,10 +574,10 @@ class AccountReconcileModel(models.Model):
         if float_is_zero(total_residual - line_residual, precision_rounding=line_currency.rounding):
             return True
 
-        if line_residual > total_residual:
-            amount_percentage = (total_residual / line_residual) * 100
+        if abs(line_residual) > abs(total_residual):
+            amount_percentage = (abs(total_residual) / abs(line_residual)) * 100
         elif total_residual:
-            amount_percentage = (line_residual / total_residual) * 100
+            amount_percentage = (abs(line_residual) / abs(total_residual)) * 100
         else:
             return False
         return amount_percentage >= self.match_total_amount_param
