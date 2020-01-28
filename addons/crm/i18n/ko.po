@@ -11,9 +11,9 @@
 # Martin Trigaux, 2017
 # Seongseok Shin <shinss61@hotmail.com>, 2018
 # Linda Stockelova <stockeloval@btlnet.com>, 2018
-# Link Up링크업 <linkup.way@gmail.com>, 2018
-# Linkup <link-up@naver.com>, 2018
+# Linkup <link-up@naver.com>, 2019
 # JH CHOI <hwangtog@gmail.com>, 2019
+# Link Up링크업 <linkup.way@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:26+0000\n"
 "PO-Revision-Date: 2016-09-07 09:18+0000\n"
-"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
+"Last-Translator: Link Up링크업 <linkup.way@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1945,7 +1945,7 @@ msgstr "엑셀 형식"
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
 msgid "Exclude Opt Out"
-msgstr ""
+msgstr "메일 수신 거부 제외"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.base_partner_merge_automatic_wizard_form
@@ -3370,6 +3370,8 @@ msgid ""
 " named. For example on a project, the parent_id of project subtypes refers "
 "to task-related subtypes."
 msgstr ""
+"자동 구독에 사용되는 상위 하위 유형입니다.이 필드의 이름이 올바르지 않습니다. 예를 들어 프로젝트의 경우 프로젝트 하위 유형의 "
+"parent_id는 작업 관련 하위유형을 나타냅니다."
 
 #. module: crm
 #: model:ir.model,name:crm.model_res_partner
@@ -3420,7 +3422,7 @@ msgstr "전화 스크립트"
 #: model:ir.ui.view,arch_db:crm.crm_planner
 #: model:ir.ui.view,arch_db:crm.crm_team_salesteams_view_kanban
 msgid "Pipeline"
-msgstr ""
+msgstr "파이프라인"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.action_report_crm_opportunity_salesteam
@@ -3771,7 +3773,7 @@ msgstr ""
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_activity_schedule_action
 msgid "Schedule an Activity"
-msgstr ""
+msgstr "활동 계획"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
@@ -3895,7 +3897,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_sale_config_settings
 msgid "Setup your domain alias"
-msgstr ""
+msgstr "도메인 별칭 설정"
 
 #. module: crm
 #: model:res.groups,name:crm.group_use_lead
@@ -4259,7 +4261,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "This Week Activities"
-msgstr ""
+msgstr "이번주 활동"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
