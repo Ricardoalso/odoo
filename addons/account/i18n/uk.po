@@ -11,8 +11,8 @@
 # Анатолій Пономаренко <aponomarenko020@gmail.com>, 2017
 # Анатолій Пономаренко <Ponomarenkoa@minfin.gov.ua>, 2017
 # rontif <oleksandr.basenko@gmail.com>, 2017
+# Bohdan Lisnenko, 2018
 # Martin Trigaux, 2018
-# Bohdan Lisnenko, 2019
 # Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019
 # 
 msgid ""
@@ -3004,7 +3004,7 @@ msgstr "Коментар"
 #: model:ir.model.fields,field_description:account.field_account_invoice_commercial_partner_id
 #: model:ir.model.fields,help:account.field_account_invoice_report_commercial_partner_id
 msgid "Commercial Entity"
-msgstr "Перспективний"
+msgstr "Юридична особа"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_common_menu
@@ -3597,7 +3597,7 @@ msgstr "Короткострокові зобов’язання"
 #. module: account
 #: model:account.account.type,name:account.data_unaffected_earnings
 msgid "Current Year Earnings"
-msgstr "Доходи поточного періоду"
+msgstr "Прибуток поточного періоду"
 
 #. module: account
 #: selection:account.abstract.payment,partner_type:0
@@ -7366,7 +7366,7 @@ msgstr "Способи оплати"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_payment_move_line_ids
 msgid "Payment Move Lines"
-msgstr "Перенесення оплати в рядках"
+msgstr "Рядки проведення оплати"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_reference_type
@@ -10342,9 +10342,9 @@ msgid ""
 "                                have issued. The credit note will be created, validated and reconciled\n"
 "                                with the invoice. You will not be able to modify the credit note."
 msgstr ""
-"Використовуйте цю опцію, якщо ви хочете скасувати рахунок-фактуру, яку ви не повинні робити\n"
-"Застосували. Кредитна заява буде створена, підтверджена та узгоджена\n"
-"з рахунком-фактурою. Ви не зможете змінити кредитну заяву."
+"Використовуйте цю опцію, якщо ви хочете скасувати рахунок-фактуру, який ви не повинні\n"
+"застосовувати. Сторно буде створене, підтверджене та узгоджене\n"
+"з рахунком-фактурою. Ви не зможете змінити сторно."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_type_include_initial_balance
@@ -10492,7 +10492,7 @@ msgstr "Умови оплати постачальника"
 #: model:ir.model.fields,field_description:account.field_account_invoice_reference
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Vendor Reference"
-msgstr "Посилання на постачальника"
+msgstr "Референс постачальника"
 
 #. module: account
 #: selection:account.invoice,type:0 selection:account.invoice.report,type:0

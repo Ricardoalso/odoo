@@ -26,7 +26,6 @@
 # Gustavo Valverde, 2017
 # David Vidal <david.vidal@trespinos.es>, 2017
 # Gelo Joga Landoo <gj@landoo.es>, 2017
-# Rick Hunter <rick_hunter_ec@yahoo.com>, 2017
 # José Vicente <txusev@gmail.com>, 2017
 # Miguel Orueta <mo@landoo.es>, 2017
 # oihane <oihanecruce@gmail.com>, 2017
@@ -42,13 +41,16 @@
 # Raquel Iciarte <ric@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
 # ced903afe967c2a46d1036224972db9d, 2018
-# Martin Trigaux, 2019
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2019
-# Nicolás Broggi <rnbroggi@gmail.com>, 2019
 # Gabriel Umana <gabriel.umana@delfixcr.com>, 2019
-# Jesse Garza <jga@odoo.com>, 2019
 # Carolina Gonzalez <cgo@odoo.com>, 2019
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2019
+# Rick Hunter <rick.hunter.ec@gmail.com>, 2019
+# Martin Trigaux, 2019
+# Rick Hunter <rick_hunter_ec@yahoo.com>, 2019
+# Nicolás Broggi <rnbroggi@gmail.com>, 2019
+# Jon Perez <jop@odoo.com>, 2019
+# Jesse Garza <jga@odoo.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -56,7 +58,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-23 16:30+0000\n"
 "PO-Revision-Date: 2016-09-07 09:14+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2019\n"
+"Last-Translator: Jesse Garza <jga@odoo.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7062,6 +7064,16 @@ msgstr ""
 "Documentos soportados son Pedidos de Venta, Pedidos de Compra y facturas/reembolsos.\n"
 
 #. module: base
+#: code:addons/model.py:153
+#, python-format
+msgid ""
+" another model requires the record being deleted. If possible, archive it "
+"instead."
+msgstr ""
+"otro modelo requiere que se elimine el registro. Si es posible, archívelo en"
+" su lugar."
+
+#. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "%A - Full weekday name."
 msgstr "%A - Nombre completo del día de la semana."
@@ -7218,6 +7230,16 @@ msgid ""
 msgstr ""
 "- Acción: una acción adjunta al modelo dado\n"
 "- Por defecto: un valor por defecto para el campo del modelo"
+
+#. module: base
+#: code:addons/model.py:141
+#, python-format
+msgid ""
+"- Create/update: a mandatory field is not set.\n"
+"- Delete: another model requires the record being deleted. If possible, archive it instead."
+msgstr ""
+"- Crear / actualizar: no se establece un campo obligatorio.\n"
+"- Eliminar: otro modelo requiere que se elimine el registro. Si es posible, archívelo en su lugar."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -9972,6 +9994,12 @@ msgid "Constraint Type"
 msgstr "Tipo de restricción"
 
 #. module: base
+#: code:addons/model.py:158
+#, python-format
+msgid "Constraint:"
+msgstr "Restricción:"
+
+#. module: base
 #: sql_constraint:ir.model.constraint:0
 msgid "Constraints with the same name are unique per module."
 msgstr "Las restricciones con el mismo nombre son únicas por módulo."
@@ -10890,6 +10918,11 @@ msgstr ""
 #: model:ir.module.category,name:base.module_category_hidden_dependency
 msgid "Dependency"
 msgstr "Dependencia"
+
+#. module: base
+#: model:ir.module.module,description:base.module_test_pylint
+msgid "Deprecated empty module in favor of test-lint."
+msgstr ""
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_description
@@ -11913,6 +11946,12 @@ msgstr ""
 #, python-format
 msgid "Field names must be unique per model."
 msgstr "Nombres de campos deben ser únicos por modelo."
+
+#. module: base
+#: code:addons/model.py:148
+#, python-format
+msgid "Field:"
+msgstr "Campo:"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_fields
@@ -14005,7 +14044,7 @@ msgstr "Plan contable para las empresas"
 #. module: base
 #: model:res.country,name:base.xk
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #. module: base
 #: model:res.country,name:base.kw
@@ -15096,7 +15135,7 @@ msgstr "Modelo"
 #: code:addons/base/ir/ir_model.py:404
 #, python-format
 msgid "Model %s does not exist"
-msgstr ""
+msgstr "El modelo %s no existe"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:550
@@ -15193,6 +15232,12 @@ msgid ""
 msgstr ""
 "Modelo para el que se aplica esta entrada - campo auxiliar para establecer "
 "un modelo, que será automáticamente establecido al nombre de modelo correcto"
+
+#. module: base
+#: code:addons/model.py:147 code:addons/model.py:157
+#, python-format
+msgid "Model:"
+msgstr "Modelo"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_model
@@ -16480,7 +16525,7 @@ msgstr ""
 #: code:addons/base/ir/ir_model.py:405
 #, python-format
 msgid "Please specify a valid model for the object relation"
-msgstr ""
+msgstr "Por favor, especifique un modelo válido para la relación de objeto"
 
 #. module: base
 #: code:addons/base/ir/ir_actions.py:799
@@ -18815,7 +18860,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_taxcloud_delivery
 msgid "TaxCloud and Delivery - Ecommerce"
-msgstr ""
+msgstr "TaxCloud y Envíos - Ecommerce"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_taxcloud
@@ -18934,7 +18979,7 @@ msgstr "Tailandia - Informes contables"
 #: code:addons/base/res/res_users.py:288
 #, python-format
 msgid "The \"App Switcher\" action cannot be selected as home action."
-msgstr ""
+msgstr "La acción \"App Switcher\" no se puede seleccionar como acción de inicio."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_code
@@ -19366,6 +19411,16 @@ msgid "The selected modules have been updated / installed !"
 msgstr "¡Los módulos seleccionados han sido actualizados / instalados !"
 
 #. module: base
+#: code:addons/base/module/module.py:489
+#, python-format
+msgid ""
+"The server is busy right now, module operations are not possible at this "
+"time, please try again later."
+msgstr ""
+"El servidor está ocupado en este momento, las operaciones del módulo no son "
+"posibles en este momento, intente nuevamente más tarde."
+
+#. module: base
 #: model:ir.model.fields,help:base.field_res_country_state_code
 msgid "The state code."
 msgstr "El estado del código."
@@ -19520,6 +19575,9 @@ msgid ""
 "This module ensures that when delivery price is computed online, and taxes are computed with TaxCloud, the tax computation is done correctly on both the order and delivery.\n"
 "    "
 msgstr ""
+"Este módulo asegura que cuando el precio de envío se calcula en línea, y los"
+" impuestos se calculan con TaxCloud, el cálculo de los impuestos se haga "
+"correctamente tanto en el pedido como el envío."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_base_module_upgrade
@@ -20097,7 +20155,9 @@ msgid "United States Postal Service (USPS) Shipping"
 msgstr "Envíos por USPS (United States Postal Service)"
 
 #. module: base
+#: code:addons/model.py:148 code:addons/model.py:157 code:addons/model.py:158
 #: selection:ir.module.module.dependency,state:0
+#, python-format
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -22009,6 +22069,11 @@ msgstr "test-inherits"
 #: model:ir.module.module,shortdesc:base.module_test_limits
 msgid "test-limits"
 msgstr "test-limits"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_test_lint
+msgid "test-lint"
+msgstr "test-lint"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_uninstall
