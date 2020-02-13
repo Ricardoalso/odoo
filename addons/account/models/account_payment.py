@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
@@ -340,6 +341,14 @@ class account_register_payments(models.TransientModel):
             results[key] += inv
         return results
 
+    def _prepare_communication(self, invoices):
+        '''Define the value for communication field
+        Append all invoice's references together.
+        '''
+        return self.show_communication_field and self.communication \
+                or self.group_invoices and ' '.join([inv.reference or inv.number for inv in invoices]) \
+                or invoices[0].reference # in this case, invoices contains only one element, since group_invoices is False
+
     @api.multi
     def _prepare_payment_vals(self, invoices):
         '''Create the payment values.
@@ -350,9 +359,7 @@ class account_register_payments(models.TransientModel):
         amount = self._compute_payment_amount(invoices=invoices) if self.multi else self.amount
         payment_type = ('inbound' if amount > 0 else 'outbound') if self.multi else self.payment_type
         bank_account = self.multi and invoices[0].partner_bank_id or self.partner_bank_account_id
-        pmt_communication = self.show_communication_field and self.communication \
-                            or self.group_invoices and ' '.join([inv.reference or inv.number for inv in invoices]) \
-                            or invoices[0].reference # in this case, invoices contains only one element, since group_invoices is False
+        pmt_communication = self._prepare_communication(invoices)
 
         if invoices[0].partner_id.type == 'invoice':
             partner_id = invoices[0].partner_id
@@ -379,16 +386,23 @@ class account_register_payments(models.TransientModel):
 
         return values
 
-    @api.multi
+    def _get_payment_group_key(self, inv):
+        """Define group key to group invoices in payments."""
+        return (inv.commercial_partner_id, inv.currency_id, inv.partner_bank_id, MAP_INVOICE_TYPE_PARTNER_TYPE[inv.type])
+
     def get_payments_vals(self):
         '''Compute the values for payments.
 
         :return: a list of payment values (dictionary).
         '''
-        if self.multi:
-            groups = self._groupby_invoices()
-            return [self._prepare_payment_vals(invoices) for invoices in groups.values()]
-        return [self._prepare_payment_vals(self.invoice_ids)]
+        grouped = defaultdict(lambda: self.env["account.invoice"])
+        for inv in self.invoice_ids:
+            if self.group_invoices:
+                group_key = self._get_payment_group_key(inv)
+            else:
+                group_key = inv.id
+            grouped[group_key] += inv
+        return [self._prepare_payment_vals(invoices) for invoices in grouped.values()]
 
     @api.multi
     def create_payments(self):
