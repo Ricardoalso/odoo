@@ -185,3 +185,32 @@ class AccountInvoice(models.Model):
         if self.env.context.get('l10n_ch_mark_isr_as_sent'):
             self.filtered(lambda inv: not inv.l10n_ch_isr_sent).write({'l10n_ch_isr_sent': True})
         return super(AccountInvoice, self.with_context(mail_post_autofollow=True)).message_post(**kwargs)
+
+    def _get_invoice_reference_ch_invoice(self):
+        """ This sets ISR reference number which is generated based on customer's `Bank Account` and set it as
+        `Payment Reference` of the invoice when invoice's journal is using Switzerland's communication standard
+        """
+        self.ensure_one()
+        return self.l10n_ch_isr_number
+
+    def _get_invoice_reference_ch_partner(self):
+        """ This sets ISR reference number which is generated based on customer's `Bank Account` and set it as
+        `Payment Reference` of the invoice when invoice's journal is using Switzerland's communication standard
+        """
+        self.ensure_one()
+        return self.l10n_ch_isr_number
+
+    def _is_isr_supplier_invoice(self):
+        """Check for payments that a supplier invoice has a bank account
+        that can issue ISR and that the reference is an ISR reference number"""
+        # We consider a structured ref can only be in `reference` whereas in v13
+        # it can be in 2 different fields
+        ref = self.reference
+        if (
+            ref and
+            self.partner_bank_id.is_isr_issuer() and
+            re.match(r'^(\d{2,27}|\d{2}( \d{5}){5})$', ref)
+        ):
+            ref = ref.replace(' ', '')
+            return ref == mod10r(ref[:-1])
+        return False
