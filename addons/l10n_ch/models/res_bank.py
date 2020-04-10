@@ -99,7 +99,7 @@ class ResPartnerBank(models.Model):
         # as a postal account even if the difference
         if acc_number and " " in acc_number:
             acc_number_split = acc_number.split(" ")[0]
-        if _is_l10n_ch_postal(acc_number) or (acc_number_split and _is_l10n_ch_postal(acc_number_split)):
+        if validate_l10n_ch_postal(acc_number) or (acc_number_split and validate_l10n_ch_postal(acc_number_split)):
             return 'postal'
         try:
             validate_l10n_ch_postal(acc_number)
