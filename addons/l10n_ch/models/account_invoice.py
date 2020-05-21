@@ -262,12 +262,22 @@ class AccountMove(models.Model):
             self.l10n_ch_isr_sent = True
             return self.env.ref('l10n_ch.l10n_ch_isr_report').report_action(self)
         else:
-           raise ValidationError(_("""You cannot generate an ISR yet.\n
-                                   For this, you need to :\n
-                                   - set a valid postal account number (or an IBAN referencing one) for your company\n
-                                   - define its bank\n
-                                   - associate this bank with a postal reference for the currency used in this invoice\n
-                                   - fill the 'bank account' field of the invoice with the postal to be used to receive the related payment. A default account will be automatically set for all invoices created after you defined a postal account for your company."""))
+            errors = []
+            if not self.invoice_bank_id:
+                errors.append(
+                    _("- Invoice's 'Bank Account' is empty. You need to create"
+                      " or select a valid ISR account")
+                )
+            elif not self.l10n_ch_isr_subscription:
+                errors.append(
+                    _("- No ISR Subscription number are set on you company bank"
+                      " account. Please fill it.")
+                )
+
+            raise ValidationError(_("""You cannot generate an ISR yet.\n
+                                    Here is what is blocking:\n
+                                   {}
+                                   """).format(errors)
 
     def can_generate_qr_bill(self):
         """ Returns True iff the invoice can be used to generate a QR-bill.
