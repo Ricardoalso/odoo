@@ -760,13 +760,13 @@ class expression(object):
                     for rec in left_model.browse(ids)
                 ])
                 if prefix:
-                    return [(left, 'in', left_model.search(doms).ids)]
+                    return [(left, 'in', left_model.search(doms, order='id').ids)]
                 return doms
             else:
                 parent_name = parent or left_model._parent_name
                 child_ids = set(ids)
                 while ids:
-                    ids = left_model.search([(parent_name, 'in', ids)]).ids
+                    ids = left_model.search([(parent_name, 'in', ids)], order='id').ids
                     child_ids.update(ids)
                 return [(left, 'in', list(child_ids))]
 
