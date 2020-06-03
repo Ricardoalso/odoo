@@ -1260,7 +1260,7 @@ class expression(object):
             if left not in model:
                 raise ValueError("Invalid field %r in domain term %r" % (left, leaf))
             format = '%s' if need_wildcard else model._fields[left].column_format
-            unaccent = self._unaccent if sql_operator.endswith('like') else lambda x: x
+            unaccent = self._unaccent if sql_operator.endswith('like') and left != "parent_path" else lambda x: x
             column = '%s.%s' % (table_alias, _quote(left))
             query = '(%s %s %s)' % (unaccent(column + cast), sql_operator, unaccent(format))
 
