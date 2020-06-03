@@ -760,13 +760,13 @@ class expression(object):
                     for rec in left_model.browse(ids)
                 ])
                 if prefix:
-                    return [(left, 'in', left_model.search(doms).ids)]
+                    return [(left, 'in', left_model.search(doms, order='id').ids)]
                 return doms
             else:
                 parent_name = parent or left_model._parent_name
                 child_ids = set(ids)
                 while ids:
-                    ids = left_model.search([(parent_name, 'in', ids)]).ids
+                    ids = left_model.search([(parent_name, 'in', ids)], order='id').ids
                     child_ids.update(ids)
                 return [(left, 'in', list(child_ids))]
 
@@ -1260,7 +1260,7 @@ class expression(object):
             if left not in model:
                 raise ValueError("Invalid field %r in domain term %r" % (left, leaf))
             format = '%s' if need_wildcard else model._fields[left].column_format
-            unaccent = self._unaccent if sql_operator.endswith('like') else lambda x: x
+            unaccent = self._unaccent if sql_operator.endswith('like') and left != "parent_path" else lambda x: x
             column = '%s.%s' % (table_alias, _quote(left))
             query = '(%s %s %s)' % (unaccent(column + cast), sql_operator, unaccent(format))
 
