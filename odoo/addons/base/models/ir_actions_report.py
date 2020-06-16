@@ -499,6 +499,8 @@ class IrActionsReport(models.Model):
                 value = '0%s' % value
         try:
             width, height, humanreadable, quiet = int(width), int(height), bool(int(humanreadable)), bool(int(quiet))
+            # for `QR` type, `quiet` is not supported. And is simply ignored.
+            # But we can use `barBorder` to get a similar behaviour.
             bar_border = 4
             if barcode_type == 'QR' and quiet:
                 bar_border = 0

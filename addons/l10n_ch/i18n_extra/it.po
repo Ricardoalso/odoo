@@ -324,7 +324,7 @@ msgstr ""
 #: model:account.tax.report.line,name:l10n_ch.account_tax_report_line_chtax_910
 #: model:account.tax.report.line,tag_name:l10n_ch.account_tax_report_line_chtax_910
 msgid "910 Les dons, les dividendes, les dédommagements, ..."
-msgstr ""
+msgstr "910 Donazioni, dividendi, compensi, ..."
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
@@ -1344,6 +1344,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "QR-bill for invoice"
 msgstr ""
+
+#. module: l10n_ch
+#: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
+msgid "QR-bill for invoice"
+msgstr "QR-facture"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
