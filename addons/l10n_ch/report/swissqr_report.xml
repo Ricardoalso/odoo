@@ -52,7 +52,7 @@
                             <t t-if="o.invoice_partner_bank_id._is_qr_iban()">
                                 <div class="swissqr_text">
                                     <span class="title">Reference</span><br/>
-                                    <span class="content" t-field="o.l10n_ch_isr_number_spaced"/><br/>
+                                    <span class="content" t-esc="o.space_qrr_reference(o.invoice_payment_ref)"/><br/>
                                 </div>
                             </t>
 
@@ -109,7 +109,7 @@
                             <t t-if="o.invoice_partner_bank_id._is_qr_iban()">
                                 <div class="swissqr_text">
                                     <span class="title">Reference</span><br/>
-                                    <span class="content" t-field="o.l10n_ch_isr_number_spaced"/><br/>
+                                    <span class="content" t-esc="o.space_qrr_reference(o.invoice_payment_ref)"/><br/>
                                 </div>
                             </t>
 
