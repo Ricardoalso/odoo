@@ -115,7 +115,10 @@ class AccountMove(models.Model):
             (3) 1: control digit for identification number and reference
         """
         for record in self:
-            if record.name and record.l10n_ch_isr_subscription:
+            is_qrbill = record.invoice_partner_bank_id._is_qr_iban()
+            isr_subscription = record.l10n_ch_isr_subscription
+            if (is_qrbill or isr_subscription) and record.name:
+
                 id_number = record._get_isrb_id_number()
                 if id_number:
                     id_number = id_number.zfill(l10n_ch_ISR_ID_NUM_LENGTH)

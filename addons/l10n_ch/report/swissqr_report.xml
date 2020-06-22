@@ -113,10 +113,11 @@
                                 </div>
                             </t>
 
-                            <t t-if="o.ref">
+                            <t t-set="additional_info" t-value="(o.ref or o.name if o.invoice_partner_bank_id._is_qr_iban() else o.invoice_payment_ref or o.ref or o.name)"/>
+                            <t t-if="additional_info">
                                 <div class="swissqr_text">
                                     <span class="title">Additional information</span><br/>
-                                    <span class="content" t-field="o.ref"/><br/>
+                                    <span class="content" t-esc="additional_info"/>
                                 </div>
                             </t>
 
