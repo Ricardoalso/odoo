@@ -339,8 +339,9 @@ class AccountMove(models.Model):
         return True
 
     def post(self):
-        if self.type == "in_invoice":
-            self._validate_isr_reference()
+        for invoice in self:
+            if invoice.type == "in_invoice":
+                invoice._validate_isr_reference()
         return super().post()
 
     def action_invoice_sent(self):
