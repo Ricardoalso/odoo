@@ -5,9 +5,10 @@
     'description': """
 Swiss localization
 ==================
-Added QR-IBAN on bank account.
-If the bank account number is a valid QR-IBAN number, swiss code URL will be build using the same account number.
-Otherwise, bank account number is IBAN number but not a valid QR-IBAN and QR-IBAN field holds a valid QR-IBAN number, swiss code URL will be build using new QR-IBAN field.
+Added a QR-IBAN field on bank account.
+If this field is empty, but the bank account number itself is a valid QR-IBAN number, it will still be used as QR-IBAN as before.  
+But if you fill in the new QR-IBAN field, that one will be used as the QR-IBAN.  This should help for reconciliation as 
+on the bank statements, the old IBAN code is still used.  
     """,
     'version': '1.0',
     'author': 'Odoo S.A',

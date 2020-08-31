@@ -21,11 +21,6 @@ class ResPartnerBank(models.Model):
             raise ValidationError(_("QR-IBAN '%s' is invalid.") % qr_iban)
         return True
 
-    @api.onchange('acc_type')
-    def _onchange_reset_ch_qr_iban(self):
-        if self.acc_type != 'iban':
-            self.l10n_ch_qr_iban = False
-
     @api.model
     def create(self, vals):
         if vals.get('l10n_ch_qr_iban'):
