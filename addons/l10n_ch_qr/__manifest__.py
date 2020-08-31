@@ -15,6 +15,7 @@ Otherwise, bank account number is IBAN number but not a valid QR-IBAN and QR-IBA
     'depends': ['l10n_ch'],
     'data': [
         'views/res_bank_views.xml',
+        'views/swissqr_report.xml',
     ],
     'auto_install': True,
 }
