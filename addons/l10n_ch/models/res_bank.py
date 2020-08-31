@@ -270,8 +270,6 @@ class ResPartnerBank(models.Model):
         QR-codes. They are formed like regular IBANs, but are actually something
         different.
         """
-        # for conveniance when invoice.invoice_partner_bank_id, could be replaced
-        # by a computed field
         if not self:
             return False
 
