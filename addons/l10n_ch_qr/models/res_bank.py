@@ -43,8 +43,7 @@ class ResPartnerBank(models.Model):
 
     def _prepare_swiss_code_url_vals(self, amount, currency_name, debtor_partner, reference_type, reference, comment):
         qr_code_vals = super()._prepare_swiss_code_url_vals(amount, currency_name, debtor_partner, reference_type, reference, comment)
-        # If the acc_number is IBAN but not QR-IBAN and if l10n_ch_qr_iban (QR-IBAN) is set,
-        # we ensure l10n_ch_qr_iban has a valid QR-IBAN and we use it to build SWISS code URL.
-        if not self._validate_qr_iban(self.sanitized_acc_number) and self.l10n_ch_qr_iban:
+        # If there is a QR IBAN we use that for the barcode
+        if self.l10n_ch_qr_iban:
             qr_code_vals[3] = sanitize_account_number(self.l10n_ch_qr_iban)
         return qr_code_vals
