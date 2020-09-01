@@ -9,7 +9,9 @@ from odoo.exceptions import ValidationError
 class ResPartnerBank(models.Model):
     _inherit = 'res.partner.bank'
 
-    l10n_ch_qr_iban = fields.Char(string='QR-IBAN')
+    l10n_ch_qr_iban = fields.Char(string='QR-IBAN', help="We added this field for the company bank accounts, in case "
+                                                         "you want to use the QR-IBAN but sometimes you still need the "
+                                                         "old IBAN number.  ")
 
     def _validate_ch_qr_iban(self, qr_iban):
         # Check first if it's a valid IBAN.
