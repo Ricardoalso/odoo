@@ -270,11 +270,7 @@ class ResPartnerBank(models.Model):
         QR-codes. They are formed like regular IBANs, but are actually something
         different.
         """
-        if not self:
-            return False
-
         self.ensure_one()
-
         return self.acc_type == 'iban' \
                and self._validate_qr_iban(self.sanitized_acc_number)
 
