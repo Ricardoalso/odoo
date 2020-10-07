@@ -782,7 +782,13 @@ class SaleOrder(models.Model):
             'state': 'sale',
             'date_order': fields.Datetime.now()
         })
-        self._action_confirm()
+
+        # Context key 'default_name' is sometimes propagated up to here.
+        # We don't need it and it creates issues in the creation of linked records.
+        context = self._context.copy()
+        context.pop('default_name', None)
+
+        self.with_context(context)._action_confirm()
         if self.env.user.has_group('sale.group_auto_done_setting'):
             self.action_done()
         return True
@@ -1239,6 +1245,7 @@ class SaleOrderLine(models.Model):
         digits='Product Unit of Measure')
     qty_invoiced = fields.Float(
         compute='_get_invoice_qty', string='Invoiced Quantity', store=True, readonly=True,
+        compute_sudo=True,
         digits='Product Unit of Measure')
 
     untaxed_amount_invoiced = fields.Monetary("Untaxed Invoiced Amount", compute='_compute_untaxed_amount_invoiced', compute_sudo=True, store=True)
@@ -1621,6 +1628,9 @@ class SaleOrderLine(models.Model):
             'product_id', 'name', 'price_unit', 'product_uom', 'product_uom_qty',
             'tax_id', 'analytic_tag_ids'
         ]
+
+    def _onchange_product_id_set_customer_lead(self):
+        pass
 
     @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty', 'tax_id')
     def _onchange_discount(self):
