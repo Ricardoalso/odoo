@@ -4619,9 +4619,15 @@ msgid "The owner of records created upon receiving emails on this alias. If this
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_activity.py:165
-#: code:addons/mail/models/mail_message.py:579
-#: code:addons/mail/models/mail_message.py:674
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "The partner can not join this channel"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_activity.py:175
+#: code:addons/mail/models/mail_message.py:598
+#: code:addons/mail/models/mail_message.py:698
 #, python-format
 msgid "The requested operation cannot be completed due to security restrictions. Please contact your system administrator.\n"
 "\n"
@@ -5163,7 +5169,26 @@ msgid "You can mark any message as 'starred', and it shows up in this channel."
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/res_users.py:53
+#: cod:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not remove this partner from this channel"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on the record of other users"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on this field"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/res_users.py:54
+>>>>>>> 050806b936c... [FIX] mail: make the current user member of the created channel
 #, python-format
 msgid "You cannot create a new user from here.\n"
 " To create new user please go to configuration panel."
