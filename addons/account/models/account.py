@@ -311,7 +311,7 @@ class AccountAccount(models.Model):
         query = """
             UPDATE account_move_line
                 SET amount_residual = 0, amount_residual_currency = 0
-            WHERE full_reconcile_id = NULL AND account_id IN %s
+            WHERE full_reconcile_id IS NULL AND account_id IN %s
         """
         self.env.cr.execute(query, [tuple(self.ids)])
 
@@ -1039,7 +1039,10 @@ class AccountTax(models.Model):
             else:
                 return quantity * self.amount
 
-        price_include = self.price_include or self._context.get('force_price_include')
+        if self._context.get('handle_price_include', True):
+            price_include = (self.price_include or self._context.get('force_price_include'))
+        else:
+            price_include = False
 
         if (self.amount_type == 'percent' and not price_include) or (self.amount_type == 'division' and price_include):
             return base_amount * self.amount / 100
@@ -1123,7 +1126,10 @@ class AccountTax(models.Model):
         for tax in self.sorted(key=lambda r: r.sequence):
             # Allow forcing price_include/include_base_amount through the context for the reconciliation widget.
             # See task 24014.
-            price_include = self._context.get('force_price_include', tax.price_include)
+            if self._context.get('handle_price_include', True):
+                price_include = self._context.get('force_price_include', tax.price_include)
+            else:
+                price_include = False
 
             if tax.amount_type == 'group':
                 children = tax.children_tax_ids.with_context(base_values=(total_excluded, total_included, base))
