@@ -149,12 +149,21 @@ var MediaWidget = Widget.extend({
     },
     /**
      * @override
+     * @return {Deferred}
      */
     goToPage: function (page) {
         this.page = page;
         if (page > this.lastLoadedPage) {
             return this.fetchPage(page);
         }
+        return $.when();
+    },
+    /**
+     * Method to be overridden when component support pagination
+     *
+     * @return {Deferred}
+     */
+    fetchPage: function() {
         return $.when();
     },
     /**
@@ -348,7 +357,12 @@ var ImageWidget = MediaWidget.extend({
 
             // Remove crop related attributes
             if (self.$media.attr('data-aspect-ratio')) {
-                var attrs = ['aspect-ratio', 'x', 'y', 'width', 'height', 'rotate', 'scale-x', 'scale-y', 'crop:originalSrc'];
+                var attrs = ['aspect-ratio', 'x', 'y', 'width', 'height', 'rotate', 'scale-x', 'scale-y'];
+                Object.keys(self.$media.data()).forEach(function (key) {
+                    if (_.str.startsWith(key, 'crop:')) {
+                        attrs.push(key);
+                    }
+                });
                 self.$media.removeClass('o_cropped_img_to_save');
                 _.each(attrs, function (attr) {
                     self.$media.removeData(attr);
@@ -370,6 +384,10 @@ var ImageWidget = MediaWidget.extend({
             self._renderImages();
         });
     },
+    /**
+     * @override
+     * @param {integer} pageNum
+     */
     fetchPage: function (pageNum) {
         // TODO: Expand this for adding SVG
         var domain = this.domain.concat([
