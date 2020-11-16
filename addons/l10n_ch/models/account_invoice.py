@@ -8,9 +8,8 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.tools.float_utils import float_split_str
 from odoo.tools.misc import mod10r
 
-
-l10n_ch_ISR_NUMBER_LENGTH = 27
 l10n_ch_ISR_ID_NUM_LENGTH = 6
+
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
@@ -63,12 +62,13 @@ class AccountMove(models.Model):
 
     def _get_isrb_id_number(self):
         """Hook to fix the lack of proper field for ISR-B Customer ID"""
-        # FIXME
-        # replace l10n_ch_postal by an other field to not mix ISR-B
-        # customer ID as it forbid the following validations on l10n_ch_postal
+        # FIXME drop support of using l10n_ch_postal for this purpose
+        # replace l10n_ch_postal to not mix it ISR-B customer ID as it
+        # forbid the following validations on l10n_ch_postal
         # number for Vendor bank accounts:
         # - validation of format xx-yyyyy-c
         # - validation of checksum
+        # This is patched in l10n_ch_isrb module
         self.ensure_one()
         partner_bank = self.invoice_partner_bank_id
         return partner_bank.l10n_ch_postal or ''
@@ -129,11 +129,10 @@ class AccountMove(models.Model):
                 invoice_ref = re.sub('[^\d]', '', record.name)
                 # keep only the last digits if it exceed boundaries
                 full_len = len(id_number) + len(invoice_ref)
-                ref_payload_len = l10n_ch_ISR_NUMBER_LENGTH - 1
-                extra = full_len - ref_payload_len
+                extra = full_len - 26
                 if extra > 0:
                     invoice_ref = invoice_ref[extra:]
-                internal_ref = invoice_ref.zfill(ref_payload_len - len(id_number))
+                internal_ref = invoice_ref.zfill(26 - len(id_number))
                 record.l10n_ch_isr_number = mod10r(id_number + internal_ref)
             else:
                 record.l10n_ch_isr_number = False
@@ -223,7 +222,12 @@ class AccountMove(models.Model):
         for record in self:
             record.l10n_ch_isr_optical_line = ''
             if record.l10n_ch_isr_number and record.l10n_ch_isr_subscription and record.currency_id.name:
+<<<<<<< HEAD
                 # Final assembly (the space after the '+' is no typo, it stands in the specs.)
+=======
+                # Final assembly
+                # (the space after the '+' is no typo, it stands in the specs.)
+>>>>>>> 952301c7835436e82b70ee89cc50146f68e423ad
                 record.l10n_ch_isr_optical_line = '{amount}>{reference}+ {creditor}>'.format(
                     amount=record._get_l10n_ch_isr_optical_amount(),
                     reference=record.l10n_ch_isr_number,
@@ -296,12 +300,25 @@ class AccountMove(models.Model):
             self.l10n_ch_isr_sent = True
             return self.env.ref('l10n_ch.l10n_ch_isr_report').report_action(self)
         else:
-            raise ValidationError(_("""You cannot generate an ISR yet.\n
-                                   For this, you need to :\n
-                                   - set a valid postal account number (or an IBAN referencing one) for your company\n
-                                   - define its bank\n
-                                   - associate this bank with a postal reference for the currency used in this invoice\n
-                                   - fill the 'bank account' field of the invoice with the postal to be used to receive the related payment. A default account will be automatically set for all invoices created after you defined a postal account for your company."""))
+            errors = []
+            if not self.invoice_partner_bank_id:
+                errors.append(_("- Invoice's 'Bank Account' is empty. You need to create or select a valid ISR account"))
+            elif not self.l10n_ch_isr_subscription:
+                errors.append(_("- No ISR Subscription number is set on you company bank account. Please fill it in."))
+            if self.type != "out_invoice":
+                errors.append(_("- You can only print Customer ISR."))
+            if self.l10n_ch_currency_name not in ['EUR', 'CHF']:
+                errors.append(_("- Currency must be CHF or EUR."))
+            if not self.name:
+                errors.append(_("- The invoice is missing a name."))
+            if not errors:
+                # l10n_ch_isr_valid mismatch
+                raise NotImplementedError()
+
+            raise ValidationError(
+                _("You cannot generate an ISR yet.\n"
+                  "Here is what is blocking:\n"
+                  "{}").format(errors))
 
     def can_generate_qr_bill(self):
         """ Returns True iff the invoice can be used to generate a QR-bill.
