@@ -24,9 +24,9 @@
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Marco Calcagni <mcalcagni@dinamicheaziendali.it>, 2019
 # Paolo Valier, 2019
-# Lorenzo Battistini <lb@takobi.online>, 2019
 # Luana Andronico <andronicoluana@gmail.com>, 2019
 # Simone Sanfilippo <s.sanfilippo@hinge16.eu>, 2019
+# Lorenzo Battistini <lb@takobi.online>, 2020
 # Sergio Zanchetta <primes2h@gmail.com>, 2020
 # 
 msgid ""
@@ -56,7 +56,7 @@ msgstr ""
 " * Lo stato «Aperta» si usa quando alla fattura creata viene assegnato un numero. Lo stato permane finché non viene pagata.\n"
 " * Lo stato «In pagamento» è usato quando i pagamenti sono stati generati in un registro contabile per l'intero ammontare della fattura, ma alcune registrazioni non sono ancora state riconciliate con la banca.\n"
 " * Lo stato «Pagata» è impostato automaticamente dopo il pagamento della fattura, a prescindere dalla riconciliazione delle relative registrazioni contabili.\n"
-" * Lo stato «Annullata» viene usato dopo l'annullamento di una fattura."
+" * Lo stato «Annullata» viene usato quando l'utente annulla una fattura."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template__code_digits
@@ -247,7 +247,7 @@ msgstr ""
 "            La preghiamo di provvedere quanto prima al pagamento.\n"
 "        % endif\n"
 "        <br/><br/>\n"
-"        Per ulteriori domande, non esiti a contattarci.\n"
+"        Per ulteriori domande non esiti a contattarci.\n"
 "    </p>\n"
 "</div>\n"
 "            "
@@ -599,7 +599,7 @@ msgstr "<span>Quantità</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Reference</span>"
-msgstr ""
+msgstr "<span>Riferimento</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -1447,7 +1447,7 @@ msgstr "Aggiungi una nota interna..."
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_invoice_send_wizard_form
 msgid "Add contacts to notify..."
-msgstr "Aggiungere un contatto da notificare..."
+msgstr "Aggiungi un contatto da notificare..."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__partner_ids
@@ -3347,7 +3347,7 @@ msgid ""
 "id=%d>%s</a><br>Reason: %s"
 msgstr ""
 "Correzione di<a href=# data-oe-model=account.invoice data-oe-"
-"id=%d>%s</a><br> Motivo: %s"
+"id=%d>%s</a><br> Causale: %s"
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_direct_costs
@@ -4088,7 +4088,7 @@ msgstr "Termine di resa predefinito"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Default payment communication on customer invoices"
-msgstr "Comunicazione per il pagamento preimpostata nelle fatture cliente"
+msgstr "Indicazione per il pagamento preimpostata nelle fatture cliente"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -4156,7 +4156,7 @@ msgstr "Grado di fiducia riposto nel debitore"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__auto_delete
 msgid "Delete Emails"
-msgstr "Eliminare le email"
+msgstr "Eliminare le e-mail"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__auto_delete_message
@@ -6661,7 +6661,7 @@ msgstr "Visualizzazione imposte negli importi riga"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Line subtotals tax display"
-msgstr "Visualizzazione delle imposte negli importi riga"
+msgstr "Visualizzazione delle imposte nei subtotali delle righe"
 
 #. module: account
 #: selection:account.setup.bank.manual.config,create_or_link_option:0
@@ -6888,7 +6888,7 @@ msgstr "Match Regex"
 #: code:addons/account/models/chart_template.py:934
 #, python-format
 msgid "Match existing invoices/bills."
-msgstr "Abbina fatture / fatture esistenti."
+msgstr "Abbina fatture esistenti."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__matched_credit_ids
@@ -8208,7 +8208,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "Please use the following communication for your payment :"
-msgstr "Usare la seguente comunicazione per il pagamento:"
+msgstr "Per il pagamento utilizzare la seguente indicazione:"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice__access_url
@@ -8492,12 +8492,12 @@ msgstr "Valore nominale"
 #: model:ir.model.fields,field_description:account.field_cash_box_in__name
 #: model:ir.model.fields,field_description:account.field_cash_box_out__name
 msgid "Reason"
-msgstr "Motivo"
+msgstr "Causale"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.tax_adjustments_wizard
 msgid "Reason..."
-msgstr "Motivo..."
+msgstr "Causale..."
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_receivable
@@ -9211,7 +9211,7 @@ msgstr "Selezionare un partner o scegliere una contropartita"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Select an old vendor bill"
-msgstr "Selezionare una fattura fornitore precedente"
+msgstr "Seleziona una fattura fornitore precedente"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line__value
@@ -9286,7 +9286,7 @@ msgstr "Invio denaro"
 #. module: account
 #: model:ir.actions.act_window,name:account.account_send_payment_receipt_by_email_action
 msgid "Send Receipt By Email"
-msgstr "Invia ricevuta con e-mail"
+msgstr "Invia ricevuta tramite e-mail"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_open_account_onboarding_sample_invoice
@@ -10719,8 +10719,8 @@ msgid ""
 "The payment communication that will be automatically populated once the "
 "invoice validation. You can also write a free communication."
 msgstr ""
-"La comunicazione per il pagamento che viene generata automaticamente dopo la"
-" validazione della fattura. È possibile anche scrivere un testo libero."
+"Indicazione per il pagamento che viene generata automaticamente dopo la "
+"validazione della fattura. È possibile anche scrivere un testo libero."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -11045,7 +11045,7 @@ msgid ""
 "model=account.invoice data-oe-id=%d>%s</a><br>Reason: %s"
 msgstr ""
 "Questa nota di credito per la fattura cliente è stata creata da: <a href=# "
-"data-oe-model=account.invoice data-oe-id=%d>%s</a><br>Motivo: %s"
+"data-oe-model=account.invoice data-oe-id=%d>%s</a><br>Causale: %s"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -11212,7 +11212,7 @@ msgid ""
 "model=account.invoice data-oe-id=%d>%s</a><br>Reason: %s"
 msgstr ""
 "Questa nota di credito per la fattura fornitore è stata creata da: <a href=#"
-" data-oe-model=account.invoice data-oe-id=%d>%s</a><br>Motivo: %s"
+" data-oe-model=account.invoice data-oe-id=%d>%s</a><br>Causale: %s"
 
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_validate_account_move
@@ -11625,7 +11625,7 @@ msgstr "Usare addebito diretto SEPA"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_reversal__journal_id
 msgid "Use Specific Journal"
-msgstr "Usare registro specifico"
+msgstr "Usa registro specifico"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__use_active_domain
@@ -12492,6 +12492,12 @@ msgstr ""
 "Per gestire automaticamente le registrazioni contabili relative alle "
 "differenze fra tassi di cambio è necessario configurare il \"Conto perdite "
 "tasso di cambio\" nelle impostazioni della contabilità."
+
+#. module: account
+#: code:addons/account/models/account_cash_rounding.py:33
+#, python-format
+msgid "Please set a positive rounding value."
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_refund
