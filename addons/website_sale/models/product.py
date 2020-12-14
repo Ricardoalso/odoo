@@ -23,7 +23,7 @@ class ProductPricelist(models.Model):
         domain = [('company_id', '=', company_id)]
         return self.env['website'].search(domain, limit=1)
 
-    website_id = fields.Many2one('website', string="Website", default=_default_website)
+    website_id = fields.Many2one('website', string="Website", ondelete='restrict', default=_default_website)
     code = fields.Char(string='E-commerce Promotional Code', groups="base.group_user")
     selectable = fields.Boolean(help="Allow the end user to choose this price list")
 
@@ -172,7 +172,7 @@ class ProductTemplate(models.Model):
     website_size_y = fields.Integer('Size Y', default=1)
     website_style_ids = fields.Many2many('product.style', string='Styles')
     website_sequence = fields.Integer('Website Sequence', help="Determine the display order in the Website E-commerce",
-                                      default=lambda self: self._default_website_sequence())
+                                      default=lambda self: self._default_website_sequence(), copy=False)
     public_categ_ids = fields.Many2many('product.public.category', string='Website Product Category',
                                         help="The product will be available in each mentioned e-commerce category. Go to"
                                         "Shop > Customize and enable 'E-commerce categories' to view all e-commerce categories.")

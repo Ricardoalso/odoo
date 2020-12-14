@@ -20,7 +20,7 @@ class StockQuant(models.Model):
 
     product_id = fields.Many2one(
         'product.product', 'Product',
-        ondelete='restrict', readonly=True, required=True)
+        ondelete='restrict', readonly=True, required=True, index=True)
     # so user can filter on template in webclient
     product_tmpl_id = fields.Many2one(
         'product.template', string='Product Template',
@@ -32,7 +32,7 @@ class StockQuant(models.Model):
         string='Company', store=True, readonly=True)
     location_id = fields.Many2one(
         'stock.location', 'Location',
-        auto_join=True, ondelete='restrict', readonly=True, required=True)
+        auto_join=True, ondelete='restrict', readonly=True, required=True, index=True)
     lot_id = fields.Many2one(
         'stock.production.lot', 'Lot/Serial Number',
         ondelete='restrict', readonly=True)
@@ -404,6 +404,11 @@ class QuantPackage(models.Model):
             ])
             move_line_to_modify.write({'package_id': False})
             package.mapped('quant_ids').sudo().write({'package_id': False})
+
+        # Quant clean-up, mostly to avoid multiple quants of the same product. For example, unpack
+        # 2 packages of 50, then reserve 100 => a quant of -50 is created at transfer validation.
+        self.env['stock.quant']._merge_quants()
+        self.env['stock.quant']._unlink_zero_quants()
 
     def action_view_picking(self):
         action = self.env.ref('stock.action_picking_tree_all').read()[0]

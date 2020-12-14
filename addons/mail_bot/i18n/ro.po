@@ -5,7 +5,8 @@
 # Translators:
 # Martin Trigaux, 2018
 # sharkutz <sharkutz4life@yahoo.com>, 2019
-# Dorin Hongu <dhongu@gmail.com>, 2019
+# Dorin Hongu <dhongu@gmail.com>, 2020
+# Foldi Robert <foldirobert@nexterp.ro>, 2020
 # 
 msgid ""
 msgstr ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 10:05+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
-"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2019\n"
+"Last-Translator: Foldi Robert <foldirobert@nexterp.ro>, 2020\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,12 +38,12 @@ msgstr "Contact"
 #. module: mail_bot
 #: selection:res.users,odoobot_state:0
 msgid "Disabled"
-msgstr ""
+msgstr "Dezactivat"
 
 #. module: mail_bot
 #: model:ir.model,name:mail_bot.model_mail_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Canal Discuții"
 
 #. module: mail_bot
 #: model:ir.model.fields,field_description:mail_bot.field_mail_bot__display_name
@@ -59,7 +60,7 @@ msgstr "Fir E-mail"
 #: code:addons/mail_bot/static/src/js/mailbot_service.js:42
 #, python-format
 msgid "Enable desktop notifications to chat"
-msgstr ""
+msgstr "Activați notificările pe desktop pentru chat"
 
 #. module: mail_bot
 #: code:addons/mail_bot/models/mail_bot.py:42
@@ -68,6 +69,8 @@ msgid ""
 "Great! 👍<br/>Now, try to <b>send an attachment</b>, like a picture of your "
 "cute dog..."
 msgstr ""
+"Minunat! 👍<br/>Acum, încearcă să <b>trimiți un atașament</b>, cum ar fi o "
+"poză cu un cățel drăguț..."
 
 #. module: mail_bot
 #: model:ir.model,name:mail_bot.model_ir_http
@@ -121,7 +124,7 @@ msgstr "ID"
 #. module: mail_bot
 #: selection:res.users,odoobot_state:0
 msgid "Idle"
-msgstr ""
+msgstr "Inactiv"
 
 #. module: mail_bot
 #: model:ir.model.fields,field_description:mail_bot.field_mail_bot____last_update
@@ -191,7 +194,7 @@ msgstr ""
 #: code:addons/mail_bot/static/src/js/mailbot_service.js:39
 #, python-format
 msgid "OdooBot has a request"
-msgstr ""
+msgstr "OdooBot are o cerință"
 
 #. module: mail_bot
 #: selection:res.users,odoobot_state:0
@@ -279,13 +282,15 @@ msgid ""
 "Wow you are a natural!<br/>Ping someone to grab its attention with "
 "@nameoftheuser. <b>Try to ping me using @OdooBot</b> in a sentence."
 msgstr ""
+"Uau că ești real! Ping pe cineva să-i atragi atenția cu @numeutilizator. "
+"Încercați să-mi faceți pinguri folosind @OdooBot într-o propoziție."
 
 #. module: mail_bot
 #. openerp-web
 #: code:addons/mail_bot/static/src/js/systray_messaging_menu.js:63
 #, python-format
 msgid "Yay, push notifications are enabled!"
-msgstr ""
+msgstr "Da, notificările push sunt activate!"
 
 #. module: mail_bot
 #: code:addons/mail_bot/models/mail_bot.py:51

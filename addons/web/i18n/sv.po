@@ -8,14 +8,15 @@
 # Haojun Zou <apollo_zhj@msn.com>, 2019
 # Robert Frykelius <robert.frykelius@linserv.se>, 2019
 # Moa Nicklasson <Moa.nicklasson@hotmail.se>, 2019
-# Kristoffer Grundström <hamnisdude@gmail.com>, 2019
+# Kristoffer Grundström <lovaren@gmail.com>, 2019
 # Martin Trigaux, 2019
 # Martin Wilderoth <martin.wilderoth@linserv.se>, 2019
 # Patrik Lermon <patrik.lermon@gmail.com>, 2019
 # lynnliuying <lynn.liu1971@gmail.com>, 2019
-# Kim Asplund <kim.asplund@gmail.com>, 2019
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2019
+# Daniel Osser <danielosser@gmail.com>, 2019
 # Anders Wallenquist <anders.wallenquist@vertel.se>, 2019
+# Kim Asplund <kim.asplund@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -23,7 +24,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-13 07:03+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
-"Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>, 2019\n"
+"Last-Translator: Kim Asplund <kim.asplund@gmail.com>, 2020\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -361,7 +362,7 @@ msgstr "Anpassat filter"
 #: code:addons/web/static/src/xml/base.xml:1111
 #, python-format
 msgid "Add Custom Group"
-msgstr ""
+msgstr "Lägg till gruppering"
 
 #. module: web
 #. openerp-web
@@ -382,7 +383,7 @@ msgstr "Lägg till ett villkor"
 #: code:addons/web/static/src/js/views/list/list_editable_renderer.js:78
 #, python-format
 msgid "Add a line"
-msgstr ""
+msgstr "Lägg till rad"
 
 #. module: web
 #. openerp-web
@@ -1651,7 +1652,7 @@ msgstr "Grupperad"
 #. module: web
 #: model:ir.model,name:web.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: web
 #. openerp-web
@@ -2250,7 +2251,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/field_utils.js:281
 #, python-format
 msgid "No records"
-msgstr ""
+msgstr "Poster saknas"
 
 #. module: web
 #. openerp-web
@@ -2385,6 +2386,12 @@ msgstr "Vid ändring:"
 #: code:addons/web/static/src/js/fields/basic_fields.js:2283
 #, python-format
 msgid "Only Integer Value should be valid."
+msgstr ""
+
+#. module: web
+#: code:addons/web/static/src/js/fields/basic_fields.js:1982
+#, python-format
+msgid "Only Integer or Float Value should be valid."
 msgstr ""
 
 #. module: web
@@ -2538,7 +2545,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/pivot/pivot_view.js:23
 #, python-format
 msgid "Pivot"
-msgstr ""
+msgstr "Pivot"
 
 #. module: web
 #. openerp-web
@@ -2622,7 +2629,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/web_calendar.xml:75
 #, python-format
 msgid "Previous"
-msgstr ""
+msgstr "Föregående"
 
 #. module: web
 #. openerp-web
@@ -3253,7 +3260,7 @@ msgstr "Denna Månaden"
 #: code:addons/web/static/src/js/views/search/time_range_menu_options.js:14
 #, python-format
 msgid "This Quarter"
-msgstr "Denna Kvartalen"
+msgstr "Detta kvartalet"
 
 #. module: web
 #. openerp-web
@@ -3363,7 +3370,7 @@ msgstr ""
 #: code:addons/web/static/src/js/fields/field_utils.js:62
 #, python-format
 msgid "True"
-msgstr ""
+msgstr "Sant"
 
 #. module: web
 #. openerp-web
@@ -3707,7 +3714,7 @@ msgstr "Ja"
 #: code:addons/web/static/src/js/views/search/time_range_menu_options.js:16
 #, python-format
 msgid "Yesterday"
-msgstr ""
+msgstr "Igår"
 
 #. module: web
 #. openerp-web
@@ -3826,7 +3833,7 @@ msgstr "ungefär en timme sedan"
 #: code:addons/web/static/src/xml/base.xml:639
 #, python-format
 msgid "all records"
-msgstr ""
+msgstr "alla poster"
 
 #. module: web
 #. openerp-web

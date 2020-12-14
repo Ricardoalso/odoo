@@ -4,7 +4,7 @@
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
-from odoo.tools import pycompat
+from odoo.tools import pycompat,float_is_zero
 from odoo.tools.float_utils import float_round
 from datetime import datetime
 import operator as py_operator
@@ -162,9 +162,23 @@ class Product(models.Model):
             company_id = self.env.user.company_id.id
             return (
                 [('location_id.company_id', '=', company_id), ('location_id.usage', 'in', ['internal', 'transit'])],
-                [('location_id.company_id', '=', False), ('location_dest_id.company_id', '=', company_id)],
-                [('location_id.company_id', '=', company_id), ('location_dest_id.company_id', '=', False),
-            ])
+                ['&',
+                     ('location_dest_id.company_id', '=', company_id),
+                     '|',
+                         ('location_id.company_id', '=', False),
+                         '&',
+                             ('location_id.usage', 'in', ['inventory', 'production']),
+                             ('location_id.company_id', '=', company_id),
+                 ],
+                ['&',
+                     ('location_id.company_id', '=', company_id),
+                     '|',
+                         ('location_dest_id.company_id', '=', False),
+                         '&',
+                             ('location_dest_id.usage', 'in', ['inventory', 'production']),
+                             ('location_dest_id.company_id', '=', company_id),
+                 ]
+            )
         location_ids = []
         if self.env.context.get('location', False):
             if isinstance(self.env.context['location'], pycompat.integer_types):
@@ -353,7 +367,7 @@ class Product(models.Model):
         return res
 
     def action_update_quantity_on_hand(self):
-        return self.product_tmpl_id.with_context({'default_product_id': self.id}).action_update_quantity_on_hand()
+        return self.product_tmpl_id.with_context(default_product_id=self.id).action_update_quantity_on_hand()
 
     def action_view_routes(self):
         return self.mapped('product_tmpl_id').action_view_routes()
@@ -362,6 +376,15 @@ class Product(models.Model):
         self.ensure_one()
         action = self.env.ref('stock.stock_move_line_action').read()[0]
         action['domain'] = [('product_id', '=', self.id)]
+        return action
+
+    # Be aware that the exact same function exists in product.template
+    def action_open_quants(self):
+        self.env['stock.quant']._merge_quants()
+        self.env['stock.quant']._unlink_zero_quants()
+        action = self.env.ref('stock.product_open_quants').read()[0]
+        action['domain'] = [('product_id', '=', self.id)]
+        action['context'] = {'search_default_internal_loc': 1}
         return action
 
     def action_open_product_lot(self):
@@ -400,13 +423,17 @@ class Product(models.Model):
                 raise UserError(msg)
         return res
 
+    def _is_phantom_bom(self):
+        self.ensure_one()
+        return False
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     responsible_id = fields.Many2one(
         'res.users', string='Responsible', default=lambda self: self.env.uid, required=True,
         help="This user will be responsible of the next activities related to logistic operations for this product.")
-    type = fields.Selection(selection_add=[('product', 'Storable Product')])
+    type = fields.Selection(selection_add=[('product', 'Storable Product')], track_visibility='onchange')
     property_stock_production = fields.Many2one(
         'stock.location', "Production Location",
         company_dependent=True, domain=[('usage', 'like', 'production')],
@@ -437,11 +464,10 @@ class ProductTemplate(models.Model):
     outgoing_qty = fields.Float(
         'Outgoing', compute='_compute_quantities', search='_search_outgoing_qty',
         digits=dp.get_precision('Product Unit of Measure'))
-    # The goal of these fields is not to be able to search a location_id/warehouse_id but
-    # to properly make these fields "dummy": only used to put some keys in context from
-    # the search view in order to influence computed field
-    location_id = fields.Many2one('stock.location', 'Location', store=False, search=lambda operator, operand, vals: [])
-    warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse', store=False, search=lambda operator, operand, vals: [])
+    # The goal of these fields is to be able to put some keys in context from search view in order
+    # to influence computed field.
+    location_id = fields.Many2one('stock.location', 'Location', store=False)
+    warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse', store=False)
     route_ids = fields.Many2many(
         'stock.location.route', 'stock_route_product', 'product_id', 'route_id', 'Routes',
         domain=[('product_selectable', '=', True)],
@@ -460,7 +486,8 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         'product_variant_ids',
-        'product_variant_ids.stock_quant_ids',
+        'product_variant_ids.stock_move_ids.product_qty',
+        'product_variant_ids.stock_move_ids.state',
     )
     def _compute_quantities(self):
         res = self._compute_quantities_dict()
@@ -549,6 +576,8 @@ class ProductTemplate(models.Model):
             ])
             if existing_move_lines:
                 raise UserError(_("You can not change the type of a product that is currently reserved on a stock move. If you need to change the type, you should first unreserve the stock move."))
+        if 'type' in vals and vals['type'] != 'product' and self.filtered(lambda p: p.type == 'product' and not float_is_zero(p.qty_available, precision_rounding=p.uom_id.rounding)):
+            raise UserError(_("Available quantity should be set to zero before changing type"))
         return super(ProductTemplate, self).write(vals)
 
     def action_update_quantity_on_hand(self):
@@ -575,6 +604,7 @@ class ProductTemplate(models.Model):
                     'context': {'default_product_id': self.env.context.get('default_product_id')}
                 }
 
+    # Be aware that the exact same function exists in product.product
     def action_open_quants(self):
         self.env['stock.quant']._merge_quants()
         self.env['stock.quant']._unlink_zero_quants()
