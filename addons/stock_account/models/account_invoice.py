@@ -36,7 +36,8 @@ class AccountInvoice(models.Model):
             currency = False
             amount_currency = False
 
-        return self.env['product.product']._anglo_saxon_sale_move_lines(i_line.name, i_line.product_id, i_line.uom_id, i_line.quantity, price_unit, currency=currency, amount_currency=amount_currency, fiscal_position=inv.fiscal_position_id, account_analytic=i_line.account_analytic_id, analytic_tags=i_line.analytic_tag_ids)
+        product = i_line.product_id.with_context(force_company=self.company_id.id)
+        return self.env['product.product']._anglo_saxon_sale_move_lines(i_line.name, product, i_line.uom_id, i_line.quantity, price_unit, currency=currency, amount_currency=amount_currency, fiscal_position=inv.fiscal_position_id, account_analytic=i_line.account_analytic_id, analytic_tags=i_line.analytic_tag_ids)
 
     def _get_last_step_stock_moves(self):
         """ To be overridden for customer invoices and vendor bills in order to
@@ -69,9 +70,9 @@ class AccountInvoice(models.Model):
                 stock_moves = invoice._get_last_step_stock_moves()
                 product_set = product or invoice._get_products_set()
                 for prod in product_set:
-                    if prod.valuation == 'real_time' and stock_moves:
+                    product_interim_account = invoice._get_anglosaxon_interim_account(prod)
+                    if prod.valuation == 'real_time' and stock_moves and product_interim_account.reconcile:
                         # We first get the invoices move lines (taking the invoice and the previous ones into account)...
-                        product_interim_account = invoice._get_anglosaxon_interim_account(prod)
                         to_reconcile = self.env['account.move.line'].search([
                             ('move_id', '=', invoice.move_id.id),
                             ('product_id', '=', prod.id),
@@ -110,7 +111,7 @@ class AccountInvoiceLine(models.Model):
         return self.invoice_id.currency_id.round(price)
 
     def get_invoice_line_account(self, type, product, fpos, company):
-        if company.anglo_saxon_accounting and type in ('in_invoice', 'in_refund') and product and product.type == 'product':
+        if company.anglo_saxon_accounting and type in ('in_invoice', 'in_refund') and product and (product.type == 'product' or product.type == 'consu' and product._is_phantom_bom()):
             accounts = product.product_tmpl_id.get_product_accounts(fiscal_pos=fpos)
             if accounts['stock_input']:
                 return accounts['stock_input']

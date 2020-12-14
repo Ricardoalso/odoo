@@ -198,11 +198,11 @@ def concat_xml(file_list):
 
     :param list(str) file_list: list of files to check
     :returns: (concatenation_result, checksum)
-    :rtype: (str, str)
+    :rtype: (bytes, str)
     """
     checksum = hashlib.new('sha1')
     if not file_list:
-        return '', checksum.hexdigest()
+        return b'', checksum.hexdigest()
 
     root = None
     for fname in file_list:
@@ -1069,7 +1069,7 @@ class Binary(http.Controller):
     def content_image(self, xmlid=None, model='ir.attachment', id=None, field='datas',
                       filename_field='datas_fname', unique=None, filename=None, mimetype=None,
                       download=None, width=0, height=0, crop=False, related_id=None, access_mode=None,
-                      access_token=None, avoid_if_small=False, upper_limit=False, signature=False):
+                      access_token=None, avoid_if_small=False, upper_limit=False, signature=False, **kw):
         status, headers, content = binary_content(
             xmlid=xmlid, model=model, id=id, field=field, unique=unique, filename=filename,
             filename_field=filename_field, download=download, mimetype=mimetype,
@@ -1338,6 +1338,8 @@ class Export(http.Controller):
 
             if len(id.split('/')) < 3 and 'relation' in field:
                 ref = field.pop('relation')
+                if import_compat and field.get('type') in ['many2one', 'many2many']:
+                    record['id'] += '/id'
                 record['value'] += '/id'
                 record['params'] = {'model': ref, 'prefix': id, 'name': name, 'parent_field': field}
                 record['children'] = True
@@ -1548,6 +1550,8 @@ class ExcelExport(ExportFormat, http.Controller):
                     cell_style = datetime_style
                 elif isinstance(cell_value, datetime.date):
                     cell_style = date_style
+                elif isinstance(cell_value, (list, tuple)):
+                    cell_value = pycompat.to_text(cell_value)
                 worksheet.write(row_index + 1, cell_index, cell_value, cell_style)
 
         fp = io.BytesIO()
@@ -1631,7 +1635,7 @@ class ReportController(http.Controller):
                 ('QR', o.name, 200, 200)"/>
 
         :param type: Accepted types: 'Codabar', 'Code11', 'Code128', 'EAN13', 'EAN8', 'Extended39',
-        'Extended93', 'FIM', 'I2of5', 'MSI', 'POSTNET', 'QR', 'Standard39', 'Standard93',
+        'Extended93', 'FIM', 'I2of5', 'MSI', 'POSTNET', 'QR', 'QR_quiet', 'Standard39', 'Standard93',
         'UPCA', 'USPS_4State'
         :param humanreadable: Accepted values: 0 (default) or 1. 1 will insert the readable value
         at the bottom of the output image

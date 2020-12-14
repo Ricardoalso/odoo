@@ -370,7 +370,9 @@ class Slide(models.Model):
             elif record.slide_type == 'video' and record.document_id:
                 if not record.mime_type:
                     # embed youtube video
-                    record.embed_code = '<iframe src="//www.youtube.com/embed/%s?theme=light" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
+                    query = urls.url_parse(record.url).query
+                    query = query + '&theme=light' if query else 'theme=light'
+                    record.embed_code = '<iframe src="//www.youtube.com/embed/%s?%s" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id, query)
                 else:
                     # embed google doc video
                     record.embed_code = '<iframe src="//drive.google.com/file/d/%s/preview" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
@@ -522,7 +524,7 @@ class Slide(models.Model):
     def _fetch_data(self, base_url, data, content_type=False, extra_params=False):
         result = {'values': dict()}
         try:
-            response = requests.get(base_url, params=data)
+            response = requests.get(base_url, timeout=3, params=data)
             response.raise_for_status()
             if content_type == 'json':
                 result['values'] = response.json()

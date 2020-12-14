@@ -708,6 +708,34 @@ Model Reference
 
         :type: bool
 
+    .. attribute:: _parent_name
+
+      Alternative field to use as parent, used by indexed storage of the tree structure of records
+      (default: ``'parent_id'``)
+
+         :type: str
+
+    .. attribute:: _date_name
+
+      Alternative field to use for default calendar view
+      (default: ``'date'``)
+
+         :type: str     
+
+    .. attribute:: _fold_name
+
+      Alternative field to determine folded groups in kanban views
+      (default: ``'fold'``)
+
+         :type: str 
+
+    .. attribute:: _translate
+
+      False disables translations export for this model
+      (default: ``True``)
+
+         :type: bool
+
     .. rubric:: CRUD
 
     .. automethod:: create
@@ -1023,8 +1051,10 @@ will yield:
     :language: text
     :lines: 13
 
-.. note:: it will also yield the various :ref:`automatic fields
-          <reference/orm/model/automatic>` unless they've been disabled
+.. note::
+
+    It will also yield the various :ref:`automatic fields
+    <reference/orm/model/automatic>` unless they've been disabled
 
 Delegation
 ----------
@@ -1058,6 +1088,11 @@ and it's possible to write directly on the delegated field:
 
 .. warning:: when using delegation inheritance, methods are *not* inherited,
              only fields
+
+.. warning::
+
+    * `_inherits` is more or less implemented, avoid it if you can;
+    * chained `_inherits` is essentially not implemented, we cannot guarantee anything on the final behavior.
 
 .. _reference/orm/domains:
 
@@ -1116,6 +1151,12 @@ A domain is a list of criteria, each criterion being a triple (either a
         Takes the semantics of the model into account (i.e following the
         relationship field named by
         :attr:`~odoo.models.Model._parent_name`).
+    ``parent_of``
+        is a parent (ascendant) of a ``value`` record.
+
+        Takes the semantics of the model into account (i.e following the
+        relationship field named by
+        :attr:`~odoo.models.Model._parent_name`). 
 
 ``value``
     variable type, must be comparable (through ``operator``) to the named
