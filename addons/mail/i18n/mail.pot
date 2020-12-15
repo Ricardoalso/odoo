@@ -5188,7 +5188,6 @@ msgstr ""
 
 #. module: mail
 #: code:addons/mail/models/res_users.py:54
->>>>>>> 050806b936c... [FIX] mail: make the current user member of the created channel
 #, python-format
 msgid "You cannot create a new user from here.\n"
 " To create new user please go to configuration panel."
