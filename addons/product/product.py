@@ -546,7 +546,7 @@ class product_product(osv.osv):
     _table = "product_product"
     _inherits = {'product.template': 'product_tmpl_id'}
     _inherit = ['mail.thread']
-    _order = 'default_code,name_template'
+    _order = 'default_code'#,name_template'
     _columns = {
         'qty_available': fields.function(_product_qty_available, type='float', string='Quantity On Hand'),
         'virtual_available': fields.function(_product_virtual_available, type='float', string='Quantity Available'),
@@ -565,11 +565,7 @@ class product_product(osv.osv):
         'price_extra': fields.float('Variant Price Extra', digits_compute=dp.get_precision('Product Price')),
         'price_margin': fields.float('Variant Price Margin', digits_compute=dp.get_precision('Product Price')),
         'pricelist_id': fields.dummy(string='Pricelist', relation='product.pricelist', type='many2one'),
-        'name_template': fields.related('product_tmpl_id', 'name', string="Template Name", type='char', size=128, store={
-            'product.template': (_get_name_template_ids, ['name'], 10),
-            'product.product': (lambda self, cr, uid, ids, c=None: ids, ['product_tmpl_id'], 10),
-
-            }, select=True),
+        'name_template': fields.related('product_tmpl_id', 'name', string="Template Name", type='char', size=128, select=True),
         'color': fields.integer('Color Index'),
         # image: all image fields are base64 encoded and PIL-supported
         'image': fields.binary("Image",
@@ -598,13 +594,22 @@ class product_product(osv.osv):
     def unlink(self, cr, uid, ids, context=None):
         unlink_ids = []
         unlink_product_tmpl_ids = []
+        ########### CUSTOM DD ############
+        # Add context active_test false to avoid deleting a template if other variant are not active
+        if context is None:
+            context = {}
+        ########## END CUSTOM DD #########
         for product in self.browse(cr, uid, ids, context=context):
             # Check if product still exists, in case it has been unlinked by unlinking its template
             if not product.exists():
                 continue
             tmpl_id = product.product_tmpl_id.id
             # Check if the product is last product of this template
-            other_product_ids = self.search(cr, uid, [('product_tmpl_id', '=', tmpl_id), ('id', '!=', product.id)], context=context)
+            ########### CUSTOM DD ############
+            ctx = context.copy()
+            ctx['active_test'] = False
+            other_product_ids = self.search(cr, uid, [('product_tmpl_id', '=', tmpl_id), ('id', '!=', product.id)], context=ctx)
+            ########## END CUSTOM DD #########
             if not other_product_ids:
                 unlink_product_tmpl_ids.append(tmpl_id)
             unlink_ids.append(product.id)

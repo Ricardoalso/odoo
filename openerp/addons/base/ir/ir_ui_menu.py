@@ -114,7 +114,6 @@ class ir_ui_menu(osv.osv):
 
         ids = super(ir_ui_menu, self).search(cr, uid, args, offset=0,
             limit=None, order=order, context=context, count=False)
-
         if not ids:
             if count:
                 return 0
@@ -342,6 +341,7 @@ class ir_ui_menu(osv.osv):
 
     _columns = {
         'name': fields.char('Menu', size=64, required=True, translate=True),
+        'active': fields.boolean('Active'),
         'sequence': fields.integer('Sequence'),
         'child_id': fields.one2many('ir.ui.menu', 'parent_id', 'Child IDs'),
         'parent_id': fields.many2one('ir.ui.menu', 'Parent Menu', select=True, ondelete="restrict"),
@@ -385,6 +385,7 @@ class ir_ui_menu(osv.osv):
         'icon': 'STOCK_OPEN',
         'icon_pict': ('stock', ('STOCK_OPEN', 'ICON_SIZE_MENU')),
         'sequence': 10,
+        'active': True,
     }
     _order = "sequence,id"
     _parent_store = True

@@ -240,7 +240,6 @@ class mail_thread(osv.AbstractModel):
         """
         if context is None:
             context = {}
-
         # subscribe uid unless asked not to
         if not context.get('mail_create_nosubscribe'):
             pid = self.pool['res.users'].browse(cr, SUPERUSER_ID, uid).partner_id.id
@@ -599,7 +598,8 @@ class mail_thread(osv.AbstractModel):
         if local_parts:
             mail_alias = self.pool.get('mail.alias')
             alias_ids = mail_alias.search(cr, uid, [('alias_name', 'in', local_parts)])
-            if alias_ids:
+            #TODO bugged/broken V7 feature for notifying user
+            if False:#alias_ids:
                 routes = []
                 for alias in mail_alias.browse(cr, uid, alias_ids, context=context):
                     user_id = alias.alias_user_id.id
@@ -812,7 +812,9 @@ class mail_thread(osv.AbstractModel):
         # Content-Type: multipart/related;
         #   boundary="_004_3f1e4da175f349248b8d43cdeb9866f1AMSPR06MB343eurprd06pro_";
         #   type="text/html"
-        if not message.is_multipart() or message.get('content-type', '').startswith("text/"):
+        if not message.get('content-type', '').startswith("application/octet-stream") \
+                and (not message.is_multipart()
+                     or message.get('content-type', '').startswith("text/")):
             encoding = message.get_content_charset()
             body = message.get_payload(decode=True)
             body = tools.ustr(body, encoding, errors='replace')
@@ -1083,7 +1085,6 @@ class mail_thread(osv.AbstractModel):
             attachments = {}
         mail_message = self.pool.get('mail.message')
         ir_attachment = self.pool.get('ir.attachment')
-
         assert (not thread_id) or \
                 isinstance(thread_id, (int, long)) or \
                 (isinstance(thread_id, (list, tuple)) and len(thread_id) == 1), \
@@ -1216,6 +1217,7 @@ class mail_thread(osv.AbstractModel):
         # Avoid warnings about non-existing fields
         for x in ('from', 'to', 'cc'):
             values.pop(x, None)
+
 
         # Create and auto subscribe the author
         msg_id = mail_message.create(cr, uid, values, context=context)

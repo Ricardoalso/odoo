@@ -345,9 +345,14 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
     },
     on_groups_started: function() {
         var self = this;
-        if (this.group_by) {
+        if (this.group_by || this.fields_keys.indexOf("sequence") !== -1) {
             // Kanban cards drag'n'drop
-            var $columns = this.$el.find('.oe_kanban_column .oe_kanban_column_cards');
+            if (this.group_by) {
+                $columns = this.$el.find('.oe_kanban_column .oe_kanban_column_cards, .oe_kanban_column .oe_kanban_folded_column_cards');
+            } else {
+                $columns = this.$el.find('.oe_kanban_column_cards');
+            }
+
             $columns.sortable({
                 handle : '.oe_kanban_draghandle',
                 start: function(event, ui) {
@@ -666,6 +671,12 @@ instance.web_kanban.KanbanGroup = instance.web.Widget.extend({
         var $list_header = this.$records.find('.oe_kanban_group_list_header');
         var $show_more = this.$records.find('.oe_kanban_show_more');
         var $cards = this.$records.find('.oe_kanban_column_cards');
+
+        if (records.length > 0 && records[0].hasOwnProperty('sequence')) {
+            records.sort(function(a, b) {
+                return a.sequence - b.sequence;
+            });
+        };
 
         _.each(records, function(record) {
             var rec = new instance.web_kanban.KanbanRecord(self, record);
