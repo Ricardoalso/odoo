@@ -343,9 +343,11 @@ class HolidaysAllocation(models.Model):
         default_holiday_status_id = self._default_holiday_status_id()
         for holiday in self:
             holiday.manager_id = holiday.employee_id and holiday.employee_id.parent_id
-            if holiday.employee_id.user_id != self.env.user and holiday._origin.employee_id != holiday.employee_id:
-                holiday.holiday_status_id = False
-            elif not holiday.holiday_status_id and not holiday._origin.holiday_status_id:
+            # IDIAP-17 - When changing Employee do not reset to False the field Time Off Type
+            # if holiday.employee_id.user_id != self.env.user and holiday._origin.employee_id != holiday.employee_id:
+            #     holiday.holiday_status_id = False
+            #
+            if not holiday.holiday_status_id and not holiday._origin.holiday_status_id:
                 holiday.holiday_status_id = default_holiday_status_id
 
     @api.depends('holiday_status_id', 'allocation_type', 'number_of_hours_display', 'number_of_days_display')
