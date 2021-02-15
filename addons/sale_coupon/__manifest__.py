@@ -17,6 +17,7 @@
         'views/res_config_settings_views.xml',
         'report/sale_coupon_report.xml',
         'report/sale_coupon_report_templates.xml',
+        'data/ir_cron_data.xml',
         'data/sale_coupon_email_data.xml',
     ],
     'demo': [
