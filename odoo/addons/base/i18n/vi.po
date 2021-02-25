@@ -3303,6 +3303,8 @@ msgid ""
 "\n"
 "Employee contracts files will be automatically integrated to the Document app.\n"
 msgstr ""
+"\n"
+"Các tệp hợp đồng nhân viên sẽ được tự động tích hợp vào ứng dụng Tài liệu.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_documents_hr_payroll
@@ -3310,6 +3312,8 @@ msgid ""
 "\n"
 "Employee payslips will be automatically integrated to the Document app.\n"
 msgstr ""
+"\n"
+"Phiếu lương của nhân viên sẽ được tự động tích hợp vào ứng dụng Tài liệu.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_utm
@@ -3317,6 +3321,8 @@ msgid ""
 "\n"
 "Enable management of UTM trackers: campaign, medium, source.\n"
 msgstr ""
+"\n"
+"Cho phép quản lý trình theo dõi UTM: chiến dịch, phương tiện, nguồn.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_address_extended
@@ -3640,6 +3646,9 @@ msgid ""
 "Generate Coupons from Helpdesks tickets\n"
 "    "
 msgstr ""
+"\n"
+"Tạo phiếu giảm giá từ thẻ hỗ trợ\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_mx_edi_landing
@@ -5463,6 +5472,9 @@ msgid ""
 "Repair Products from helpdesk tickets\n"
 "    "
 msgstr ""
+"\n"
+"Sửa sản phẩm từ thẻ hỗ trợ\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_fetchmail
@@ -11028,17 +11040,17 @@ msgstr "Brazilian - Accounting"
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_amazon_delivery
 msgid "Bridge module between Amazon Connector and Delivery"
-msgstr ""
+msgstr "Mô-đun cầu nối giữa Amazon Connector và Giao hàng"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_amazon_taxcloud
 msgid "Bridge module between Amazon Connector and TaxCloud"
-msgstr ""
+msgstr "Mô-đun cầu nối giữa Amazon Connector và TaxCloud"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_timesheet_purchase
 msgid "Bridge module between Sales Timesheet and Purchase"
-msgstr ""
+msgstr "Mô-đun cầu nối giữa Bảng chấm công bán hàng và Mua hàng"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_helpdesk
@@ -11049,7 +11061,7 @@ msgstr "Bridge module for helpdesk modules using the website."
 #. module: base
 #: model:ir.module.module,summary:base.module_project_enterprise
 msgid "Bridge module for project and enterprise"
-msgstr ""
+msgstr "Mô-đun cầu nối cho dự án và doanh nghiệp"
 
 #. module: base
 #: model:res.country,name:base.io
@@ -11287,7 +11299,7 @@ msgstr ""
 #: code:addons/base/models/res_lang.py:0
 #, python-format
 msgid "Cannot deactivate a language that is currently used by contacts."
-msgstr ""
+msgstr "Không thể bỏ kích hoạt 1 ngôn ngữ đang được dùng bởi người dùng."
 
 #. module: base
 #: code:addons/base/models/res_lang.py:0
@@ -13010,7 +13022,7 @@ msgstr "Ngày"
 #: model:ir.module.module,shortdesc:base.module_account_debit_note
 #: model:ir.module.module,summary:base.module_account_debit_note
 msgid "Debit Notes"
-msgstr ""
+msgstr "Số giấy ghi nợ"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_debug
@@ -13103,7 +13115,7 @@ msgstr "Báo cáo được định nghĩa"
 #. module: base
 #: model:ir.module.module,summary:base.module_web_map
 msgid "Defines the map view for odoo enterprise"
-msgstr ""
+msgstr "Xác định chế độ xem bản đồ cho odoo Enterprise"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_constraint__definition
@@ -14756,6 +14768,12 @@ msgid ""
 "Technical Details:\n"
 "%s"
 msgstr ""
+"File %r không được nhập do tệp không đúng định dạng.\n"
+"\n"
+"Sự cố này có thể do các thông tin nhập trùng lặp khi liên kết đến cùng một trường. Vui lòng kiểm tra nội dung của file  bạn đang cố gắng nhập.\n"
+"\n"
+"Chi tiết kỹ thuật:\n"
+"%s"
 
 #. module: base
 #: code:addons/base/wizard/base_import_language.py:0
@@ -15954,6 +15972,8 @@ msgid ""
 "Helps you manage your mass mailing to design\n"
 "professional emails and reuse templates."
 msgstr ""
+"Giúp bạn quản lý việc gửi thư hàng loạt để thiết kế\n"
+"email chuyên nghiệp và sử dụng lại các mẫu."
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_human_resources_payroll
@@ -19658,7 +19678,7 @@ msgstr "Norway - Accounting"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_no_saft
 msgid "Norwegian Standard Audit File for Tax"
-msgstr ""
+msgstr "Tệp Kiểm toán Tiêu chuẩn Na Uy về Thuế"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_module_module__state__uninstalled
@@ -23424,7 +23444,7 @@ msgstr "Quản lý kho cho thuê"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_renting_sign
 msgid "Rental/Sign Bridge"
-msgstr ""
+msgstr "Cầu cho thuê / chữ ký"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_repair
@@ -27969,6 +27989,9 @@ msgid ""
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
 "Anywhere else, time values are computed according to the time offset of your web client."
 msgstr ""
+"Khi in tài liệu và xuất / nhập dữ liệu, các giá trị thời gian được tính theo múi giờ này.\n"
+"Nếu múi giờ không được cài, UTC (Giờ phối hợp quốc tế) sẽ được sử dụng.\n"
+"Ở bất kỳ nơi nào khác, giá trị thời gian được tính theo thời gian bù đắp của ứng dụng web khách của bạn."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.sequence_view
