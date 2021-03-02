@@ -41,6 +41,7 @@
                             <span class="swissqr_text title">Payable to</span><br/>
                             <span class="swissqr_text content" t-field="o.partner_bank_id.acc_number"/><br/>
                             <span class="swissqr_text content" t-field="o.company_id.name"/><br/>
+                            <span class="swissqr_text content" t-field="o.company_id.street"/><br/>
                             <span class="swissqr_text content" t-field="o.company_id.country_id.code"/>
                             <span class="swissqr_text content" t-field="o.company_id.zip"/>
                             <span class="swissqr_text content" t-field="o.company_id.city"/><br/>
@@ -55,6 +56,8 @@
                                 <span class="swissqr_text content" t-field="o.partner_id.parent_id.name" /><br/>
                             </t>
                             <span class="swissqr_text content" t-field="o.partner_id.name"/><br/>
+                            <span class="swissqr_text content" t-field="o.partner_id.street"> </span>
+                            <span class="swissqr_text content" t-field="o.partner_id.street2"/><br/>
                             <span class="swissqr_text content" t-field="o.partner_id.country_id.code"/>
                             <span class="swissqr_text content" t-field="o.partner_id.zip"/>
                             <span class="swissqr_text content" t-field="o.partner_id.city"/><br/>
