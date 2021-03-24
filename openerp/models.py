@@ -3836,6 +3836,15 @@ class BaseModel(object):
 
         readonly = None
         self.check_field_access_rights(cr, user, 'write', vals.keys())
+        if self._name != 'ir.attachment' and not self._name.startswith('mail.'):
+            logged_vals = vals.copy()
+            if 'image' in vals:
+                logged_vals['image'] = 'N/A'
+            logging.getLogger('openerp.models').info(
+                'UID %d Model %s Record %s write(%s)',
+                user, self._name, ids, logged_vals
+            )
+
         deleted_related = defaultdict(list)
         for field in vals.keys():
             fobj = None
@@ -4114,6 +4123,14 @@ class BaseModel(object):
         vals = self._add_missing_default_values(vals)
         for field in itertools.chain(MAGIC_COLUMNS, ('parent_left', 'parent_right')):
             vals.pop(field, None)
+        if self._name != 'ir.attachment' and not self._name.startswith('mail.'):
+            logged_vals = vals.copy()
+            if 'image' in vals:
+                logged_vals['image'] = 'N/A'
+            logging.getLogger('openerp.models').info(
+                'UID %d Model %s Record %s create(%s)',
+                self.env.uid, self._name, self.ids, logged_vals
+            )
 
         # split up fields into old-style and pure new-style ones
         old_vals, new_vals, unknown = {}, {}, []
