@@ -84,7 +84,7 @@
                             <span class="swissqr_text title title_zone">Payment part</span><br/>
                         </div>
 
-                        <img class="swissqr" t-att-src="o.partner_bank_id.build_swiss_code_url(o.residual, o.currency_id.name, None, o.partner_id, None, o.reference, o.name or o.number)"/>
+                        <img class="swissqr" t-att-src="o.partner_bank_id.build_swiss_code_url(o.residual, o.currency_id.name, None, o.partner_id, None, o.reference, o.number)"/>
                         <img class="ch_cross" src="/l10n_ch/static/src/img/CH-Cross_7mm.png"/>
 
                         <div id="indications_zone" class="swissqr_column_right indication_zone">
@@ -102,8 +102,8 @@
                             </t>
 
                             <span class="swissqr_text title">Additional information</span><br/>
-                            <span class="swissqr_text content" t-esc="o.reference or o.name or o.number" t-if="not o.partner_bank_id._is_qr_iban()"/>
-                            <span class="swissqr_text content" t-esc="o.name or o.number" t-if="o.partner_bank_id._is_qr_iban()"/>
+                            <span class="swissqr_text content" t-esc="o.reference or o.number" t-if="not o.partner_bank_id._is_qr_iban()"/>
+                            <span class="swissqr_text content" t-esc="o.number" t-if="o.partner_bank_id._is_qr_iban()"/>
                             <br/>
 
                             <span class="swissqr_text title">Payable by</span><br/>
