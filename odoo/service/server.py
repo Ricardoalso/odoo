@@ -701,6 +701,8 @@ class PreforkServer(CommonServer):
     def long_polling_spawn(self):
         nargs = stripped_sys_argv()
         cmd = [sys.executable, sys.argv[0], 'gevent'] + nargs[1:]
+        lp_db_maxconn = int(os.environ.get("LONGPOLLING_DB_MAXCONN", config['db_maxconn']))
+        cmd += ['--db_maxconn', str(lp_db_maxconn_factor)]
         popen = subprocess.Popen(cmd)
         self.long_polling_pid = popen.pid
 
