@@ -100,7 +100,12 @@ var FiltersMenu = DropdownMenu.extend({
         var prop = new search_filters.ExtendedSearchProposition(this, this.fields);
         this.propositions.push(prop);
         this.$('.o_apply_filter').prop('disabled', false);
-        return prop.insertBefore(this.$addFilterMenu);
+        prop.insertBefore(this.$addFilterMenu);
+
+        return $(".dropdown-menu .dropdown-item-text select").click(function(e){
+            e.stopPropagation();
+        });
+	    
     },
     /**
      * Confirm a filter selection, creates it and add it to the menu
