@@ -170,6 +170,9 @@ var GroupByMenu = DropdownMenu.extend({
         this.$menu.append($generatorMenu);
         this.$addCustomGroup = this.$menu.find('.o_add_custom_group');
         this.$groupSelector = this.$menu.find('.o_group_selector');
+        $(".dropdown-menu .dropdown-item-text select").click(function(e){
+            e.stopPropagation();
+        });
     },
     /**
      * @private
