@@ -3840,6 +3840,10 @@ class BaseModel(object):
             logged_vals = vals.copy()
             if 'image' in vals:
                 logged_vals['image'] = 'N/A'
+            if 'image_medium' in vals:
+                logged_vals['image_medium'] = 'N/A'
+            if 'image_small' in vals:
+                logged_vals['image_small'] = 'N/A'
             logging.getLogger('openerp.models').info(
                 'UID %d Model %s Record %s write(%s)',
                 user, self._name, ids, logged_vals
@@ -4127,6 +4131,10 @@ class BaseModel(object):
             logged_vals = vals.copy()
             if 'image' in vals:
                 logged_vals['image'] = 'N/A'
+            if 'image_medium' in vals:
+                logged_vals['image_medium'] = 'N/A'
+            if 'image_small' in vals:
+                logged_vals['image_small'] = 'N/A'
             logging.getLogger('openerp.models').info(
                 'UID %d Model %s Record %s create(%s)',
                 self.env.uid, self._name, self.ids, logged_vals
