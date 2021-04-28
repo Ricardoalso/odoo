@@ -13,11 +13,11 @@
 # Egon Raamat <egon@avalah.ee>, 2020
 # Martin Aavastik <martin@avalah.ee>, 2020
 # Helen Sulaoja <helen@avalah.ee>, 2020
-# Algo Kärp <algokarp@gmail.com>, 2020
-# Piia Paurson <piia@avalah.ee>, 2020
-# Eneli Õigus <enelioigus@gmail.com>, 2021
-# atriine <triine@avalah.ee>, 2021
+# Triine Aavik <triine@avalah.ee>, 2021
 # Andre Roomet <andreroomet@gmail.com>, 2021
+# Eneli Õigus <enelioigus@gmail.com>, 2021
+# Algo Kärp <algokarp@gmail.com>, 2021
+# Piia Paurson <piia@avalah.ee>, 2021
 # 
 msgid ""
 msgstr ""
@@ -25,7 +25,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:11+0000\n"
-"Last-Translator: Andre Roomet <andreroomet@gmail.com>, 2021\n"
+"Last-Translator: Piia Paurson <piia@avalah.ee>, 2021\n"
 "Language-Team: Estonian (https://www.transifex.com/odoo/teams/41243/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -266,7 +266,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/tours/mail.js:26
+#: code:addons/mail/static/src/js/tours/mail.js:0
 #, python-format
 msgid "<p>Create a public or private channel.</p>"
 msgstr ""
@@ -343,6 +343,8 @@ msgid ""
 "<strong>Internal communication</strong>: Replying will post an internal "
 "note. Followers won't receive any email notification."
 msgstr ""
+"<strong>Ettevõttesisene suhtlus</strong>Vastamine jätab Odoosse sisemise "
+"märkuse. Jälgijad ei saa e-maili teavitusi."
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.email_compose_message_wizard_form
@@ -912,7 +914,7 @@ msgstr "Automaane kustutamine"
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_view_form
 msgid "Auto Subscribe Groups"
-msgstr ""
+msgstr "Automaatne tellimine gruppidele"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__group_ids
@@ -2052,7 +2054,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_thread_cc__email_cc
 msgid "Email cc"
-msgstr ""
+msgstr "Koopia"
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_compose_message
@@ -2344,7 +2346,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/chatter.xml:0
 #, python-format
 msgid "Followers of"
-msgstr ""
+msgstr "Jälgijad dokumendil "
 
 #. module: mail
 #: model:ir.model.fields.selection,name:mail.selection__mail_alias__alias_contact__followers
@@ -2359,7 +2361,7 @@ msgid "Following"
 msgstr "Jälgin"
 
 #. module: mail
-#: code:addons/mail/models/mail_channel.py:778
+#: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "Following invites are invalid as user groups do not match: %s"
 msgstr ""
@@ -3044,7 +3046,7 @@ msgstr "Lahku sellest kanalist"
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_thread_cc__email_cc
 msgid "List of cc from incoming emails."
-msgstr ""
+msgstr "Saabuvate kirjade koopiate loend."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_wizard_invite__channel_ids
@@ -4122,6 +4124,18 @@ msgid "Online"
 msgstr "Online"
 
 #. module: mail
+#: code:addons/mail/models/mail_message.py:0
+#, python-format
+msgid "Only administrators are allowed to export mail message"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_message.py:0
+#, python-format
+msgid "Only administrators are allowed to use grouped read on message model"
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid ""
@@ -4436,7 +4450,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_bounce_catchall
 msgid "Please contact us instead using"
-msgstr ""
+msgstr "Palun kontakteeruge meiega selle asemel, et kasutada"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_send_guidelines
@@ -4827,6 +4841,8 @@ msgid ""
 "Reply email address. Setting the reply_to bypasses the automatic thread "
 "creation."
 msgstr ""
+"Vastusmeili aadress. Määrates reply_to pääsed ümber automaatsest "
+"lõimeloomest."
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__reply_to
@@ -5697,7 +5713,7 @@ msgstr ""
 #: model:ir.model.fields,help:mail.field_res_partner__activity_exception_decoration
 #: model:ir.model.fields,help:mail.field_res_users__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Kirjel oleva erandtegevuse tüüp."
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__uuid
@@ -6230,19 +6246,19 @@ msgid ""
 msgstr ""
 
 #. module: mail
+#: code:addons/mail/models/mail_alias.py:0
+#, python-format
+msgid ""
+"You cannot use anything else than unaccented latin characters in the alias "
+"address."
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid ""
 "You do not have the rights to modify fields related to moderation on one of "
 "the channels you are modifying."
-msgstr ""
-
-#. module: mail
-#: code:addons/mail/models/mail_alias.py:89
-#, python-format
-msgid ""
-"You cannot use anything else than unaccented latin characters in the alias "
-"address."
 msgstr ""
 
 #. module: mail

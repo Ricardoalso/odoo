@@ -3,6 +3,7 @@ odoo.define('web.field_one_to_many_tests', function (require) {
 
 var AbstractField = require('web.AbstractField');
 var AbstractStorageService = require('web.AbstractStorageService');
+var fieldRegistry = require('web.field_registry');
 var FormView = require('web.FormView');
 var KanbanRecord = require('web.KanbanRecord');
 var ListRenderer = require('web.ListRenderer');
@@ -5517,6 +5518,34 @@ QUnit.module('fields', {}, function () {
             form.destroy();
         });
 
+        QUnit.test('nested x2many (non inline views and no widget on inner x2many in list)', async function (assert) {
+            assert.expect(5);
+
+            this.data.partner.records[0].p = [1];
+            const form = await createView({
+                View: FormView,
+                model: 'partner',
+                data: this.data,
+                arch: '<form><field name="p"/></form>',
+                archs: {
+                    'partner,false,list': '<tree><field name="turtles"/></tree>',
+                    'partner,false,form': '<form><field name="turtles" widget="many2many_tags"/></form>',
+                },
+                res_id: 1,
+            });
+
+            assert.containsOnce(form, '.o_data_row');
+            assert.strictEqual(form.$('.o_data_row').text(), '1 record');
+
+            await testUtils.dom.click(form.$('.o_data_row'));
+
+            assert.containsOnce(document.body, '.modal .o_form_view');
+            assert.containsOnce(document.body, '.modal .o_form_view .o_field_many2manytags .badge');
+            assert.strictEqual($('.modal .o_field_many2manytags').text().trim(), 'donatello');
+
+            form.destroy();
+        });
+
         QUnit.test('one2many (who contains display_name) with tree view and without form view', async function (assert) {
             assert.expect(1);
 
@@ -7128,6 +7157,43 @@ QUnit.module('fields', {}, function () {
             await testUtils.dom.clickFirst($('.modal .modal-footer .btn-primary'));
 
             await testUtils.form.clickSave(form);
+
+            form.destroy();
+        });
+
+        QUnit.test('nested one2manys with no widget in list and as invisible list in form', async function (assert) {
+            assert.expect(6);
+
+            this.data.partner.records[0].p = [1];
+
+            const form = await createView({
+                View: FormView,
+                model: 'partner',
+                data: this.data,
+                arch: `
+                    <form>
+                        <field name="p">
+                            <tree><field name="turtles"/></tree>
+                            <form><field name="turtles" invisible="1"/></form>
+                        </field>
+                    </form>`,
+                res_id: 1,
+            });
+
+            assert.containsOnce(form, '.o_data_row');
+            assert.strictEqual(form.$('.o_data_row .o_data_cell').text(), '1 record');
+
+            await testUtils.dom.click(form.$('.o_data_row'));
+
+            assert.containsOnce(document.body, '.modal .o_form_view');
+            assert.isNotVisible($('.modal .o_field_one2many'));
+
+            // Test possible caching issues
+            await testUtils.dom.click($('.modal .o_form_button_cancel'));
+            await testUtils.dom.click(form.$('.o_data_row'));
+
+            assert.containsOnce(document.body, '.modal .o_form_view');
+            assert.isNotVisible($('.modal .o_field_one2many'));
 
             form.destroy();
         });
@@ -9176,6 +9242,77 @@ QUnit.module('fields', {}, function () {
             await testUtils.form.clickSave(form);
 
             form.destroy();
+        });
+
+        QUnit.test('update a one2many from a custom field widget', async function (assert) {
+            // In this test, we define a custom field widget to render/update a one2many
+            // field. For the update part, we ensure that updating primitive fields of a sub
+            // record works. There is no guarantee that updating a relational field on the sub
+            // record would work. Deleting a sub record works as well. However, creating sub
+            // records isn't supported. There are obviously a lot of limitations, but the code
+            // hasn't been designed to support all this. This test simply encodes what can be
+            // done, and this comment explains what can't (and won't be implemented in stable
+            // versions).
+            assert.expect(3);
+
+            this.data.partner.records[0].p = [1, 2];
+            const MyRelationalField = AbstractField.extend({
+                events: {
+                    'click .update': '_onUpdate',
+                    'click .delete': '_onDelete',
+                },
+                async _render() {
+                    const records = await this._rpc({
+                        method: 'read',
+                        model: 'partner',
+                        args: [this.value.res_ids],
+                    });
+                    this.$el.text(records.map(r => `${r.display_name}/${r.int_field}`).join(', '));
+                    this.$el.append($('<button class="update fa fa-edit">'));
+                    this.$el.append($('<button class="delete fa fa-trash">'));
+                },
+                _onUpdate() {
+                    this._setValue({
+                        operation: 'UPDATE',
+                        id: this.value.data[0].id,
+                        data: {
+                            display_name: 'new name',
+                            int_field: 44,
+                        },
+                    });
+                },
+                _onDelete() {
+                    this._setValue({
+                        operation: 'DELETE',
+                        ids: [this.value.data[0].id],
+                    });
+                },
+            });
+            fieldRegistry.add('my_relational_field', MyRelationalField);
+
+            const form = await createView({
+                View: FormView,
+                model: 'partner',
+                data: this.data,
+                arch: `
+                    <form>
+                        <field name="p" widget="my_relational_field"/>
+                    </form>`,
+                res_id: 1,
+            });
+
+            assert.strictEqual(form.$('.o_field_widget[name=p]').text(), 'first record/10, second record/9');
+
+            await testUtils.dom.click(form.$('button.update'));
+
+            assert.strictEqual(form.$('.o_field_widget[name=p]').text(), 'new name/44, second record/9');
+
+            await testUtils.dom.click(form.$('button.delete'));
+
+            assert.strictEqual(form.$('.o_field_widget[name=p]').text(), 'second record/9');
+
+            form.destroy();
+            delete fieldRegistry.map.my_relational_field;
         });
     });
 });
