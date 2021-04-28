@@ -275,12 +275,13 @@ class SaleCouponProgram(models.Model):
         Returns the programs when the reward is actually in the order lines
         """
         programs = self.env['sale.coupon.program']
+        order_lines_product_ids = set(order.mapped('order_line.product_id').ids)
         for program in self:
             if program.reward_type == 'product' and \
-               not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
+               not program.reward_product_id.id in order_lines_product_ids:
                 continue
             elif program.reward_type == 'discount' and program.discount_apply_on == 'specific_products' and \
-               not order.order_line.filtered(lambda line: line.product_id in program.discount_specific_product_ids):
+               not set(program.discount_specific_product_ids.ids) & order_lines_product_ids:
                 continue
             programs |= program
         return programs
