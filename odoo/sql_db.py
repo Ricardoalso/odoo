@@ -85,8 +85,8 @@ def clear_env(cr):
             break
 
 import re
-re_from = re.compile('.* from "?([a-zA-Z_0-9]+)"? .*$')
-re_into = re.compile('.* into "?([a-zA-Z_0-9]+)"? .*$')
+re_from = re.compile('.* from +"?([a-zA-Z_0-9.]+)[", ].*$')
+re_into = re.compile('.* into +"?([a-zA-Z_0-9.]+)[", ].*$')
 
 sql_counter = 0
 
@@ -243,7 +243,7 @@ class Cursor(object):
 
         if self.sql_log:
             encoding = psycopg2.extensions.encodings[self.connection.encoding]
-            _logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
+            #_logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
         now = time.time()
         try:
             params = params or None
@@ -264,7 +264,8 @@ class Cursor(object):
         if self.sql_log:
             delay *= 1E6
 
-            query_lower = self._obj.query.decode().lower()
+            query_lower = self._obj.query.decode().lower().strip().replace('\n', ' ')
+            _logger.info('\nQUERY:\t%s\t%s', query_lower, delay/1e3)
             res_from = re_from.match(query_lower)
             if res_from:
                 self.sql_from_log.setdefault(res_from.group(1), [0, 0])
@@ -293,13 +294,13 @@ class Cursor(object):
             if sqllogs[type]:
                 sqllogitems = sqllogs[type].items()
                 _logger.debug("SQL LOG %s:", type)
-                for r in sorted(sqllogitems, key=lambda k: k[1]):
-                    delay = timedelta(microseconds=r[1][1])
-                    _logger.debug("table: %s: %s/%s", r[0], delay, r[1][0])
-                    sum += r[1][1]
+                # for r in sorted(sqllogitems, key=lambda k: k[1][1]):
+                #     delay = timedelta(microseconds=r[1][1])
+                #     _logger.debug("table: %s: %s/%s", r[0], delay, r[1][0])
+                #     sum += r[1][1]
                 sqllogs[type].clear()
             sum = timedelta(microseconds=sum)
-            _logger.debug("SUM %s:%s/%d [%d]", type, sum, self.sql_log_count, sql_counter)
+            #_logger.debug("SUM %s:%s/%d [%d]", type, sum, self.sql_log_count, sql_counter)
             sqllogs[type].clear()
         process('from')
         process('into')
