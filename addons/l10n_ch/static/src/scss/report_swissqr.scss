@@ -1,5 +1,9 @@
 body.l10n_ch_qr {
     padding:0;
+    #wrapwrap {
+        width:210mm;
+        height:297mm;
+    }
 
     /* Disable custom bakground */
     .o_report_layout_background {
@@ -21,35 +25,32 @@ body.l10n_ch_qr {
         position: absolute;
         background-color: white;
         border-color:black;
-        border-width: 1pt 1pt 1pt 1pt;
+        border-width: 1px 0px 1px 1px;
         border-style: solid;
-        height: 131mm;    /* 105 * 1.25 - 0.25 mm to cope for rendering issues due to header (probably a rounding issue) */
-        width: 77.5mm;    /* 62 * 1.25 */
-        top: 240mm;       /* 192 * 1.25 */
+        height: 105mm;
+        width: 62mm;
+        top: 184mm;
         left: 0mm;
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
     }
 
     .swissqr_body {
         position: absolute;
         background-color: white;
         border-color:black;
-        border-width: 1pt 1pt 1pt 1pt;
+        border-width: 1px 1px 1px 1px;
         border-style: solid;
-        height: 131mm;    /* 105 * 1.25 - 0.25mm to cope for rendering issues due to header (probably a rounding issue)*/
-        width: 185mm;     /* 148 * 1.25 */
-        top: 240mm;       /* 192 * 1.25 */
-        left: 77.5mm;     /* 62 * 1.25 */
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
-
+        height: 105mm;
+        width: 148mm;
+        top: 184mm;
+        left: 62.0mm;
     }
 
     .swissqr {
         position: absolute;
-        height: 57.5mm; /* 46 * 1.25 */
-        width: 57.5mm; /* 46 * 1.25 */
-        top: 20mm; /* 16 * 1.25 */
-        left: 6.25mm;  /* 5 * 1.25 min readability margin for QR */
+        height: 46mm; /* 46 * 1.25 */
+        width: 46mm; /* 46 * 1.25 */
+        top: 17mm; /* 16 * 1.25 */
+        left: 5mm;  /* 5 * 1.25 min readability margin for QR */
         /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
     }
 
