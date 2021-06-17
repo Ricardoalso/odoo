@@ -36,11 +36,11 @@
                 <div class="swissqr_content">
 
                     <div class="swissqr_receipt" t-if="o.invoice_partner_bank_id.validate_swiss_code_arguments(o.invoice_partner_bank_id.currency_id, o.partner_id, o.invoice_payment_ref) and ((o.currency_id.name == 'EUR') or (o.currency_id.name == 'CHF'))">
-                        <div id="receipt_title_zone" class="main_title swissqr_column_left">
+                        <div id="receipt_title_zone" class="main_title">
                             <span>Receipt</span>
                         </div>
 
-                        <div id="receipt_indication_zone" class="swissqr_column_left receipt_indication_zone">
+                        <div id="receipt_indication_zone" class="receipt_indication_zone">
                             <div class="swissqr_text">
                               <span class="title">Account / Payable to</span><br/>
                               <span class="content" t-field="o.invoice_partner_bank_id.acc_number"/><br/>
@@ -69,7 +69,7 @@
                             </div>
 
                         </div>
-                        <div id="receipt_amount_zone" class="swissqr_column_left receipt_amount_zone">
+                        <div id="receipt_amount_zone" class="receipt_amount_zone">
                             <div class="swissqr_text">
                                 <div class="column">
                                     <span class="title">Currency</span><br/>
@@ -90,14 +90,14 @@
                     </div>
 
                     <div class="swissqr_body" t-if="o.invoice_partner_bank_id.validate_swiss_code_arguments(o.invoice_partner_bank_id.currency_id, o.partner_id, o.invoice_payment_ref) and ((o.currency_id.name == 'EUR') or (o.currency_id.name == 'CHF'))">
-                        <div class="main_title swissqr_column_left">
+                        <div class="main_title">
                             <span>Payment Part</span>
                         </div>
 
                         <img class="swissqr" t-att-src="o.invoice_partner_bank_id.build_swiss_code_url(o.amount_residual, o.currency_id.name, None, o.partner_id, None, o.invoice_payment_ref, o.ref or o.name)"/>
                         <img class="ch_cross" src="/l10n_ch/static/src/img/CH-Cross_7mm.png"/>
 
-                        <div id="indications_zone" class="swissqr_column_right indication_zone">
+                        <div id="indications_zone" class="indication_zone">
                             <div class="swissqr_text">
                                 <span class="title">Account / Payable to</span><br/>
                                 <span class="content" t-field="o.invoice_partner_bank_id.acc_number"/><br/>
@@ -134,7 +134,7 @@
                             </div>
 
                         </div>
-                        <div id="amount_zone" class="swissqr_column_left amount_zone">
+                        <div id="amount_zone" class="amount_zone">
                             <div class="swissqr_text">
                                 <div class="column">
                                     <span class="title">Currency</span><br/>
