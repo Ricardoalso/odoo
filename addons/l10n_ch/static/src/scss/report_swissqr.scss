@@ -1,5 +1,17 @@
+@font-face {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/l10n_ch/static/src/font/Arial.ttf');
+}
+
 body.l10n_ch_qr {
-    padding:0;
+    padding: 0;
+
+    #wrapwrap {
+        width: 210mm;
+        height: 297mm;
+    }
 
     /* Disable custom bakground */
     .o_report_layout_background {
@@ -19,61 +31,116 @@ body.l10n_ch_qr {
 
     .swissqr_receipt {
         position: absolute;
-        background-color: white;
-        border-color:black;
-        border-width: 1pt 1pt 1pt 1pt;
+        border-color: black black white white;
+        border-width: 0.7pt 0.7pt 0.7pt 0.7pt;
         border-style: solid;
-        height: 131mm;    /* 105 * 1.25 - 0.25 mm to cope for rendering issues due to header (probably a rounding issue) */
-        width: 77.5mm;    /* 62 * 1.25 */
-        top: 240mm;       /* 192 * 1.25 */
+        height: 105mm;
+        width: 62mm;
+        top: 192mm;
         left: 0mm;
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
+        padding: 5mm;
+
+        span {
+            font-family: Arial, Frutiger, Helvetica !important;
+        }
+
+        .swissqr_text {
+            padding-bottom: 9pt;
+
+            .title {
+                font-size: 6pt;
+                line-height: 9pt;
+            }
+
+            .content {
+                font-size: 8pt;
+                line-height: 9pt;
+            }
+        }
+
+        .receipt_amount_zone {
+
+            .title,
+            .content {
+                line-height: 11pt !important;
+            }
+        }
     }
 
     .swissqr_body {
         position: absolute;
-        background-color: white;
-        border-color:black;
-        border-width: 1pt 1pt 1pt 1pt;
+        border-color: black white white white;
+        border-width: 0.7pt 0.7pt 0.7pt 0.7pt;
         border-style: solid;
-        height: 131mm;    /* 105 * 1.25 - 0.25mm to cope for rendering issues due to header (probably a rounding issue)*/
-        width: 185mm;     /* 148 * 1.25 */
-        top: 240mm;       /* 192 * 1.25 */
-        left: 77.5mm;     /* 62 * 1.25 */
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
+        height: 105mm;
+        width: 148mm;
+        top: 192mm;
+        left: 62.0mm;
+        padding: 5mm;
 
+        span {
+            font-family: Arial, Frutiger, Helvetica !important;
+        }
+
+        .indication_zone {
+            .swissqr_text {
+                padding-bottom: 11pt;
+
+                .title {
+                    font-size: 8pt;
+                    line-height: 11pt;
+                }
+
+                .content {
+                    font-size: 10pt;
+                    line-height: 11pt;
+                }
+            }
+        }
+
+        .amount_zone {
+            .title {
+                font-size: 8pt;
+                line-height: 11pt;
+            }
+
+            .content {
+                font-size: 10pt;
+                line-height: 13pt;
+            }
+        }
     }
 
     .swissqr {
         position: absolute;
-        height: 57.5mm; /* 46 * 1.25 */
-        width: 57.5mm; /* 46 * 1.25 */
-        top: 20mm; /* 16 * 1.25 */
-        left: 6.25mm;  /* 5 * 1.25 min readability margin for QR */
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
+        height: 46mm;
+        width: 46mm;
+        top: 17mm;
+        left: 5mm;
     }
 
     .ch_cross {
         position: absolute;
         background-color: white;
-        height: 8.75mm; /* 7 * 1.25 */
-        width: 8.75mm; /* 7 * 1.25 */
-        top: 44.375mm;  /* (16 + 23 - 7/2) * 1.25 = 41.5 * 1.25 */
-        left: 30.625mm; /* (5 + 23 - 7/2) * 1.25 = 24.5 * 1.25 */
-        /*These measures are multiplied by 1.25 here to fit the canvas size used by our reporting engine (1.25 times bigger than A4)*/
+        height: 7mm;
+        width: 7mm;
+        top: 36.5mm;
+        /* (17 + 23 - 7/2) */
+        left: 24.5mm;
+        /* (5 + 23 - 7/2) */
     }
 
     .swissqr_text {
         font-family: Arial, Frutiger, Helvetica;
         color: black;
         line-height: 1;
-        padding-top: 1em;
 
         .title {
             font-size: 8pt;
             font-weight: bold;
             margin-top: 2mm;
         }
+
         .content {
             font-size: 10pt;
         }
@@ -81,20 +148,11 @@ body.l10n_ch_qr {
     }
 
     .main_title {
-        margin-top: 5mm;
+        display: table-cell;
+        vertical-align: top;
+        height: 7mm;
         font-size: 11pt;
         font-weight: bold;
-    }
-
-    .swissqr_column_left {
-        position: absolute;
-        left: 5mm;
-    }
-
-    .swissqr_column_right {
-        position: absolute;
-        left: 70mm; /* (5 + 46 + 5) * 1.25 */
-        max-width: 90mm;
     }
 
     .procedure_zone {
@@ -102,16 +160,23 @@ body.l10n_ch_qr {
     }
 
     .receipt_indication_zone {
-        top: 10mm;
+        height: 56mm;
+        width: 52.0mm;
     }
 
     .indication_zone {
-        top: 10mm;
+        position: absolute;
+        top: 5mm;
+        left: 56mm;
+        height: 85mm;
+        width: 87.0mm;
     }
 
     .receipt_amount_zone {
         position: absolute;
-        top: 86mm;
+        top: 68mm;
+        height: 14mm;
+        width: 52.0mm;
 
         .column {
             margin-right: 5mm;
@@ -120,8 +185,14 @@ body.l10n_ch_qr {
     }
 
     .receipt_acceptance_point_zone {
-        position: relative;
-        top: 100mm;
+        position: absolute;
+        top: 82mm;
+        height: 18mm;
+        width: 52.0mm;
+
+        .title {
+            line-height: 8pt !important;
+        }
 
         .content {
             float: right;
@@ -132,7 +203,9 @@ body.l10n_ch_qr {
 
     .amount_zone {
         position: absolute;
-        top: 86mm;
+        top: 68mm;
+        width: 51mm;
+        height: 22mm;
 
         .column {
             margin-right: 5mm;
@@ -141,5 +214,3 @@ body.l10n_ch_qr {
     }
 
 }
-
-
