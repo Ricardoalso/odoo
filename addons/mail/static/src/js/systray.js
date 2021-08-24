@@ -281,7 +281,8 @@ var ActivityMenu = Widget.extend({
 
 });
 
-SystrayMenu.Items.push(MessagingMenu);
+// Hide Chatter to everyone in main menu
+//SystrayMenu.Items.push(MessagingMenu);
 SystrayMenu.Items.push(ActivityMenu);
 
 // to test activity menu in qunit test cases we need it
