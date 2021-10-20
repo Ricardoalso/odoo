@@ -397,7 +397,7 @@ class SaleOrder(models.Model):
             if not error_status.get('error'):
                 if program.promo_applicability == 'on_next_order':
                     order.state != 'cancel' and order._create_reward_coupon(program)
-                elif program.discount_line_product_id.id not in self.order_line.mapped('product_id').ids:
+                elif program.discount_line_product_id.id not in self.order_line.filtered("is_reward_line").mapped('product_id').ids:
                     self.write({'order_line': [(0, False, value) for value in self._get_reward_line_values(program)]})
                 order.no_code_promo_program_ids |= program
 
@@ -424,7 +424,7 @@ class SaleOrder(models.Model):
         applied_programs = order._get_applied_programs_with_rewards_on_current_order()
         for program in applied_programs.sorted(lambda ap: (ap.discount_type == 'fixed_amount', ap.discount_apply_on == 'on_order')):
             values = order._get_reward_line_values(program)
-            lines = order.order_line.filtered(lambda line: line.product_id == program.discount_line_product_id)
+            lines = order.order_line.filtered(lambda line: line.is_reward_line and line.product_id == program.discount_line_product_id)
             if program.reward_type == 'discount':
                 lines_to_remove = lines
                 lines_to_add = []
@@ -501,7 +501,7 @@ class SaleOrder(models.Model):
 
             # Remove their reward lines
             if product_ids_to_remove:
-                invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in product_ids_to_remove)
+                invalid_lines |= order.order_line.filtered(lambda line: line.is_reward_line and line.product_id.id in product_ids_to_remove)
 
         invalid_lines.unlink()
 
@@ -577,7 +577,7 @@ class SaleOrderLine(models.Model):
             if related_program:
                 line.order_id.no_code_promo_program_ids -= related_program
                 line.order_id.code_promo_program_id -= related_program
-                related_program_lines |= line.order_id.order_line.filtered(lambda l: l.product_id.id == related_program.discount_line_product_id.id) - line
+                related_program_lines |= line.order_id.order_line.filtered(lambda l: l.is_reward_line and l.product_id.id == related_program.discount_line_product_id.id) - line
         return super(SaleOrderLine, self | related_program_lines).unlink()
 
     def _compute_tax_id(self):
