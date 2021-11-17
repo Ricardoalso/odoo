@@ -303,6 +303,13 @@ class MrpBom(models.Model):
                         product_ids.add(bom_line.product_id.id)
                 boms_done.append((bom, {'qty': converted_line_quantity, 'product': current_product, 'original_qty': quantity, 'parent_line': current_line}))
             else:
+                if self.env.context.get("explode_all"):
+                    # SPECIFIC CASE FOR US!
+                    line_quantity = current_line.product_uom_id._compute_quantity(line_quantity, current_line.bom_id.product_uom_id)
+                    lines_done.append((current_line, {'qty': line_quantity, 'product': current_product, 'original_qty': quantity, 'parent_line': parent_line}))
+                    continue
+                    # END OF SPECIFIC CASE FOR US!
+
                 # We round up here because the user expects that if he has to consume a little more, the whole UOM unit
                 # should be consumed.
                 rounding = current_line.product_uom_id.rounding
