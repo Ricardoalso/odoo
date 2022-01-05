@@ -425,6 +425,11 @@ def binary_content(xmlid=None, model='ir.attachment', id=None, field='datas', un
         xmlid=xmlid, model=model, id=id, field=field, unique=unique, filename=filename, filename_field=filename_field,
         download=download, mimetype=mimetype, default_mimetype=default_mimetype, env=env)
 
+# Shared parameters for all login/signup flows
+SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error', 'scope', 'mode',
+                          'redirect', 'redirect_hostname', 'email', 'name', 'partner_id',
+                          'password', 'confirm_password', 'city', 'country_id', 'lang'}
+
 #----------------------------------------------------------
 # Odoo Web web Controllers
 #----------------------------------------------------------
@@ -463,7 +468,7 @@ class Home(http.Controller):
         if not request.uid:
             request.uid = odoo.SUPERUSER_ID
 
-        values = request.params.copy()
+        values = {k: v for k, v in request.params.items() if k in SIGN_UP_REQUEST_PARAMS}
         try:
             values['databases'] = http.db_list()
         except odoo.exceptions.AccessDenied:
