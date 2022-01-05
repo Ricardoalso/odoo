@@ -457,6 +457,11 @@ def content_disposition(filename):
         return "attachment; filename*=UTF-8''%s" % escaped
 
 
+# Shared parameters for all login/signup flows
+SIGN_UP_REQUEST_PARAMS = {'db', 'login', 'debug', 'token', 'message', 'error', 'scope', 'mode',
+                          'redirect', 'redirect_hostname', 'email', 'name', 'partner_id',
+                          'password', 'confirm_password', 'city', 'country_id', 'lang'}
+
 #----------------------------------------------------------
 # OpenERP Web web Controllers
 #----------------------------------------------------------
@@ -495,7 +500,7 @@ class Home(http.Controller):
         if not request.uid:
             request.uid = openerp.SUPERUSER_ID
 
-        values = request.params.copy()
+        values = {k: v for k, v in request.params.items() if k in SIGN_UP_REQUEST_PARAMS}
         if not redirect:
             redirect = '/web?' + request.httprequest.query_string
         values['redirect'] = redirect

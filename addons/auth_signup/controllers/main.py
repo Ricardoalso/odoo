@@ -23,7 +23,7 @@ import werkzeug
 
 import openerp
 from openerp.addons.auth_signup.res_users import SignupError
-from openerp.addons.web.controllers.main import ensure_db
+from openerp.addons.web.controllers.main import ensure_db, SIGN_UP_REQUEST_PARAMS
 from openerp import http
 from openerp.http import request
 from openerp.tools.translate import _
@@ -99,7 +99,7 @@ class AuthSignupHome(openerp.addons.web.controllers.main.Home):
 
     def get_auth_signup_qcontext(self):
         """ Shared helper returning the rendering context for signup and reset password """
-        qcontext = request.params.copy()
+        qcontext = {k: v for (k, v) in request.params.items() if k in SIGN_UP_REQUEST_PARAMS}
         qcontext.update(self.get_auth_signup_config())
         if qcontext.get('token'):
             try:
