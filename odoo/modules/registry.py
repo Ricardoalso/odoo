@@ -101,6 +101,7 @@ class Registry(Mapping):
                     cr.commit()
 
         registry.ready = True
+        registry.new = registry.init = registry.registries = None
 
         if update_module:
             # only in case of update, otherwise we'll have an infinite reload loop!
