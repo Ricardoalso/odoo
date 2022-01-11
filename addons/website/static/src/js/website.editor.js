@@ -1899,7 +1899,13 @@
             this.$("#video_id").val(video_id);
             this.$("#video_type").val(video_type);
 
-            this.$iframe.attr("src", this.get_url());
+            var src = "";
+            if (video_type) {
+                src = this.get_url();
+            } else {
+                console.error("Unsupported video URL")
+            }
+            this.$iframe.attr("src", src);
             return false;
         },
         save: function () {
