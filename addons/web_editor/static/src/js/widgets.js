@@ -834,11 +834,8 @@ function createVideoNode(url, options) {
         });
     } else {
         // this is not a known video link. Now what, Cat? Now what?
-        $video = $('<iframe>', {
-            width: '640',
-            height: '360',
-            src: url
-        });
+        $video = $('<iframe>');
+        console.error("Unsupported URL");
     }
 
     if (options.autoplay) {
