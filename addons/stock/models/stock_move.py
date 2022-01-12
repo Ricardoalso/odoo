@@ -640,6 +640,8 @@ class StockMove(models.Model):
                 for record in ops.linked_move_operation_ids:
                     move_qty = record.qty
                     move = record.move_id
+                    if move.id not in main_domain:
+                        continue
                     domain = main_domain[move.id]
                     for lot in lot_qty:
                         if float_compare(lot_qty[lot], 0, precision_rounding=rounding) > 0 and float_compare(move_qty, 0, precision_rounding=rounding) > 0:
