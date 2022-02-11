@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-11 22:41+0000\n"
-"PO-Revision-Date: 2022-02-11 22:41+0000\n"
+"POT-Creation-Date: 2022-02-11 22:51+0000\n"
+"PO-Revision-Date: 2022-02-11 22:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #. module: l10n_ch
 #: model:ir.actions.report,print_report_name:l10n_ch.l10n_ch_qr_report
 msgid "'QR-bill-%s' % object.name"
-msgstr ""
+msgstr "'QR-facture-%s' % object.name"
 
 #. module: l10n_ch
 #: model:account.tax.template,description:l10n_ch.vat_other_movements_910
@@ -429,7 +429,7 @@ msgstr ""
 #. module: l10n_ch
 #: model:account.tax,description:l10n_ch.1_vat_25
 msgid "2.5% Lief./DL (exkl. MWST)"
-msgstr ""
+msgstr "2.5%"
 
 #. module: l10n_ch
 #: model:account.tax,description:l10n_ch.1_vat_25_incl
@@ -1288,7 +1288,7 @@ msgstr ""
 #. module: l10n_ch
 #: model:account.tax,description:l10n_ch.1_vat_77
 msgid "7.7% Lief./DL (exkl. MWST)"
-msgstr ""
+msgstr "7.7%"
 
 #. module: l10n_ch
 #: model:account.tax,description:l10n_ch.1_vat_77_incl
@@ -1410,62 +1410,62 @@ msgstr ""
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span class=\"title\">Acceptance point</span>"
-msgstr ""
+msgstr "<span class=\"title\">Point de dépôt</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span class=\"title\">Reference</span>"
-msgstr ""
+msgstr "<span class=\"title\">Référence</span><br/>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Account / Payable to</span>"
-msgstr ""
+msgstr "<span>Compte / À payer à</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Account / Payable to</span><br/>"
-msgstr ""
+msgstr "<span>Compte / À payer à</span><br/>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Additional information</span>"
-msgstr ""
+msgstr "<span>Informations supplémentaires</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Amount</span>"
-msgstr ""
+msgstr "<span>Montant</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Amount</span><br/>"
-msgstr ""
+msgstr "<span>Montant</span><br/>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Currency</span>"
-msgstr ""
+msgstr "<span>Monnaie</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Payable by</span>"
-msgstr ""
+msgstr "<span>Payable par</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Payment part</span>"
-msgstr ""
+msgstr "<span>Section paiement</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Receipt</span>"
-msgstr ""
+msgstr "<span>Récépissé</span>"
 
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "<span>Reference</span>"
-msgstr ""
+msgstr "<span>Référence</span>"
 
 #. module: l10n_ch
 #: model:account.tax.report.line,name:l10n_ch.account_tax_report_line_chtax_autres_mouv
@@ -1475,17 +1475,17 @@ msgstr ""
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_res_bank
 msgid "Bank"
-msgstr ""
+msgstr "Banque"
 
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_res_partner_bank
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Comptes bancaires"
 
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Importer Relevé"
 
 #. module: l10n_ch
 #: model:account.tax.report.line,name:l10n_ch.account_tax_report_line_calc_impot_base
@@ -1548,17 +1548,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch.field_account_bank_statement_import_journal_creation__invoice_reference_model
 #: model:ir.model.fields,field_description:l10n_ch.field_account_journal__invoice_reference_model
 msgid "Communication Standard"
-msgstr ""
+msgstr "Standard de communication"
 
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de config"
 
 #. module: l10n_ch
 #: model:ir.model.fields,field_description:l10n_ch.field_account_bank_statement_line__l10n_ch_currency_name
@@ -1578,7 +1578,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:l10n_ch.field_res_partner_bank__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: l10n_ch
 #: model:account.tax.template,name:l10n_ch.vat_other_movements_910
@@ -1609,7 +1609,7 @@ msgstr ""
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_mail_template
 msgid "Email Templates"
-msgstr ""
+msgstr "Modèles de courriel"
 
 #. module: l10n_ch
 #: model:ir.model.fields,field_description:l10n_ch.field_res_config_settings__l10n_ch_isr_scan_line_left
@@ -1701,7 +1701,7 @@ msgstr ""
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Pièce comptable"
 
 #. module: l10n_ch
 #: model:ir.model.fields,field_description:l10n_ch.field_account_bank_statement_line__l10n_ch_isr_needs_fixing
@@ -1776,7 +1776,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch.field_res_config_settings____last_update
 #: model:ir.model.fields,field_description:l10n_ch.field_res_partner_bank____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: l10n_ch
 #: model:account.account.template,name:l10n_ch.l10nch_chart_template_liquidity_transfer
@@ -1833,7 +1833,7 @@ msgstr ""
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.isr_invoice_form
 msgid "Print QR-bill"
-msgstr ""
+msgstr "Imprimer QR-facture"
 
 #. module: l10n_ch
 #: model:ir.model.fields,field_description:l10n_ch.field_res_company__l10n_ch_isr_print_bank_location
@@ -1860,12 +1860,12 @@ msgstr ""
 #. module: l10n_ch
 #: model_terms:ir.ui.view,arch_db:l10n_ch.l10n_ch_swissqr_template
 msgid "QR-bill for invoice"
-msgstr ""
+msgstr "QR-facture"
 
 #. module: l10n_ch
 #: model:ir.model,name:l10n_ch.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Signaler l'action"
 
 #. module: l10n_ch
 #: model:account.tax.report.line,name:l10n_ch.account_tax_report_line_chtax_solde
@@ -2196,6 +2196,8 @@ msgid ""
 "You can choose different models for each type of reference. The default one "
 "is the Odoo reference."
 msgstr ""
+"Vous pouvez choisir différents modèles par type de référence. Le modèle par "
+"défaut est la référence Odoo."
 
 #. module: l10n_ch
 #: code:addons/l10n_ch/models/account_invoice.py:0
