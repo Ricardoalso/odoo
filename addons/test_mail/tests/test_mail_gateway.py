@@ -14,7 +14,11 @@ from odoo.addons.test_mail.models.test_mail_models import MailTestGateway
 from odoo.addons.test_mail.tests.common import TestMailCommon
 from odoo.tests import tagged
 from odoo.tests.common import users
-from odoo.tools import email_split_and_format, formataddr, mute_logger
+from odoo.tools import email_split_and_format, mute_logger, pycompat, formataddr
+
+
+def from_string(text):
+    return email.message_from_string(pycompat.to_text(text), policy=email.policy.SMTP)
 
 
 @tagged('mail_gateway')
@@ -51,18 +55,6 @@ class TestEmailParsing(TestMailCommon):
         res = self.env['mail.thread'].message_parse(self.from_string(test_mail_data.MAIL_SINGLE_BINARY))
         self.assertEqual(res['body'], '')
         self.assertEqual(res['attachments'][0][0], 'thetruth.pdf')
-
-        res = self.env['mail.thread'].message_parse(self.from_string(test_mail_data.MAIL_MULTIPART_WEIRD_FILENAME))
-        self.assertEqual(res['attachments'][0][0], '62_@;,][)=.(ÇÀÉ.txt')
-
-    def test_message_parse_bugs(self):
-        """ Various corner cases or message parsing """
-        # message without Final-Recipient
-        self.env['mail.thread'].message_parse(self.from_string(test_mail_data.MAIL_NO_FINAL_RECIPIENT))
-
-        # message with empty body (including only void characters)
-        res = self.env['mail.thread'].message_parse(self.from_string(test_mail_data.MAIL_NO_BODY))
-        self.assertEqual(res['body'], '\n \n', 'Gateway should not crash with void content')
 
     def test_message_parse_eml(self):
         # Test that the parsing of mail with embedded emails as eml(msg) which generates empty attachments, can be processed.
