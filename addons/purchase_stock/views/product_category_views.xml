@@ -5,6 +5,9 @@
         <field name="model">product.category</field>
         <field name="inherit_id" ref="purchase.view_category_property_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//group[@name='logistics']" position="after">
+                <field name="property_valuation" invisible="1"/>
+            </xpath>
             <field name="property_account_creditor_price_difference_categ" position="attributes">
                 <attribute name="attrs">{'invisible':[('property_valuation', '=', 'manual_periodic')]}</attribute>
             </field>
