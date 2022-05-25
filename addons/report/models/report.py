@@ -584,7 +584,7 @@ class Report(models.Model):
 
         return merged_file_path
 
-    def barcode(self, barcode_type, value, width=600, height=100, humanreadable=0):
+    def barcode(self, barcode_type, value, width=600, height=100, humanreadable=0, barlevel='L'):
         if barcode_type == 'UPCA' and len(value) in (11, 12, 13):
             barcode_type = 'EAN13'
             if len(value) in (11, 12):
@@ -593,7 +593,7 @@ class Report(models.Model):
             width, height, humanreadable = int(width), int(height), bool(int(humanreadable))
             barcode = createBarcodeDrawing(
                 barcode_type, value=value, format='png', width=width, height=height,
-                humanReadable=humanreadable
+                humanReadable=humanreadable, barLevel=barlevel
             )
             return barcode.asString('png')
         except (ValueError, AttributeError):
