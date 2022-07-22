@@ -156,8 +156,11 @@ class StockWarehouseOrderpoint(models.Model):
             if not orderpoint.product_id or not orderpoint.location_id:
                 orderpoint.lead_days_date = False
                 continue
-            lead_days, dummy = orderpoint.rule_ids._get_lead_days(orderpoint.product_id)
-            lead_days_date = fields.Date.today() + relativedelta.relativedelta(days=lead_days)
+            rules = orderpoint.rule_ids
+            buy_rule = rules.filtered(lambda r: r.action == "buy")
+            seller = orderpoint.product_id.with_company(buy_rule.company_id)._select_seller(quantity=None)
+            lead_days, dummy = rules._get_lead_days(orderpoint.product_id)
+            lead_days_date = seller._get_next_availability_date() + relativedelta.relativedelta(days=lead_days)
             orderpoint.lead_days_date = lead_days_date
 
     @api.depends('route_id', 'product_id', 'location_id', 'company_id', 'warehouse_id', 'product_id.route_ids')
