@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <div id="emails" position="inside">
                     <div class="col-12 col-lg-6 o_setting_box" id="microsoft_outlook_setting"
-                        attrs="{'invisible': [('external_email_server_default', '=', False)]}">
+                        attrs="{'invisible': [('default_external_email_server', '=', False)]}">
                         <div class="o_setting_right_pane">
                             <span class="o_form_label">Outlook Credentials</span>
                             <div class="text-muted">
