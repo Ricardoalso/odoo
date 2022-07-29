@@ -38,16 +38,17 @@ class MicrosoftOutlookMixin(models.AbstractModel):
 
     @api.depends('use_microsoft_outlook_service')
     def _compute_is_microsoft_outlook_configured(self):
-        Config = self.env['ir.config_parameter'].sudo()
-        microsoft_outlook_client_id = Config.get_param('microsoft_outlook_client_id')
-        microsoft_outlook_client_secret = Config.get_param('microsoft_outlook_client_secret')
+        company = self.env.user.company_id
+        microsoft_outlook_client_id = company.microsoft_outlook_client_identifier
+        microsoft_outlook_client_secret = company.microsoft_outlook_client_secret
         self.is_microsoft_outlook_configured = microsoft_outlook_client_id and microsoft_outlook_client_secret
 
     @api.depends('use_microsoft_outlook_service')
     def _compute_outlook_uri(self):
         Config = self.env['ir.config_parameter'].sudo()
         base_url = Config.get_param('web.base.url')
-        microsoft_outlook_client_id = Config.get_param('microsoft_outlook_client_id')
+        company = self.env.user.company_id
+        microsoft_outlook_client_id = company.microsoft_outlook_client_identifier
 
         for record in self:
             if not record.id or not record.use_microsoft_outlook_service or not record.is_microsoft_outlook_configured:
@@ -123,8 +124,9 @@ class MicrosoftOutlookMixin(models.AbstractModel):
         """
         Config = self.env['ir.config_parameter'].sudo()
         base_url = Config.get_param('web.base.url')
-        microsoft_outlook_client_id = Config.get_param('microsoft_outlook_client_id')
-        microsoft_outlook_client_secret = Config.get_param('microsoft_outlook_client_secret')
+        company = self.env.user.company_id
+        microsoft_outlook_client_id = company.microsoft_outlook_client_identifier
+        microsoft_outlook_client_secret = company.microsoft_outlook_client_secret
 
         response = requests.post(
             url_join(self._OUTLOOK_ENDPOINT, 'token'),
