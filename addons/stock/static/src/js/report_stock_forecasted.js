@@ -123,7 +123,9 @@ const ReplenishReport = clientAction.extend({
             withControlPanel: false,
             context: {fill_temporal: false},
         };
-        const GraphView = viewRegistry.get("graph");
+        const viewArch = new DOMParser().parseFromString(viewInfo.arch, "text/xml");
+        const viewRegistryKey = viewArch.documentElement.getAttribute("js_class");
+        const GraphView = viewRegistry.get(viewRegistryKey || viewInfo.type);
         const graphView = new GraphView(viewInfo, params);
         const graphController = await graphView.getController(this);
         await graphController.appendTo(document.createDocumentFragment());
