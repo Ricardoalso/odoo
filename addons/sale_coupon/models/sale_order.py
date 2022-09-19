@@ -338,6 +338,14 @@ class SaleOrder(models.Model):
                         email_layout_xmlid='mail.mail_notification_light',
                     )
 
+    def _get_domain_for_search_applicable_programs(self):
+        self.ensure_one()
+        return [
+            ('company_id', 'in', [self.company_id.id, False]),
+            '|', ('rule_date_from', '=', False), ('rule_date_from', '<=', fields.Datetime.now()),
+            '|', ('rule_date_to', '=', False), ('rule_date_to', '>=', fields.Datetime.now()),
+        ]
+
     def _get_applicable_programs(self):
         """
         This method is used to return the valid applicable programs on given order.
@@ -345,11 +353,9 @@ class SaleOrder(models.Model):
         self.ensure_one()
         programs = self.env['sale.coupon.program'].with_context(
             no_outdated_coupons=True
-        ).search([
-            ('company_id', 'in', [self.company_id.id, False]),
-            '|', ('rule_date_from', '=', False), ('rule_date_from', '<=', fields.Datetime.now()),
-            '|', ('rule_date_to', '=', False), ('rule_date_to', '>=', fields.Datetime.now()),
-        ], order="id")._filter_programs_from_common_rules(self)
+        ).search(
+            self._get_domain_for_search_applicable_programs(), order="id"
+        )._filter_programs_from_common_rules(self)
         # no impact code...
         # should be programs = programs.filtered if we really want to filter...
         # if self.promo_code:
