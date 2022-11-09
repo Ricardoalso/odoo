@@ -3,6 +3,7 @@
 
 from odoo.tests import Form
 from datetime import datetime, timedelta
+from freezegun import freeze_time
 
 from odoo.fields import Datetime as Dt
 from odoo.exceptions import UserError
@@ -2293,3 +2294,128 @@ class TestMrpOrder(TestMrpCommon):
         production.workorder_ids[0].button_start()
         production.workorder_ids[0].button_start()
         self.assertEqual(len(production.workorder_ids[0].time_ids.filtered(lambda t: t.date_start and not t.date_end)), 1)
+
+    @freeze_time('2022-06-28 08:00')
+    def test_replan_workorders01(self):
+        """
+        Create two MO, each one with one WO. Set the same scheduled start date
+        to each WO during the creation of the MO. A warning will be displayed.
+        -> The user replans one of the WO: the warnings should disappear and the
+        WO should be postponed.
+        """
+        mos = self.env['mrp.production']
+        for _ in range(2):
+            mo_form = Form(self.env['mrp.production'])
+            mo_form.bom_id = self.bom_4
+            with mo_form.workorder_ids.edit(0) as wo_line:
+                wo_line.date_planned_start = Dt.now()
+            mos += mo_form.save()
+        mos.action_confirm()
+
+        mo_01, mo_02 = mos
+        wo_01 = mo_01.workorder_ids
+        wo_02 = mo_02.workorder_ids
+
+        self.assertTrue(wo_01.show_json_popover)
+        self.assertTrue(wo_02.show_json_popover)
+
+        wo_02.action_replan()
+
+        self.assertFalse(wo_01.show_json_popover)
+        self.assertFalse(wo_02.show_json_popover)
+        self.assertEqual(wo_01.date_planned_finished, wo_02.date_planned_start)
+
+    @freeze_time('2022-06-28 08:00')
+    def test_replan_workorders02(self):
+        """
+        Create two MO, each one with one WO. Set the same scheduled start date
+        to each WO after the creation of the MO. A warning will be displayed.
+        -> The user replans one of the WO: the warnings should disappear and the
+        WO should be postponed.
+        """
+        mos = self.env['mrp.production']
+        for _ in range(2):
+            mo_form = Form(self.env['mrp.production'])
+            mo_form.bom_id = self.bom_4
+            mos += mo_form.save()
+        mos.action_confirm()
+        mo_01, mo_02 = mos
+
+        for mo in mos:
+            with Form(mo) as mo_form:
+                with mo_form.workorder_ids.edit(0) as wo_line:
+                    wo_line.date_planned_start = Dt.now()
+
+        wo_01 = mo_01.workorder_ids
+        wo_02 = mo_02.workorder_ids
+        self.assertTrue(wo_01.show_json_popover)
+        self.assertTrue(wo_02.show_json_popover)
+
+        wo_02.action_replan()
+
+        self.assertFalse(wo_01.show_json_popover)
+        self.assertFalse(wo_02.show_json_popover)
+        self.assertEqual(wo_01.date_planned_finished, wo_02.date_planned_start)
+
+    def test_backorder_with_overconsumption(self):
+        """ Check that the components of the backorder have the correct quantities
+        when there is overconsumption in the initial MO
+        """
+        mo, _, _, _, _ = self.generate_mo(qty_final=30, qty_base_1=2, qty_base_2=3)
+        mo.action_confirm()
+        mo.qty_producing = 10
+        mo.move_raw_ids[0].quantity_done = 90
+        mo.move_raw_ids[1].quantity_done = 70
+        action = mo.button_mark_done()
+        backorder = Form(self.env['mrp.production.backorder'].with_context(**action['context']))
+        backorder.save().action_backorder()
+        mo_backorder = mo.procurement_group_id.mrp_production_ids[-1]
+
+        # Check quantities of the original MO
+        self.assertEqual(mo.product_uom_qty, 10.0)
+        self.assertEqual(mo.qty_produced, 10.0)
+        move_prod_1 = self.env['stock.move'].search([
+            ('product_id', '=', mo.bom_id.bom_line_ids[0].product_id.id),
+            ('raw_material_production_id', '=', mo.id)])
+        move_prod_2 = self.env['stock.move'].search([
+            ('product_id', '=', mo.bom_id.bom_line_ids[1].product_id.id),
+            ('raw_material_production_id', '=', mo.id)])
+        self.assertEqual(sum(move_prod_1.mapped('quantity_done')), 90.0)
+        self.assertEqual(sum(move_prod_1.mapped('product_uom_qty')), 90.0)
+        self.assertEqual(sum(move_prod_2.mapped('quantity_done')), 70.0)
+        self.assertEqual(sum(move_prod_2.mapped('product_uom_qty')), 70.0)
+
+        # Check quantities of the backorder MO
+        self.assertEqual(mo_backorder.product_uom_qty, 20.0)
+        move_prod_1_bo = self.env['stock.move'].search([
+            ('product_id', '=', mo.bom_id.bom_line_ids[0].product_id.id),
+            ('raw_material_production_id', '=', mo_backorder.id)])
+        move_prod_2_bo = self.env['stock.move'].search([
+            ('product_id', '=', mo.bom_id.bom_line_ids[1].product_id.id),
+            ('raw_material_production_id', '=', mo_backorder.id)])
+        self.assertEqual(sum(move_prod_1_bo.mapped('product_uom_qty')), 60.0)
+        self.assertEqual(sum(move_prod_2_bo.mapped('product_uom_qty')), 40.0)
+
+    def test_update_qty_to_consume_of_component(self):
+        """
+        The UoM of the finished product has a rounding precision equal to 1.0
+        and the UoM of the component has a decimal one. When the producing qty
+        is set, an onchange autocomplete the consumed quantity of the component.
+        Then, when updating the 'to consume' quantity of the components, their
+        consumed quantity is updated again. The test ensures that this update
+        respects the rounding precisions
+        """
+        self.uom_dozen.rounding = 1
+        self.bom_4.product_uom_id = self.uom_dozen
+
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.bom_id = self.bom_4
+        mo = mo_form.save()
+        mo.action_confirm()
+
+        with Form(mo) as mo_form:
+            mo_form.qty_producing = 1
+            with mo_form.move_raw_ids.edit(0) as raw:
+                raw.product_uom_qty = 1.25
+
+        self.assertEqual(mo.move_raw_ids.quantity_done, 1.25)

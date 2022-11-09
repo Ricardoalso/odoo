@@ -9,7 +9,6 @@
 # Arminas Grigonis <arminas@versada.lt>, 2021
 # vaalds <vaalds@gmail.com>, 2021
 # Rolandas <panauto1@gmail.com>, 2021
-# Antanas Muliuolis <an.muliuolis@gmail.com>, 2021
 # Anatolij, 2021
 # Šarūnas Ažna <sarunas.azna@gmail.com>, 2021
 # Monika Raciunaite <monika.raciunaite@gmail.com>, 2021
@@ -25,13 +24,14 @@
 # Linas Versada <linaskrisiukenas@gmail.com>, 2021
 # Arunas Vaitekunas <vaitekunas@gmail.com>, 2021
 # Paulius Sladkevičius <paulius@versada.eu>, 2021
-# Jonas Zinkevicius <jozi@odoo.com>, 2021
 # grupoda2 <dmitrijus.ivanovas@gmail.com>, 2021
 # Camille Dantinne <cmd@odoo.com>, 2021
 # Donatas <donatasvaliulis16@gmail.com>, 2021
 # Gailius Kazlauskas, 2022
 # Sigitasvia <sigitas@vialaurea.lt>, 2022
 # Arunas V. <arunas@devoro.com>, 2022
+# Jonas Zinkevicius <jozi@odoo.com>, 2022
+# Antanas Muliuolis <an.muliuolis@gmail.com>, 2022
 # Ramunė ViaLaurea <ramune.vialaurea@gmail.com>, 2022
 # 
 msgid ""
@@ -497,6 +497,9 @@ msgid ""
 "('state', '!=', 'draft'), ('invoice_payment_term_id', '!=', False)]}\"> or "
 "</span>"
 msgstr ""
+"<span class=\"o_form_label mx-3 oe_edit_only\" attrs=\"{'invisible': ['|', "
+"('state', '!=', 'draft'), ('invoice_payment_term_id', '!=', False)]}\"> arba"
+" </span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
@@ -790,6 +793,11 @@ msgstr "<strong>Įmonė:</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
+msgid "<strong>Credit Note Date:</strong>"
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "<strong>Customer Code:</strong>"
 msgstr "<strong>Kliento kodas:</strong>"
 
@@ -802,6 +810,11 @@ msgstr "<strong>Klientas: </strong>"
 #: model_terms:ir.ui.view,arch_db:account.view_account_analytic_default_kanban
 msgid "<strong>Customer</strong>"
 msgstr "<strong>Klientas</strong>"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Data:</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -857,6 +870,11 @@ msgstr "<strong>Mokėjimo būdas: </strong>"
 #: model_terms:ir.ui.view,arch_db:account.view_account_analytic_default_kanban
 msgid "<strong>Product</strong>"
 msgstr "<strong>Produktas</strong>"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
+msgid "<strong>Receipt Date:</strong>"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -4911,7 +4929,7 @@ msgstr "Kreditinės sąskaitos šablonas"
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid "Draft Entry"
-msgstr ""
+msgstr "Juodraštinis įrašas"
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -6266,6 +6284,8 @@ msgid ""
 "Incorrect fiscal year date: day is out of range for month. Month: %s; Day: "
 "%s"
 msgstr ""
+"Neteisinga finansinių metų data: diena nepatenka į mėnesio ribas: mėnuo: %s;"
+" diena: %s"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__invoice_incoterm_id
@@ -7847,7 +7867,7 @@ msgstr "Perkėlimo eilučių skaičius"
 #: model:ir.model.fields,field_description:account.field_account_invoice_report__move_type
 #: model:ir.model.fields,field_description:account.field_account_move_reversal__move_type
 msgid "Move Type"
-msgstr ""
+msgstr "Judėjimo tipas"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9675,6 +9695,12 @@ msgid "Reconciliation Parts"
 msgstr "Sudengimo dalys"
 
 #. module: account
+#: code:addons/account/models/partner.py:0
+#, python-format
+msgid "Record cannot be deleted. Partner used in Accounting"
+msgstr ""
+
+#. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Record transactions in foreign currencies"
 msgstr "Registruoti operacijas užsienio valiutomis"
@@ -9892,7 +9918,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_form
 msgid "Reset To Draft"
-msgstr ""
+msgstr "Atkurti kaip juodraštį"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
@@ -10245,7 +10271,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal__sale_activity_type_id
 msgid "Schedule Activity"
-msgstr ""
+msgstr "Suplanuoti veiklą"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_journal_search
@@ -10542,7 +10568,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_tour_upload_bill_email_confirm
 msgid "Send your email to"
-msgstr ""
+msgstr "Siųsti Jūsų el. laišką į "
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_search
@@ -10722,6 +10748,8 @@ msgid ""
 "Shorter name used for display. The journal entries of this journal will also"
 " be named using this prefix by default."
 msgstr ""
+"Trumpas kodas naudojamas atvaizdavimui. Šiame žurnale sukurti žurnalo įrašai"
+" taip pat turės šitą kodą kaip priešdėlį prieš numerį."
 
 #. module: account
 #: model:res.groups,name:account.group_account_readonly
@@ -11283,7 +11311,7 @@ msgstr "Mokesčiai įtraukti į kainą"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company__tax_lock_date
 msgid "Tax Lock Date"
-msgstr ""
+msgstr "Mokesčių užrakinimo data"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__tax_lock_date_message
@@ -13227,7 +13255,7 @@ msgstr "Perkelti"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_automatic_entry_wizard_form
 msgid "Transfer Date"
-msgstr ""
+msgstr "Perkėlimo data"
 
 #. module: account
 #: code:addons/account/wizard/account_automatic_entry_wizard.py:0
@@ -14572,7 +14600,7 @@ msgstr "sekančio mėnesio"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "on"
-msgstr "esantis"
+msgstr "nuo"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
@@ -14622,7 +14650,7 @@ msgstr "iki"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "to check"
-msgstr ""
+msgstr "patikrinti"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_tour_upload_bill_email_confirm

@@ -282,15 +282,17 @@ class MrpProduction(models.Model):
                     product_domain += [('id', 'in', production.bom_id.product_tmpl_id.product_variant_ids.ids)]
             production.allowed_product_ids = self.env['product.product'].search(product_domain)
 
-    @api.depends('procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids')
+    @api.depends('procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids',
+                 'procurement_group_id.stock_move_ids.move_orig_ids.created_production_id.procurement_group_id.mrp_production_ids')
     def _compute_mrp_production_child_count(self):
         for production in self:
-            production.mrp_production_child_count = len(production.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids - production)
+            production.mrp_production_child_count = len(production._get_children())
 
-    @api.depends('move_dest_ids.group_id.mrp_production_ids')
+    @api.depends('procurement_group_id.mrp_production_ids.move_dest_ids.group_id.mrp_production_ids',
+                 'procurement_group_id.stock_move_ids.move_dest_ids.group_id.mrp_production_ids')
     def _compute_mrp_production_source_count(self):
         for production in self:
-            production.mrp_production_source_count = len(production.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.mrp_production_ids - production)
+            production.mrp_production_source_count = len(production._get_sources())
 
     @api.depends('procurement_group_id.mrp_production_ids')
     def _compute_mrp_production_backorder(self):
@@ -475,7 +477,10 @@ class MrpProduction(models.Model):
                 production.state = 'draft'
             elif all(move.state == 'cancel' for move in production.move_raw_ids):
                 production.state = 'cancel'
-            elif all(move.state in ('cancel', 'done') for move in production.move_raw_ids):
+            elif (
+                all(move.state in ('cancel', 'done') for move in production.move_raw_ids)
+                and all(move.state in ('cancel', 'done') for move in production.move_finished_ids)
+            ):
                 production.state = 'done'
             elif production.workorder_ids and all(wo_state in ('done', 'cancel') for wo_state in production.workorder_ids.mapped('state')):
                 production.state = 'to_close'
@@ -771,7 +776,7 @@ class MrpProduction(models.Model):
         # Remove from `move_finished_ids` the by-product moves and then move `move_byproduct_ids`
         # into `move_finished_ids` to avoid duplicate and inconsistency.
         if values.get('move_finished_ids', False):
-            values['move_finished_ids'] = list(filter(lambda move: move[2]['byproduct_id'] is False, values['move_finished_ids']))
+            values['move_finished_ids'] = list(filter(lambda move: move[2].get('byproduct_id', False) is False, values['move_finished_ids']))
         if values.get('move_byproduct_ids', False):
             values['move_finished_ids'] = values.get('move_finished_ids', []) + values['move_byproduct_ids']
             del values['move_byproduct_ids']
@@ -792,10 +797,11 @@ class MrpProduction(models.Model):
         })
         production.move_raw_ids.write({'date': production.date_planned_start})
         production.move_finished_ids.write({'date': production.date_planned_finished})
-        # Trigger move_raw creation when importing a file
+        # Trigger SM & WO creation when importing a file
         if 'import_file' in self.env.context:
             production._onchange_move_raw()
             production._onchange_move_finished()
+            production._onchange_workorder_ids()
         return production
 
     def unlink(self):
@@ -1032,7 +1038,7 @@ class MrpProduction(models.Model):
             if production.state in ('done', 'cancel'):
                 continue
             additional_moves = production.move_raw_ids.filtered(
-                lambda move: move.state == 'draft' and move.additional
+                lambda move: move.state == 'draft'
             )
             additional_moves.write({
                 'group_id': production.procurement_group_id.id,
@@ -1040,7 +1046,7 @@ class MrpProduction(models.Model):
             additional_moves._adjust_procure_method()
             moves_to_confirm |= additional_moves
             additional_byproducts = production.move_finished_ids.filtered(
-                lambda move: move.state == 'draft' and move.additional
+                lambda move: move.state == 'draft'
             )
             moves_to_confirm |= additional_byproducts
 
@@ -1051,9 +1057,21 @@ class MrpProduction(models.Model):
 
         self.workorder_ids.filtered(lambda w: w.state not in ['done', 'cancel'])._action_confirm()
 
+    def _get_children(self):
+        self.ensure_one()
+        procurement_moves = self.procurement_group_id.stock_move_ids
+        child_moves = procurement_moves.move_orig_ids
+        return (procurement_moves | child_moves).created_production_id.procurement_group_id.mrp_production_ids - self
+
+    def _get_sources(self):
+        self.ensure_one()
+        dest_moves = self.procurement_group_id.mrp_production_ids.move_dest_ids
+        parent_moves = self.procurement_group_id.stock_move_ids.move_dest_ids
+        return (dest_moves | parent_moves).group_id.mrp_production_ids - self
+
     def action_view_mrp_production_childs(self):
         self.ensure_one()
-        mrp_production_ids = self.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids.ids
+        mrp_production_ids = self._get_children().ids
         action = {
             'res_model': 'mrp.production',
             'type': 'ir.actions.act_window',
@@ -1073,7 +1091,7 @@ class MrpProduction(models.Model):
 
     def action_view_mrp_production_sources(self):
         self.ensure_one()
-        mrp_production_ids = self.procurement_group_id.mrp_production_ids.move_dest_ids.group_id.mrp_production_ids.ids
+        mrp_production_ids = self._get_sources().ids
         action = {
             'res_model': 'mrp.production',
             'type': 'ir.actions.act_window',
@@ -1520,15 +1538,17 @@ class MrpProduction(models.Model):
         if self.env.context.get('mo_ids_to_backorder'):
             productions_to_backorder = self.browse(self.env.context['mo_ids_to_backorder'])
             productions_not_to_backorder = self - productions_to_backorder
+            close_mo = False
         else:
             productions_not_to_backorder = self
             productions_to_backorder = self.env['mrp.production']
+            close_mo = True
 
         self.workorder_ids.button_finish()
 
+        backorders = productions_to_backorder._generate_backorder_productions(close_mo=close_mo)
         productions_not_to_backorder._post_inventory(cancel_backorder=True)
         productions_to_backorder._post_inventory(cancel_backorder=False)
-        backorders = productions_to_backorder._generate_backorder_productions()
 
         # if completed products make other confirmed/partially_available moves available, assign them
         done_move_finished_ids = (productions_to_backorder.move_finished_ids | productions_not_to_backorder.move_finished_ids).filtered(lambda m: m.state == 'done')
@@ -1685,9 +1705,10 @@ class MrpProduction(models.Model):
                 order_exception, visited = exception
                 order_exceptions.update(order_exception)
                 visited_objects += visited
-            visited_objects = self.env[visited_objects[0]._name].concat(*visited_objects)
+            visited_objects = [sm for sm in visited_objects if sm._name == 'stock.move']
             impacted_object = []
-            if visited_objects and visited_objects._name == 'stock.move':
+            if visited_objects:
+                visited_objects = self.env[visited_objects[0]._name].concat(*visited_objects)
                 visited_objects |= visited_objects.mapped('move_orig_ids')
                 impacted_object = visited_objects.filtered(lambda m: m.state not in ('done', 'cancel')).mapped('picking_id')
             values = {
@@ -1756,6 +1777,7 @@ class MrpProduction(models.Model):
                     ('qty_done', '=', 1),
                     ('state', '=', 'done'),
                     ('location_dest_id.usage', '=', 'production'),
+                    ('production_id', '!=', False),
                 ])
                 if duplicates:
                     # Maybe some move lines have been compensated by unbuild

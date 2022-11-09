@@ -35,7 +35,6 @@ import babel
 import babel.dates
 import passlib.utils
 import pytz
-import werkzeug.utils
 from lxml import etree
 
 import odoo
@@ -284,7 +283,7 @@ def flatten(list):
     """
     r = []
     for e in list:
-        if isinstance(e, (bytes, str)) or not isinstance(e, collections.Iterable):
+        if isinstance(e, (bytes, str)) or not isinstance(e, collections.abc.Iterable):
             r.append(e)
         else:
             r.extend(flatten(e))
@@ -1011,18 +1010,30 @@ class Collector(Mapping):
         for ``defaultdict(list)``.
     """
     __slots__ = ['_map']
+
     def __init__(self):
         self._map = {}
+
     def add(self, key, val):
         vals = self._map.setdefault(key, [])
         if val not in vals:
             vals.append(val)
+
     def __getitem__(self, key):
         return self._map.get(key, ())
+
     def __iter__(self):
         return iter(self._map)
+
     def __len__(self):
         return len(self._map)
+
+    def discard_keys_and_values(self, excludes):
+        self._map = {
+            key: [val for val in vals if val not in excludes]
+            for key, vals in self._map.items()
+            if key not in excludes
+        }
 
 
 class StackMap(MutableMapping):
@@ -1227,13 +1238,27 @@ def ignore(*exc):
     except exc:
         pass
 
-# Avoid DeprecationWarning while still remaining compatible with werkzeug pre-0.9
-if parse_version(getattr(werkzeug, '__version__', '0.0')) < parse_version('0.9.0'):
-    def html_escape(text):
-        return werkzeug.utils.escape(text, quote=True)
-else:
-    def html_escape(text):
-        return werkzeug.utils.escape(text)
+def html_escape(text):
+    """ Vendored from werkzeug.utils.escape which is deprecated in 2.0
+    Replace special characters "&", "<", ">" and (") to HTML-safe sequences.
+
+    There is a special handling for `None` which escapes to an empty string.
+
+    :param s: the string to escape.
+    """
+    if  text is None:
+        return ""
+    elif hasattr(text, "__html__"):
+        return str(text.__html__())
+    elif not isinstance(text, str):
+        text = str(text)
+    text = (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
+    return text
 
 def get_lang(env, lang_code=False):
     """
