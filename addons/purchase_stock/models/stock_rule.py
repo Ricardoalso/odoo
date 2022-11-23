@@ -262,7 +262,7 @@ class StockRule(models.Model):
         params values: values of procurements
         params origins: procuremets origins to write on the PO
         """
-        purchase_date = min([fields.Datetime.from_string(value['date_planned']) - relativedelta(days=int(value['supplier'].delay)) for value in values])
+        purchase_date = min([fields.Datetime.from_string(value['date_planned']) - value['supplier']._get_delay_delta() for value in values])
 
         purchase_date = (purchase_date - relativedelta(days=company_id.po_lead))
 
@@ -307,7 +307,7 @@ class StockRule(models.Model):
             ('user_id', '=', False),
         )
         if values.get('orderpoint_id'):
-            procurement_date = fields.Date.to_date(values['date_planned']) - relativedelta(days=int(values['supplier'].delay) + company_id.po_lead)
+            procurement_date = fields.Date.to_date(values['date_planned']) - values['supplier']._get_delay_delta() + company_id.po_lead)
             delta_days = int(self.env['ir.config_parameter'].sudo().get_param('purchase_stock.delta_days_merge') or 0)
             domain += (
                 ('date_order', '<=', datetime.combine(procurement_date + relativedelta(days=delta_days), datetime.max.time())),

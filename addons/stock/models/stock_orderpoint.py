@@ -463,6 +463,10 @@ class StockWarehouseOrderpoint(models.Model):
             'group_id': group or self.group_id,
         }
 
+    def _get_procurement_datetime(self):
+        self.ensure_one()
+        return datetime.combine(self.lead_days_date, time.min)
+
     def _procure_orderpoint_confirm(self, use_new_cursor=False, company_id=None, raise_user_error=True):
         """ Create procurements based on orderpoints.
         :param bool use_new_cursor: if set, use a dedicated cursor and auto-commit after processing
@@ -483,7 +487,7 @@ class StockWarehouseOrderpoint(models.Model):
                 procurements = []
                 for orderpoint in orderpoints_batch:
                     if float_compare(orderpoint.qty_to_order, 0.0, precision_rounding=orderpoint.product_uom.rounding) == 1:
-                        date = datetime.combine(orderpoint.lead_days_date, time.min)
+                        date = orderpoint._get_procurement_datetime()
                         values = orderpoint._prepare_procurement_values(date=date)
                         procurements.append(self.env['procurement.group'].Procurement(
                             orderpoint.product_id, orderpoint.qty_to_order, orderpoint.product_uom,
