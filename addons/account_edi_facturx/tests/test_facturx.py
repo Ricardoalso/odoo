@@ -11,6 +11,12 @@ class TestAccountEdiFacturx(AccountEdiTestCommon):
     def setUpClass(cls, chart_template_ref=None, edi_format_ref='account_edi_facturx.edi_facturx_1_0_05'):
         super().setUpClass(chart_template_ref=chart_template_ref, edi_format_ref=edi_format_ref)
 
+        if cls.env['ir.module.module'].search(
+            [('name', '=', 'account_edi_ubl_cii'), ('state', '=', 'installed')],
+            limit=1,
+        ):
+            cls.skipTest(cls, "Factur-X Tests skipped because account_edi_ubl_cii is installed.")
+
         # ==== Init ====
 
         cls.tax_10_include = cls.env['account.tax'].create({
@@ -62,7 +68,7 @@ class TestAccountEdiFacturx(AccountEdiTestCommon):
             <CrossIndustryInvoice>
                 <ExchangedDocumentContext>
                     <GuidelineSpecifiedDocumentContextParameter>
-                        <ID>urn:cen.eu:en16931:2017</ID>
+                        <ID>urn:cen.eu:en16931:2017#conformant#urn:factur-x.eu:1p0:extended</ID>
                     </GuidelineSpecifiedDocumentContextParameter>
                 </ExchangedDocumentContext>
                 <ExchangedDocument>
@@ -111,10 +117,16 @@ class TestAccountEdiFacturx(AccountEdiTestCommon):
                     <ApplicableHeaderTradeAgreement>
                         <SellerTradeParty>
                             <Name>company_1_data</Name>
+                            <DefinedTradeContact>
+                                <PersonName>company_1_data</PersonName>
+                            </DefinedTradeContact>
                             <PostalTradeAddress/>
                         </SellerTradeParty>
                         <BuyerTradeParty>
                             <Name>partner_b</Name>
+                            <DefinedTradeContact>
+                                <PersonName>partner_b</PersonName>
+                            </DefinedTradeContact>
                             <PostalTradeAddress/>
                         </BuyerTradeParty>
                         <BuyerOrderReferencedDocument>
@@ -124,6 +136,9 @@ class TestAccountEdiFacturx(AccountEdiTestCommon):
                     <ApplicableHeaderTradeDelivery>
                         <ShipToTradeParty>
                             <Name>partner_b</Name>
+                            <DefinedTradeContact>
+                                <PersonName>partner_b</PersonName>
+                            </DefinedTradeContact>
                             <PostalTradeAddress/>
                         </ShipToTradeParty>
                     </ApplicableHeaderTradeDelivery>

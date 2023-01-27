@@ -19,7 +19,7 @@ class StockMove(models.Model):
     purchase_line_id = fields.Many2one('purchase.order.line',
         'Purchase Order Line', ondelete='set null', index=True, readonly=True)
     created_purchase_line_id = fields.Many2one('purchase.order.line',
-        'Created Purchase Order Line', ondelete='set null', readonly=True, copy=False)
+        'Created Purchase Order Line', ondelete='set null', readonly=True, copy=False, index=True)
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
@@ -240,7 +240,7 @@ class Orderpoint(models.Model):
     def _get_replenishment_order_notification(self):
         self.ensure_one()
         domain = [('orderpoint_id', 'in', self.ids)]
-        if self.env.context.get('written_date'):
+        if self.env.context.get('written_after'):
             domain = AND([domain, [('write_date', '>', self.env.context.get('written_after'))]])
         order = self.env['purchase.order.line'].search(domain, limit=1).order_id
         if order:
