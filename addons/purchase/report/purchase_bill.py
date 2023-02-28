@@ -21,9 +21,9 @@ class PurchaseBillUnion(models.Model):
     vendor_bill_id = fields.Many2one('account.move', string='Vendor Bill', readonly=True)
     purchase_order_id = fields.Many2one('purchase.order', string='Purchase Order', readonly=True)
 
-    def init(self):
-        tools.drop_view_if_exists(self.env.cr, 'purchase_bill_union')
-        self.env.cr.execute("""
+    @api.model
+    def get_sql_for_view_creation(self):
+        return """
             CREATE OR REPLACE VIEW purchase_bill_union AS (
                 SELECT
                     id, name, ref as reference, partner_id, date, amount_untaxed as amount, currency_id, company_id,
@@ -39,7 +39,12 @@ class PurchaseBillUnion(models.Model):
                 WHERE
                     state in ('purchase', 'done') AND
                     invoice_status in ('to invoice', 'no')
-            )""")
+            )
+        """
+
+    def init(self):
+        tools.drop_view_if_exists(self.env.cr, 'purchase_bill_union')
+        self.env.cr.execute(self.get_sql_for_view_creation())
 
     def name_get(self):
         result = []
